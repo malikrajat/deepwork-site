@@ -11,7 +11,6 @@
     "ng": "ng",
     "start": "ng serve --port 5000",
     "build": "ng build",
-    "build:github": "ng build --base-href=/deepwork-site/ --configuration production",
     "watch": "ng build --watch --configuration development",
     "lint": "biome lint .",
     "format": "biome check --write . && prettier --write \"**/*.{html,css}\"",

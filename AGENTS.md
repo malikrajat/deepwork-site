@@ -167,7 +167,6 @@ on framework style for this version; where it disagrees with older habits, it wi
 ```bash
 npm start              # dev server, http://localhost:5000
 npm run build          # production build
-npm run build:github   # production build with the GitHub Pages base href
 npm run lint           # Biome lint
 npm run format         # Biome (TS/JSON/tools) + Prettier (HTML/CSS)
 npm run verify         # format:check + build

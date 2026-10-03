@@ -52,19 +52,17 @@ jobs:
       - name: Lint
         run: npm run lint
 
-      # Deliberately the root-base build, not `build:github`.
+      # The root-base build, which is the one Netlify publishes — this is the
+      # artefact that actually ships, not an approximation of it.
       #
-      # `build:github` sets `--base-href=/deepwork-site/`, which rewrites every
-      # asset URL to `/deepwork-site/main-<hash>.js`. The audit serves `dist/` at
-      # the server root, so it looks for `dist/deepwork-site/browser/deepwork-site/…`
-      # — a path that does not exist. Every script 404s, Angular never bootstraps,
-      # and the audit fails on the first real interaction with a 30s click
-      # timeout rather than on anything it was written to test.
-      #
-      # This is the build the site is published from (see `netlify.toml`), and the
-      # asset paths it produces are identical to the Pages build apart from the
-      # base href, which the Pages workflow covers itself. The base-href-specific
-      # artefact is verified in `deploy.yml`, which builds and publishes it.
+      # A base href other than `/` must not be introduced here. `--base-href=/x/`
+      # rewrites every asset URL to `/x/main-<hash>.js`, while the audit serves
+      # `dist/` at the server root, so it would look for
+      # `dist/deepwork-site/browser/x/main-<hash>.js` — a path that does not exist.
+      # Every script 404s, Angular never bootstraps, and the audit then fails on
+      # the first real interaction with a 30s click timeout rather than on
+      # anything it was written to test. That is exactly how this pipeline broke
+      # once, when it built with a Pages base href that no longer exists.
       - name: Build
         run: npm run build
 

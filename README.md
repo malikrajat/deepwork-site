@@ -40,7 +40,6 @@ Three ideas shaped almost every decision in here:
 npm install
 npm start                 # dev server on http://localhost:5000
 npm run build             # production build -> dist/deepwork-site/browser
-npm run build:github      # the same build with the GitHub Pages base href
 npm run serve:dist        # serve the build at http://127.0.0.1:5200
 npm run verify            # format:check + build
 ```
@@ -287,18 +286,16 @@ deliberate and documented in `biome.json`.
 
 ## Deployment
 
-Both hosts serve the same static output and need no server.
+Netlify is the only host, and it needs no dashboard configuration: `netlify.toml` is committed and
+describes the build (`npm run build`), the publish directory (`dist/deepwork-site/browser`), an SPA
+redirect, caching and security headers.
 
-**GitHub Pages** — `.github/workflows/deploy.yml` builds with `npm run build:github` (which sets
-`--base-href=/deepwork-site/`) and publishes `dist/deepwork-site/browser`. If the repository is
-renamed, the base href changes in exactly two places: `package.json` and that workflow.
-
-**Netlify** — `netlify.toml` is committed and needs no dashboard configuration: build
-`npm run build`, publish `dist/deepwork-site/browser`, an SPA redirect, and caching plus security
-headers. The base href stays `/` there, which is why the Pages base href is a build flag rather than
-something written into `index.html`.
-
-Every asset reference is relative, so the site resolves under whatever base href the build was given.
+The base href stays `/`, which matches `src/index.html` and the canonical URLs. There is deliberately
+no second deployment: a GitHub Pages copy was removed once the site moved to Netlify, because
+publishing the same page at two URLs while declaring only one canonical is a duplicate-content
+signal, and the page's canonical tags, `sitemap.xml`, `robots.txt` and `llms.txt` all name exactly
+one home. If the site ever moves, those five places change together — and `npm run audit` asserts the
+canonical URL, so a missed one fails the build rather than shipping.
 
 ---
 
