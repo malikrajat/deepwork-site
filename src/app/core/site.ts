@@ -32,8 +32,18 @@ export const SITE = {
   latestReleaseUrl: 'https://github.com/malikrajat/deepwork/releases/latest',
   issuesUrl: 'https://github.com/malikrajat/deepwork/issues/new',
   changelogUrl: 'https://github.com/malikrajat/deepwork/blob/main/CHANGELOG.md',
-  /** The public address of this site, used for canonical and Open Graph tags. */
-  siteUrl: 'https://malikrajat.github.io/deepwork-site/',
+  /**
+   * The public address of this site, used for canonical and Open Graph tags.
+   *
+   * This is the Netlify deployment at the domain root, not the GitHub Pages
+   * subpath. Both host the site, so exactly one has to be named here: a canonical
+   * tag pointing at a second copy tells a crawler the two URLs are duplicates and
+   * splits the ranking between them. `netlify.toml` is the deployment that is
+   * actually promoted, and `index.html`, `sitemap.xml`, `robots.txt`, `llms.txt`
+   * and `llms-full.txt` all repeat this value deliberately — changing it here
+   * alone leaves the catalogues advertising a different home page.
+   */
+  siteUrl: 'https://deepwork-pomodoro.netlify.app/',
   author: 'Rajat Malik',
   authorUrl: 'https://github.com/malikrajat',
 } as const;

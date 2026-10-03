@@ -25,7 +25,7 @@ const { startServer } = require('./static-server.cjs');
 const DIST = path.join(__dirname, '..', 'dist', 'deepwork-site', 'browser');
 const PORT = Number(process.env['PORT'] || 5200);
 const OUT = path.join(__dirname, '..', 'public', 'llms-full.txt');
-const SITE_URL = 'https://malikrajat.github.io/deepwork-site/';
+const SITE_URL = 'https://deepwork-pomodoro.netlify.app/';
 
 /** Set when an already-running server should be used instead of starting one. */
 const EXTERNAL_URL = process.env['SITE_URL'];

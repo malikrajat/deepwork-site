@@ -1,4 +1,4 @@
-# robots.txt for DeepWork — https://malikrajat.github.io/deepwork-site/
+# robots.txt for DeepWork — https://deepwork-pomodoro.netlify.app/
 #
 # This site is a single public page describing a free desktop and web app. There
 # is no admin area, no user-generated content, no login and nothing private, so
@@ -15,7 +15,7 @@
 #   /llms.txt       — a short, curated index with links to each section
 #   /llms-full.txt  — the entire page, converted to Markdown
 #
-# Sitemap: https://malikrajat.github.io/deepwork-site/sitemap.xml
+# Sitemap: https://deepwork-pomodoro.netlify.app/sitemap.xml
 
 # ── Everything, by default ────────────────────────────────────────────────
 User-agent: *

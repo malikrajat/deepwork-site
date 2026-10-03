@@ -7,7 +7,7 @@ its data on your own machine.
 [malikrajat/deepwork](https://github.com/malikrajat/deepwork), and nothing here modifies it: this
 project reads that repository, screenshots it and describes it.
 
-- **Site:** https://malikrajat.github.io/deepwork-site/
+- **Site:** https://deepwork-pomodoro.netlify.app/
 - **Web app:** https://malikrajat.github.io/deepwork/
 - **Downloads:** https://github.com/malikrajat/deepwork/releases/latest
 

@@ -1,6 +1,6 @@
 # DeepWork — full page
 
-> Source: https://malikrajat.github.io/deepwork-site/
+> Source: https://deepwork-pomodoro.netlify.app/
 > This is the complete content of the DeepWork product site, converted to Markdown from the
 > rendered page. A shorter, curated index is at /llms.txt.
 

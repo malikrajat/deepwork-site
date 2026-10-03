@@ -145,7 +145,7 @@ async function main() {
   const sitemap = fs.existsSync('public/sitemap.xml')
     ? fs.readFileSync('public/sitemap.xml', 'utf8')
     : '';
-  check(sitemap.includes('malikrajat.github.io/deepwork-site/'), 'sitemap has the canonical URL');
+  check(sitemap.includes('deepwork-pomodoro.netlify.app/'), 'sitemap has the canonical URL');
   check(sitemap.includes('image:image'), 'sitemap carries image entries');
   check(/<lastmod>\d{4}-\d{2}-\d{2}<\/lastmod>/.test(sitemap), 'sitemap has a real lastmod');
 

@@ -25,35 +25,35 @@ Key facts, all verifiable against the repository:
   features, no native mobile app, and the Windows/macOS installers are unsigned so SmartScreen and
   Gatekeeper warn on first run.
 
-Canonical page: https://malikrajat.github.io/deepwork-site/
+Canonical page: https://deepwork-pomodoro.netlify.app/
 Web app: https://malikrajat.github.io/deepwork/
 Downloads: https://github.com/malikrajat/deepwork/releases/latest
 
 ## Focus sessions
 
-- [Focus sessions](https://malikrajat.github.io/deepwork-site/#focus): the Pomodoro workflow — 25-minute focus sessions, 5-minute short breaks and 15-minute long breaks by default, four sessions before a long break, every length configurable. A circular ring fills as the session runs. A finished session rings, raises a system notification and repeats until it is answered, moving through a twelve-colour palette; each completion also draws one of twenty-four written lines for focus and twenty-four for breaks.
+- [Focus sessions](https://deepwork-pomodoro.netlify.app/#focus): the Pomodoro workflow — 25-minute focus sessions, 5-minute short breaks and 15-minute long breaks by default, four sessions before a long break, every length configurable. A circular ring fills as the session runs. A finished session rings, raises a system notification and repeats until it is answered, moving through a twelve-colour palette; each completion also draws one of twenty-four written lines for focus and twenty-four for breaks.
 
 ## Planning and tasks
 
-- [Day planner](https://malikrajat.github.io/deepwork-site/#planner): queued tasks are laid onto a timeline of focus blocks, with breaks reserved between them, in Eisenhower-quadrant order. Tasks can be pinned to a time, span several blocks, or be pulled into the day by "Fit day". The day reports its own focus minutes, break minutes, pomodoros and task count.
-- [Tasks and matrix](https://malikrajat.github.io/deepwork-site/#tasks): a To Do / In Progress / Done board with drag and drop and full keyboard control (`1`, `2`, `3`, arrow keys, `Enter`). Quick add is on every page and on `Ctrl+N`. Tasks carry a title, description, priority P1–P4, deadline, quadrant, tags and a repeat rule (daily, weekly or monthly, with weekdays and an end date). Import from Excel or CSV with a validated preview, and export to CSV with 24 columns.
-- [Eisenhower matrix](https://malikrajat.github.io/deepwork-site/#matrix): four quadrants — Q1 Do First, Q2 Schedule, Q3 Delegate, Q4 Eliminate — that decide the order the planner schedules from and that analytics reports completion against.
+- [Day planner](https://deepwork-pomodoro.netlify.app/#planner): queued tasks are laid onto a timeline of focus blocks, with breaks reserved between them, in Eisenhower-quadrant order. Tasks can be pinned to a time, span several blocks, or be pulled into the day by "Fit day". The day reports its own focus minutes, break minutes, pomodoros and task count.
+- [Tasks and matrix](https://deepwork-pomodoro.netlify.app/#tasks): a To Do / In Progress / Done board with drag and drop and full keyboard control (`1`, `2`, `3`, arrow keys, `Enter`). Quick add is on every page and on `Ctrl+N`. Tasks carry a title, description, priority P1–P4, deadline, quadrant, tags and a repeat rule (daily, weekly or monthly, with weekdays and an end date). Import from Excel or CSV with a validated preview, and export to CSV with 24 columns.
+- [Eisenhower matrix](https://deepwork-pomodoro.netlify.app/#matrix): four quadrants — Q1 Do First, Q2 Schedule, Q3 Delegate, Q4 Eliminate — that decide the order the planner schedules from and that analytics reports completion against.
 
 ## Habits, wellbeing and reflection
 
-- [Habits and journal](https://malikrajat.github.io/deepwork-site/#habits): habits with a name and an icon, a one-press check-in, current and best streaks, a completion percentage, an all-time count and a 30-day strip showing exactly which days were missed. The journal is one dated entry per day with writing prompts, saved as you type, with days written, words all-time, average entry, streaks and 30-day consistency.
-- [Hydration](https://malikrajat.github.io/deepwork-site/#hydration): an optional water reminder that asks rather than announces, with two answers. Intervals from 15 to 180 minutes, drink sizes from 30 to 1000 ml, targets of 1.5 to 3 litres, and a working-hours window. It never stacks an unanswered question, stays quiet outside working hours, and counts the glass by itself when the window is minimised. This is a habit nudge, not medical advice.
+- [Habits and journal](https://deepwork-pomodoro.netlify.app/#habits): habits with a name and an icon, a one-press check-in, current and best streaks, a completion percentage, an all-time count and a 30-day strip showing exactly which days were missed. The journal is one dated entry per day with writing prompts, saved as you type, with days written, words all-time, average entry, streaks and 30-day consistency.
+- [Hydration](https://deepwork-pomodoro.netlify.app/#hydration): an optional water reminder that asks rather than announces, with two answers. Intervals from 15 to 180 minutes, drink sizes from 30 to 1000 ml, targets of 1.5 to 3 litres, and a working-hours window. It never stacks an unanswered question, stays quiet outside working hours, and counts the glass by itself when the window is minimised. This is a habit nudge, not medical advice.
 
 ## Insight and privacy
 
-- [Insights](https://malikrajat.github.io/deepwork-site/#insights): a 12-week focus heatmap, focus by hour of day with the peak window called out, average focus by weekday, task flow (created against closed), completion by quadrant, habit consistency, journalling statistics, and average session length with the share of interrupted sessions. Every chart is paired with a plain-language reading computed from the user's own rows by fixed rules. **There is no AI and no model of any kind in this app** — the readings are deterministic.
-- [Your data](https://malikrajat.github.io/deepwork-site/#your-data): local SQLite storage, no accounts, no cloud, five rolling log files the user can open and copy, CSV as a real exit, and fonts that ship with the app so it renders identically offline.
-- [Desktop app](https://malikrajat.github.io/deepwork-site/#desktop): the Tauri build adds a tray icon, an always-on-top window, a 136×76 draggable floating mini widget with the same countdown ring, and in-app updates that download and start the right installer for the platform.
-- [Common questions](https://malikrajat.github.io/deepwork-site/#faq): free, offline, where the data lives, why there is no sync, platform support, team use, licensing and the unsigned-installer warning.
+- [Insights](https://deepwork-pomodoro.netlify.app/#insights): a 12-week focus heatmap, focus by hour of day with the peak window called out, average focus by weekday, task flow (created against closed), completion by quadrant, habit consistency, journalling statistics, and average session length with the share of interrupted sessions. Every chart is paired with a plain-language reading computed from the user's own rows by fixed rules. **There is no AI and no model of any kind in this app** — the readings are deterministic.
+- [Your data](https://deepwork-pomodoro.netlify.app/#your-data): local SQLite storage, no accounts, no cloud, five rolling log files the user can open and copy, CSV as a real exit, and fonts that ship with the app so it renders identically offline.
+- [Desktop app](https://deepwork-pomodoro.netlify.app/#desktop): the Tauri build adds a tray icon, an always-on-top window, a 136×76 draggable floating mini widget with the same countdown ring, and in-app updates that download and start the right installer for the platform.
+- [Common questions](https://deepwork-pomodoro.netlify.app/#faq): free, offline, where the data lives, why there is no sync, platform support, team use, licensing and the unsigned-installer warning.
 
 ## Optional
 
-- [Full page as Markdown](https://malikrajat.github.io/deepwork-site/llms-full.txt): the entire site in one plain-text file.
+- [Full page as Markdown](https://deepwork-pomodoro.netlify.app/llms-full.txt): the entire site in one plain-text file.
 - [Source code](https://github.com/malikrajat/deepwork): the Angular front end, the Rust desktop shell, the tests and the release pipeline, under the MIT licence.
 - [Licence text](https://github.com/malikrajat/deepwork/blob/main/LICENSE): MIT.
 - [Changelog](https://github.com/malikrajat/deepwork/blob/main/CHANGELOG.md): the written history of every release.
