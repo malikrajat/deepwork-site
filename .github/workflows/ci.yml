@@ -52,10 +52,21 @@ jobs:
       - name: Lint
         run: npm run lint
 
-      # `build:github` is the same build the Pages workflow publishes, so this
-      # job is testing the artefact that actually ships.
+      # Deliberately the root-base build, not `build:github`.
+      #
+      # `build:github` sets `--base-href=/deepwork-site/`, which rewrites every
+      # asset URL to `/deepwork-site/main-<hash>.js`. The audit serves `dist/` at
+      # the server root, so it looks for `dist/deepwork-site/browser/deepwork-site/…`
+      # — a path that does not exist. Every script 404s, Angular never bootstraps,
+      # and the audit fails on the first real interaction with a 30s click
+      # timeout rather than on anything it was written to test.
+      #
+      # This is the build the site is published from (see `netlify.toml`), and the
+      # asset paths it produces are identical to the Pages build apart from the
+      # base href, which the Pages workflow covers itself. The base-href-specific
+      # artefact is verified in `deploy.yml`, which builds and publishes it.
       - name: Build
-        run: npm run build:github
+        run: npm run build
 
       # The audit drives the real page in a real browser. It needs Chromium, and
       # nothing else in this project does.
