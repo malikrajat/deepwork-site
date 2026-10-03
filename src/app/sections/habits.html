@@ -1,0 +1,59 @@
+<section class="section" id="habits">
+  <div class="shell">
+    <div class="section__head" dwReveal>
+      <p class="eyebrow">Habits & journal</p>
+      <h2 class="h2 section__title">The part that is not about the timer at all</h2>
+      <p class="lead section__lead">
+        Focus sessions measure output. Habits and a journal measure whether the way you work is
+        actually working — and both live in the same app, counted the same way, on the same dates.
+      </p>
+    </div>
+
+    <div class="grid grid--2 grid--split">
+      <article class="card" dwReveal>
+        <p class="eyebrow">Habits</p>
+        <h3 class="h3" style="margin-bottom: 1rem">Streaks that show their working</h3>
+        <ul class="feature-list">
+          @for (point of habitPoints; track point) {
+            <li class="feature-list__item">
+              <span class="feature-list__tick" aria-hidden="true">✓</span>
+              <span>{{ point }}</span>
+            </li>
+          }
+        </ul>
+        <img
+          class="shot"
+          style="margin-top: 1.5rem"
+          ngSrc="{{ habitsShot.src }}"
+          [width]="habitsShot.width"
+          [height]="habitsShot.height"
+          [alt]="habitsShot.alt"
+        />
+      </article>
+
+      <article class="card" dwReveal [dwRevealDelay]="100">
+        <p class="eyebrow">Journal</p>
+        <h3 class="h3" style="margin-bottom: 1rem">One page a day, and the numbers it leaves</h3>
+        <ul class="feature-list">
+          @for (point of journalPoints; track point) {
+            <li class="feature-list__item">
+              <span class="feature-list__tick" aria-hidden="true">✓</span>
+              <span>{{ point }}</span>
+            </li>
+          }
+        </ul>
+        <blockquote class="quote">
+          {{ prompt }}
+          <cite>A prompt the journal offers when the page is empty.</cite>
+        </blockquote>
+        <img
+          class="shot"
+          ngSrc="{{ journalShot.src }}"
+          [width]="journalShot.width"
+          [height]="journalShot.height"
+          [alt]="journalShot.alt"
+        />
+      </article>
+    </div>
+  </div>
+</section>

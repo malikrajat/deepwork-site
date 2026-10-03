@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Page not found — DeepWork</title>
+    <!-- A 404 has nothing to rank for, and letting it be indexed puts an error
+         page in front of a search result. -->
+    <meta name="robots" content="noindex, follow" />
+    <meta name="theme-color" content="#080613" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <style>
+      /* Self-contained on purpose: this file is served by the host for any path
+         that does not exist, so it cannot depend on the hashed build output. */
+      :root {
+        color-scheme: dark;
+      }
+      * {
+        margin: 0;
+        box-sizing: border-box;
+      }
+      body {
+        display: grid;
+        place-items: center;
+        min-height: 100svh;
+        padding: 2rem;
+        font-family:
+          Inter,
+          system-ui,
+          -apple-system,
+          'Segoe UI',
+          Roboto,
+          sans-serif;
+        text-align: center;
+        color: #b6b2d0;
+        background: #080613;
+        background-image:
+          radial-gradient(ellipse 55% 45% at 20% 15%, rgba(139, 92, 246, 0.3) 0%, transparent 62%),
+          radial-gradient(ellipse 45% 40% at 82% 22%, rgba(6, 182, 212, 0.22) 0%, transparent 60%);
+      }
+      .mark {
+        display: grid;
+        place-items: center;
+        width: 46px;
+        height: 46px;
+        margin: 0 auto 1.5rem;
+        border-radius: 14px;
+        background: linear-gradient(135deg, #8b5cf6, #06b6d4);
+        color: #fff;
+        font-weight: 800;
+      }
+      h1 {
+        font-size: clamp(1.75rem, 1.2rem + 2.4vw, 2.75rem);
+        line-height: 1.1;
+        letter-spacing: -0.03em;
+        color: #f2f0ff;
+        margin-bottom: 0.9rem;
+      }
+      p {
+        max-width: 34rem;
+        margin: 0 auto 2rem;
+        line-height: 1.65;
+      }
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.7rem;
+        justify-content: center;
+      }
+      a.button {
+        display: inline-flex;
+        align-items: center;
+        min-height: 46px;
+        padding: 0.7rem 1.4rem;
+        border-radius: 999px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition:
+          transform 0.2s ease,
+          box-shadow 0.2s ease;
+      }
+      a.primary {
+        background: linear-gradient(135deg, #8b5cf6, #06b6d4);
+        color: #fff;
+        box-shadow: 0 10px 30px rgba(139, 92, 246, 0.32);
+      }
+      a.ghost {
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        background: rgba(255, 255, 255, 0.045);
+        color: #f2f0ff;
+      }
+      a.button:hover {
+        transform: translateY(-2px);
+      }
+      a:focus-visible {
+        outline: 2px solid rgba(167, 139, 250, 0.9);
+        outline-offset: 3px;
+      }
+      .small {
+        margin-top: 2rem;
+        font-size: 0.85rem;
+        color: #8b87ab;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <span class="mark" aria-hidden="true">DW</span>
+      <h1>That page does not exist</h1>
+      <p>
+        The address you followed is not one of ours. Everything DeepWork has to say is on a single
+        page — the app itself, the features, the answers and the download links.
+      </p>
+      <div class="actions">
+        <a class="button primary" href="/">Back to the DeepWork site</a>
+        <a class="button ghost" href="https://malikrajat.github.io/deepwork/">Open the web app</a>
+      </div>
+      <p class="small">
+        Free · No account · Works offline ·
+        <a href="https://github.com/malikrajat/deepwork" style="color: #a78bfa">Source on GitHub</a>
+      </p>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>DeepWork — social preview</title>
+    <style>
+      /* The fonts are the ones the site ships, referenced straight out of
+         `src/fonts` because this page is rendered from the filesystem. */
+      @font-face {
+        font-family: 'Inter';
+        font-weight: 300 800;
+        font-style: normal;
+        src: url('../src/fonts/inter-latin.woff2') format('woff2');
+      }
+      @font-face {
+        font-family: 'Inter';
+        font-weight: 300 800;
+        font-style: normal;
+        src: url('../src/fonts/inter-latin-ext.woff2') format('woff2');
+        unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF;
+      }
+      @font-face {
+        font-family: 'JetBrains Mono';
+        font-weight: 400 700;
+        src: url('../src/fonts/jetbrains-mono-latin.woff2') format('woff2');
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        width: 1200px;
+        height: 630px;
+        overflow: hidden;
+      }
+
+      body {
+        position: relative;
+        font-family: 'Inter', system-ui, sans-serif;
+        background: #080613;
+        color: #f2f0ff;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* The same drifting mesh the site and the app use, frozen for a still. */
+      .mesh {
+        position: absolute;
+        inset: -20%;
+        background:
+          radial-gradient(ellipse 50% 45% at 16% 14%, rgba(139, 92, 246, 0.55) 0%, transparent 62%),
+          radial-gradient(ellipse 45% 40% at 78% 24%, rgba(6, 182, 212, 0.34) 0%, transparent 60%),
+          radial-gradient(ellipse 50% 45% at 62% 92%, rgba(236, 72, 153, 0.24) 0%, transparent 62%);
+      }
+
+      .grid-lines {
+        position: absolute;
+        inset: 0;
+        opacity: 0.35;
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+        background-size: 48px 48px;
+        mask-image: radial-gradient(ellipse 80% 70% at 40% 40%, #000 0%, transparent 75%);
+      }
+
+      .content {
+        position: relative;
+        display: grid;
+        grid-template-columns: 1fr 520px;
+        align-items: center;
+        gap: 40px;
+        height: 100%;
+        padding: 68px 0 68px 72px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 34px;
+        font-size: 21px;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+      }
+
+      .mark {
+        display: grid;
+        place-items: center;
+        width: 36px;
+        height: 36px;
+        border-radius: 11px;
+        background: linear-gradient(135deg, #8b5cf6, #06b6d4);
+        font-size: 15px;
+        font-weight: 800;
+        color: #fff;
+        box-shadow: 0 8px 24px rgba(139, 92, 246, 0.5);
+      }
+
+      h1 {
+        font-size: 76px;
+        font-weight: 800;
+        line-height: 0.98;
+        letter-spacing: -0.042em;
+        margin-bottom: 22px;
+      }
+
+      .grad {
+        background: linear-gradient(135deg, #a78bfa, #22d3ee);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      p.lead {
+        max-width: 30ch;
+        font-size: 21px;
+        line-height: 1.5;
+        color: #b6b2d0;
+        margin-bottom: 34px;
+      }
+
+      .chips {
+        display: flex;
+        gap: 10px;
+      }
+
+      .chip {
+        padding: 9px 18px;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        background: rgba(255, 255, 255, 0.06);
+        font-size: 15px;
+        font-weight: 550;
+        color: #f2f0ff;
+      }
+
+      .chip--accent {
+        border-color: rgba(139, 92, 246, 0.5);
+        background: rgba(139, 92, 246, 0.2);
+      }
+
+      /* The real dashboard, bled off the right edge so the preview shows the
+         product rather than a logo on a gradient. */
+      .shot-wrap {
+        position: absolute;
+        top: 96px;
+        left: 700px;
+        width: 780px;
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        background: #100c22;
+        box-shadow:
+          0 60px 120px rgba(0, 0, 0, 0.75),
+          0 0 0 1px rgba(255, 255, 255, 0.04),
+          0 0 90px rgba(139, 92, 246, 0.3);
+        overflow: hidden;
+        transform: perspective(1800px) rotateY(-9deg) rotateX(3deg);
+        transform-origin: left center;
+      }
+
+      .bar {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        padding: 12px 16px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+        background: rgba(255, 255, 255, 0.04);
+      }
+
+      .dot {
+        width: 11px;
+        height: 11px;
+        border-radius: 50%;
+      }
+
+      img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      .footer-line {
+        position: absolute;
+        left: 72px;
+        bottom: 40px;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 14px;
+        letter-spacing: 0.06em;
+        color: #8b87ab;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="mesh"></div>
+    <div class="grid-lines"></div>
+
+    <div class="content">
+      <div>
+        <div class="brand">
+          <span class="mark">DW</span>
+          <span>DeepWork</span>
+        </div>
+        <h1>Focus better.<br />Work <span class="grad">deeper</span>.</h1>
+        <p class="lead">
+          A free focus timer, task manager and habit tracker that keeps everything on your own
+          machine.
+        </p>
+        <div class="chips">
+          <span class="chip chip--accent">Free</span>
+          <span class="chip">Public source</span>
+          <span class="chip">No account · No cloud</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="shot-wrap">
+      <div class="bar">
+        <span class="dot" style="background: #ff5f57"></span>
+        <span class="dot" style="background: #febc2e"></span>
+        <span class="dot" style="background: #28c840"></span>
+      </div>
+      <img src="../public/screenshots/dashboard-dark.webp" alt="" />
+    </div>
+
+    <div class="footer-line">WINDOWS · MACOS · LINUX · ANY BROWSER</div>
+  </body>
+</html>

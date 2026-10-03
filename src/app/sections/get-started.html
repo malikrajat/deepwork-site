@@ -1,0 +1,74 @@
+<section class="section" id="get-started">
+  <div class="shell">
+    <div class="section__head section__head--center" dwReveal>
+      <p class="eyebrow">Get started</p>
+      <h2 class="h2 section__title">Start in ten seconds. Keep it for as long as it helps.</h2>
+    </div>
+
+    <ul class="grid grid--3">
+      @for (route of routes; track route.num; let i = $index) {
+        <li class="card card--edge card--hover route" dwReveal [dwRevealDelay]="i * 80">
+          <span class="step__num">{{ route.num }}</span>
+          <h3 class="card__title" style="font-size: var(--fs-h3)">{{ route.name }}</h3>
+          <p class="card__body">{{ route.body }}</p>
+
+          @if (route.image; as image) {
+            <div class="route__device">
+              <img
+                class="route__shot"
+                ngSrc="{{ image.src }}"
+                [width]="image.width"
+                [height]="image.height"
+                [alt]="image.alt"
+              />
+            </div>
+          }
+
+          <a
+            class="btn"
+            [class.btn--primary]="route.primary"
+            [class.btn--ghost]="!route.primary"
+            [href]="route.href"
+            target="_blank"
+            rel="noopener"
+          >
+            {{ route.action }}
+          </a>
+        </li>
+      }
+    </ul>
+
+    <ul class="notes" dwReveal>
+      @for (note of notes; track note) {
+        <li class="notes__item">
+          <span class="feature-list__tick" aria-hidden="true">✓</span>
+          <span>{{ note }}</span>
+        </li>
+      }
+    </ul>
+
+    <div class="band" style="margin-top: clamp(2.5rem, 5vw, 4rem)" dwReveal>
+      <h2 class="band__title">Free to use. Built for focused work.</h2>
+      <p class="lead band__lead">
+        No subscription, no account and nothing to cancel. Open it in a browser tab and see whether
+        it fits how you work — the desktop app will still be there when you want the tray icon.
+      </p>
+      <div class="btn-row band__actions">
+        <a class="btn btn--primary btn--lg" [href]="site.webAppUrl" target="_blank" rel="noopener">
+          Open DeepWork
+        </a>
+        <a
+          class="btn btn--ghost btn--lg"
+          [href]="site.latestReleaseUrl"
+          target="_blank"
+          rel="noopener"
+        >
+          Download for desktop
+        </a>
+        <a class="btn btn--ghost btn--lg" [href]="site.repoUrl" target="_blank" rel="noopener">
+          View on GitHub
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

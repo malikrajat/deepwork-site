@@ -1,0 +1,49 @@
+<section class="section" id="why">
+  <div class="shell">
+    <div class="section__head section__head--center" dwReveal>
+      <p class="eyebrow">Why DeepWork</p>
+      <h2 class="h2 section__title">What it is good at, and what it is not</h2>
+      <p class="lead section__lead" style="margin-inline: auto">
+        The fastest way to be disappointed by a tool is to be sold something it never claimed. So
+        here is both halves.
+      </p>
+    </div>
+
+    <div class="grid grid--2">
+      <div class="panel panel--good" dwReveal>
+        <h3 class="panel__title">
+          <span aria-hidden="true">✓</span>
+          What it does well
+        </h3>
+        <ul class="panel__list">
+          @for (item of strengths; track item.title) {
+            <li>
+              <span>
+                <b style="color: var(--text)">{{ item.title }}</b>
+                <span style="display: block">{{ item.body }}</span>
+              </span>
+            </li>
+          }
+        </ul>
+      </div>
+
+      <div class="panel panel--honest" dwReveal [dwRevealDelay]="90">
+        <h3 class="panel__title">
+          <span aria-hidden="true">!</span>
+          What it does not do
+        </h3>
+        <ul class="panel__list">
+          @for (item of limitations; track item) {
+            <li>
+              <span>{{ item }}</span>
+            </li>
+          }
+        </ul>
+        <p class="panel__footnote">
+          Nothing on this list is a bug being hidden. Each one is a decision that could change if
+          enough people ask — the issue tracker is open.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

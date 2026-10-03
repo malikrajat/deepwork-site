@@ -1,0 +1,106 @@
+<section class="section section--raised" id="your-data">
+  <div class="shell">
+    <div class="section__head" dwReveal>
+      <p class="eyebrow">Your data</p>
+      <h2 class="h2 section__title">It stays on your machine, and that is the feature</h2>
+      <p class="lead section__lead">
+        Most productivity apps ask you to hand over your working life before they will show you a
+        timer. DeepWork asks for nothing. No account, no cloud, no analytics on you — and a
+        diagnostic trail you are allowed to read.
+      </p>
+    </div>
+
+    <div class="story story--flip">
+      <div class="story__body" dwReveal>
+        <ul class="feature-list">
+          @for (promise of promises; track promise.title) {
+            <li class="feature-list__item">
+              <span class="feature-list__tick" aria-hidden="true">{{ promise.glyph }}</span>
+              <span>
+                <b>{{ promise.title }}</b>
+                {{ promise.body }}
+              </span>
+            </li>
+          }
+        </ul>
+      </div>
+
+      <div class="story__media" dwReveal [dwRevealDelay]="100">
+        <div class="frame">
+          <div class="frame__bar">
+            <span class="frame__dots" aria-hidden="true">
+              <span class="frame__dot"></span>
+              <span class="frame__dot"></span>
+              <span class="frame__dot"></span>
+            </span>
+            <span class="frame__title">DeepWork — Dashboard, light theme</span>
+          </div>
+          <img
+            class="frame__screen"
+            ngSrc="{{ shot.src }}"
+            [width]="shot.width"
+            [height]="shot.height"
+            [alt]="shot.alt"
+          />
+        </div>
+        <p class="caption">
+          The same app, the same data, in the light theme. Both themes are designed rather than
+          inverted.
+        </p>
+      </div>
+    </div>
+
+    <div class="grid grid--2" style="margin-top: clamp(2rem, 4vw, 3rem)">
+      <article class="card" dwReveal>
+        <h3 class="card__title">Five log files you can actually open</h3>
+        <p class="card__body" style="margin-bottom: 1rem">
+          When something goes wrong on a machine nobody can sit in front of, the app has already
+          written down what it was doing. Settings has one button that opens the folder and another
+          that copies the last 300 lines with the environment they happened in.
+        </p>
+        <ul class="log-list">
+          @for (line of logs; track line) {
+            <li class="log-list__item mono">{{ line }}</li>
+          }
+        </ul>
+        <p class="card__body" style="margin-top: 1rem">
+          Each file rolls over at 512&nbsp;KB, keeps its five most recent archives, and can never
+          grow past roughly 15&nbsp;MB. Identical lines inside two seconds are folded into one with
+          a count, so a repeating fault cannot flood the file.
+        </p>
+      </article>
+
+      <article class="card" dwReveal [dwRevealDelay]="90">
+        <h3 class="card__title">Offline is the normal case</h3>
+        <p class="card__body" style="margin-bottom: 1rem">
+          The fonts travel with the app, the alert tones are synthesised rather than downloaded, and
+          the database is a file on your disk. Nothing in the app needs the network to look like
+          itself or to keep your records.
+        </p>
+        <ul class="feature-list">
+          <li class="feature-list__item">
+            <span class="feature-list__tick" aria-hidden="true">✓</span>
+            <span
+              >Inter and JetBrains Mono ship with the build — no font CDN, no third-party
+              request.</span
+            >
+          </li>
+          <li class="feature-list__item">
+            <span class="feature-list__tick" aria-hidden="true">✓</span>
+            <span
+              >The browser build registers a service worker, so it keeps working after the first
+              visit.</span
+            >
+          </li>
+          <li class="feature-list__item">
+            <span class="feature-list__tick" aria-hidden="true">✓</span>
+            <span
+              >{{ themes[0] }} — applied before the first paint, with no flash of the wrong
+              one.</span
+            >
+          </li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>

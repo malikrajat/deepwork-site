@@ -1,0 +1,50 @@
+<footer class="footer">
+  <div class="shell">
+    <div class="footer__grid">
+      <div>
+        <a class="nav__brand" [href]="'#top'">
+          <span class="nav__mark" aria-hidden="true">DW</span>
+          <span>{{ site.name }}</span>
+        </a>
+        <p class="footer__about" style="margin-top: 1rem">
+          A free focus timer, task manager and habit tracker that keeps its data on your own
+          machine. Built by {{ site.author }}.
+        </p>
+
+        @if (!hasLicense) {
+          <p class="footer__about" style="margin-top: 0.75rem">
+            <strong style="color: var(--text-2)">A note on licensing:</strong> the repository is
+            public, but it does not carry a LICENSE file yet, so reuse rights have not been formally
+            granted. Read, run and build it freely — and
+            <a [href]="site.issuesUrl" target="_blank" rel="noopener">ask</a> if you need a specific
+            licence.
+          </p>
+        }
+      </div>
+
+      @for (column of columns; track column.heading) {
+        <div>
+          <h2 class="footer__heading">{{ column.heading }}</h2>
+          <ul class="footer__list">
+            @for (link of column.links; track link.label) {
+              <li>
+                <a
+                  [href]="link.href"
+                  [attr.target]="link.external ? '_blank' : null"
+                  [attr.rel]="link.external ? 'noopener' : null"
+                >
+                  {{ link.label }}
+                </a>
+              </li>
+            }
+          </ul>
+        </div>
+      }
+    </div>
+
+    <div class="footer__bottom">
+      <span>© {{ year }} {{ site.name }} · v{{ site.version }} · {{ sourceLabel }}</span>
+      <span>Free to use. No account, no tracking, no upsell.</span>
+    </div>
+  </div>
+</footer>

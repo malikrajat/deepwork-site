@@ -1,0 +1,109 @@
+<section class="hero" id="top">
+  <div class="shell shell--wide hero__inner">
+    <div>
+      <p class="hero__badge rise rise--1">
+        <span class="chip__dot" aria-hidden="true"></span>
+        <strong>Free</strong>
+        <span class="hero__badge-sep" aria-hidden="true">·</span>
+        {{ sourceLabel }}
+        <span class="hero__badge-sep" aria-hidden="true">·</span>
+        v{{ site.version }}
+      </p>
+
+      <h1 class="display hero__title rise rise--2">
+        Focus better.<br />
+        Work <span class="grad">deeper</span>.
+      </h1>
+
+      <p class="lead hero__lead rise rise--3">
+        DeepWork is a free focus timer, task list, day planner and habit tracker in one window — and
+        it keeps every byte on your own machine. Run a session, plan the day in focus blocks, and
+        watch the week actually add up. No account. No cloud. No subscription.
+      </p>
+
+      <div class="btn-row hero__actions rise rise--4">
+        <a class="btn btn--primary btn--lg" [href]="site.webAppUrl" target="_blank" rel="noopener">
+          Open the web app
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M5 12h14M13 6l6 6-6 6" />
+          </svg>
+        </a>
+        <a
+          class="btn btn--ghost btn--lg"
+          [href]="site.latestReleaseUrl"
+          target="_blank"
+          rel="noopener"
+        >
+          Download for desktop
+        </a>
+      </div>
+
+      <ul class="hero__facts rise rise--4">
+        @for (fact of facts; track fact) {
+          <li class="hero__fact">
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.4"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="m4 12 5 5L20 6" />
+            </svg>
+            <b>{{ fact }}</b>
+          </li>
+        }
+      </ul>
+    </div>
+
+    <div class="hero__media">
+      <div class="frame frame--hero">
+        <div class="frame__bar">
+          <span class="frame__dots" aria-hidden="true">
+            <span class="frame__dot"></span>
+            <span class="frame__dot"></span>
+            <span class="frame__dot"></span>
+          </span>
+          <span class="frame__title">DeepWork — Dashboard</span>
+        </div>
+        <img
+          class="frame__screen"
+          ngSrc="{{ shot.src }}"
+          [width]="shot.width"
+          [height]="shot.height"
+          [alt]="shot.alt"
+          priority
+        />
+      </div>
+
+      <!-- Callouts carrying the application's own labels, so the annotation and
+           the screenshot underneath it use the same vocabulary. -->
+      <div class="float float--a" aria-hidden="true">
+        <span>
+          <span class="float__label">Focus Time</span>
+          <span class="float__value">2 h 05 m today</span>
+        </span>
+      </div>
+      <div class="float float--b" aria-hidden="true">
+        <span>
+          <span class="float__label">Daily Goal</span>
+          <span class="float__value">4 of 8 sessions</span>
+        </span>
+      </div>
+    </div>
+  </div>
+</section>

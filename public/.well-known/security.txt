@@ -1,0 +1,15 @@
+# Security policy for the DeepWork website.
+#
+# RFC 9116. This file describes how to report a problem with THIS SITE. The
+# DeepWork application is a separate repository
+# (https://github.com/malikrajat/deepwork) and lives under its own policy.
+#
+# There is no bug bounty, no paid programme and no security team: this is a
+# static site published by one developer, and the honest description of the
+# process is "open an issue and it will be looked at". No email address is
+# listed because inventing one would be worse than having none.
+
+Contact: https://github.com/malikrajat/deepwork/issues/new
+Expires: 2027-10-03T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://malikrajat.github.io/deepwork-site/.well-known/security.txt

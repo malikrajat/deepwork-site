@@ -1,0 +1,486 @@
+# DeepWork — full page
+
+> Source: https://malikrajat.github.io/deepwork-site/
+> This is the complete content of the DeepWork product site, converted to Markdown from the
+> rendered page. A shorter, curated index is at /llms.txt.
+
+---
+Free · MIT licensed · v2.0.17
+
+## Focus better. Work deeper .
+
+DeepWork is a free focus timer, task list, day planner and habit tracker in one window — and it keeps every byte on your own machine. Run a session, plan the day in focus blocks, and watch the week actually add up. No account. No cloud. No subscription.
+- Windows · macOS · Linux · any browser
+- No account, no cloud
+- Works offline
+
+The product
+
+### One window for the whole working day
+
+DeepWork is not a timer with a task list bolted on. It is a single window where the session you are running, the work you promised yourself, the day you planned and the progress you made all live in the same place.
+
+#### The focus clock
+
+Work, short break and long break on one ring that fills as the session runs.
+
+#### One board, three columns
+
+Drag a card between To Do, In Progress and Done — its colour is its status.
+
+#### Keyboard first
+
+Focused cards move along the board with 1, 2, 3 and the arrow keys. Ctrl+N adds a task.
+
+#### Everything on one page
+
+Today, Matrix, Calendar, Habits, Journal and Insights are one click apart.
+
+More than a Pomodoro
+
+### A timer counts down. DeepWork keeps the whole day.
+
+Most focus timers stop at the countdown and hand the rest of your day back to a note app and a spreadsheet. DeepWork keeps going: what you are working on, when you planned to do it, whether you did it, how you slept on it, and what the pattern looks like after a month.
+- Focus sessions The Pomodoro timer
+- Day planner A timeline that schedules your tasks
+- Tasks Board, dates and deadlines
+- Eisenhower matrix Four quadrants, drag to prioritise
+- Today Only the work that belongs to today
+- Habits Check in, keep a streak
+- Journal A dated entry per day
+- Water reminder Asks, counts, and stays quiet outside your hours
+- Insights Your own numbers, read back to you
+- Import & export Excel and CSV in, CSV out
+- Desktop behaviour Tray, mini widget, always on top
+- Local database One SQLite file, on your machine
+
+All of it in one local app, with no account and nothing uploaded.
+
+Focus sessions
+
+### A session you can actually finish
+
+Start the clock, and the rest of the app gets quiet. One ring fills as the session runs, in the window and in the mini widget, so however you are working you are looking at the same countdown.
+- Focus session 25 min
+- Short break 5 min
+- Long break 15 min
+- Four sessions, then a long break The cycle you would expect from Pomodoro, and every part of it is a setting: the three lengths and how many sessions come before the long one.
+- An alert that will not be missed A finished session rings, raises a system notification, and moves both the widget and the card to the next of twelve colours — repeating until you answer it. Start, skip or stop answers it too.
+- Tones generated, not downloaded Four choices — bell, chime, ding or none — synthesised with the Web Audio API, with the volume under your system controls and a tray mute.
+- A sentence, not a beep Every finished session draws a different line from twenty-four written for focus and twenty-four for breaks, walked in order so the same one does not come back twice.
+
+> “That was a session, not a sprint. Step away while it settles.” One of the twenty-four focus lines the app ends a session with.
+
+Day planner
+
+### Plan the day in focus blocks, not in hope
+
+Most planners ask you to guess how long something takes. DeepWork already knows the size of a focus block, so it lays your day out for you — and then gets out of the way when you want to move something yourself.
+
+The totals the Calendar keeps for a day — counted from the timeline itself.
+
+#### It does the arithmetic
+
+Your queued tasks become focus blocks on a real timeline, with breaks already reserved between them. You see the day you have, not the day you hoped for.
+
+#### Priority decides the order
+
+Work is queued by Eisenhower quadrant, then by the order you put it in. The first thing on the timeline is the thing you said mattered.
+
+#### Pin it, and the plan bends
+
+Drag a task onto a time and it stays there. A task can span several blocks, and a block can hold more than one task if you put them there yourself.
+
+#### Fit day
+
+When the queue does not fit the window, one button extends the day until everything has a place — or tells you honestly that it still does not.
+
+#### A day that ends
+
+The day window is yours to set. Outside it, DeepWork is not pretending you are working.
+
+#### Totals for the day
+
+Focus minutes, break minutes, pomodoros, breaks and tasks — the shape of the day, before you have to remember it.
+
+Tasks
+
+### A board that keeps up with the day
+
+Three columns, and a card moves between them by being dragged or by a single key. What makes it useful is what happens around that: the date filing, the keyboard, and the fact that your existing spreadsheet is not thrown away.
+- Cards are dragged between columns — the colour is the status, everywhere at once.
+- On Tasks the board is filed by date and the sections fold away, so a long list stays readable.
+- Today shows only today: an overdue task, one dated today, or one written today.
+- Unfinished work carries forward by default. Turn it off and yesterday closes itself.
+
+#### Adding a task takes one field
+
+The round add button floats on every page and Ctrl+N opens the same dialog. Type a title and press Add to Today — priority, deadline, quadrant and repeat are already decided, and Advanced options is there if you disagree.
+
+#### Work that comes back
+
+A task can repeat daily, weekly or monthly, on the weekdays you choose, with an end date. Recurring work arrives as its own instance, so finishing today’s does not erase next week’s.
+
+#### Your spreadsheet still works
+
+Import .xlsx, .xlsm or .csv — with a downloadable template that documents every column — and see a validated preview before a single row is written. Repeated titles are labelled, never silently dropped.
+
+#### An export that opens cleanly
+
+Twenty-four columns per task, quick ranges from today to all time, filters by status and priority, and an optional totals block. Written as UTF-8 with a BOM so Excel shows your accents and em dashes correctly.
+
+Prioritisation
+
+### Decide once, in four boxes
+
+A long task list is not a plan. The matrix is where a task stops being a line and becomes a decision — and the decision is what the rest of the app works from.
+- Drag a card into a quadrant and its priority stops being a feeling.
+- The task list beside the board is resizable, and every quadrant scrolls on its own.
+- Collapse a quadrant, or the whole list, and the board still accepts a drop.
+- Quadrant order is what the day planner schedules from — Q1 first, Q4 last.
+- Insights shows completion per quadrant, so you can see where your work actually sits.
+
+Habits & journal
+
+### The part that is not about the timer at all
+
+Focus sessions measure output. Habits and a journal measure whether the way you work is actually working — and both live in the same app, counted the same way, on the same dates.
+
+Habits
+
+#### Streaks that show their working
+
+- Add a habit with a name and an icon — nothing else is asked for.
+- Check in with one press; the streak, the best run and the all-time count follow you.
+- A 30-day strip shows exactly which days you missed, not just the percentage.
+- A habit below 40% is marked as slipping, in the app’s own words.
+- Insights turns the same check-ins into a 30-day consistency chart.
+
+Journal
+
+#### One page a day, and the numbers it leaves
+
+- One entry per day, dated, saved as you type — with Ctrl+S when you want to be sure.
+- Writing prompts if the blank page is the problem.
+- Days written, words all-time, average entry and the current and best streak.
+- Journal-wide consistency for the last 30 days.
+- The one comparison worth making: how your focus differs on the days you wrote.
+
+> What went well today? What could be improved? What are you grateful for? A prompt the journal offers when the page is empty.
+
+Hydration
+
+### Stay focused without forgetting the basics
+
+Deep work is not the only thing a long afternoon is missing. The water reminder is off until you switch it on, and when it is on it behaves like a question rather than a notification.
+
+#### Every answer is a choice, not a field
+
+The useful range for each setting is narrow, and a number you have to type is a number you can mistype. So the reminder offers the sensible ones and nothing else.
+- Remind me every 15 · 20 · 25 · 30 · 45 · 60 · 90 · 120 · 180 min default 60
+- One drink counts as 30 · 50 · 70 · 90 · 100 · 150 · 200 · 250 · 300 · 400 · 500 · 750 · 1000 ml default 500 ml
+- Daily target 1.5 · 2 · 2.5 · 3 L default 2 L
+- Working hours A from and a to time — reminders fire between them default 09:00 – 18:00
+
+#### Today, on the dashboard
+
+The card reads out the day against the target, how many drinks that is, when the last one was and what the reminder is doing next. + 500 ml logs a glass at the size you chose; Undo takes it back if you pressed it twice.
+
+> “Focus is easier when you are not quietly dehydrated.” One of the ten lines the water reminder rotates through.
+
+Each drink is a row of its own, so the day’s total is a sum rather than a counter that can only go up — and the tally starts again at local midnight, not at UTC midnight.
+
+The water card, as it sits on the dashboard.
+
+#### It asks, it does not announce
+
+A card appears with the glass, the day so far and two answers: “Yes, I drank …” logs it, “Not now” closes it. Nothing else dismisses it — not a timer, not a click elsewhere — so a reminder cannot be lost by standing up for a minute.
+
+#### It never stacks
+
+An unanswered question holds the cadence, and the next one starts counting from your answer. “Yes” at 14:00 means the next is a full interval later, not one that was already overdue.
+
+#### Quiet when it should be
+
+Outside your working hours it says nothing, and the dashboard tells you when it resumes. A machine that only slept gets one reminder when it wakes, never a queue of the ones it slept through.
+
+#### Minimised means busy
+
+Shrinking DeepWork into the mini widget is you saying you are working elsewhere. The reminder rings, counts the glass and leaves your window alone — unless you turn that off.
+
+#### The clock only runs while the app does
+
+Closing DeepWork pauses the cadence instead of the wall clock charging you for it, so reopening waits a full interval rather than asking the moment the window appears.
+
+#### Undo, because you will double-tap
+
+Each drink is a row of its own, so today’s total is a sum rather than a counter that only goes up — and the last one can be taken back.
+
+A habit nudge, not medical advice — as the app itself puts it. Anyone with a reason to drink more or less water is the person who knows their own number.
+
+Insights
+
+### Understand how you work, not just how long
+
+Every figure on this page is computed on your own machine from your own sessions, tasks, habits and entries. Nothing is uploaded, and nothing is guessed by a model — the written readings are worked out from your rows by plain, readable rules.
+
+#### What the numbers say
+
+Charts are easy to look at and hard to read. So every chart is paired with a sentence about it, and the sentences are the point:
+- You have focused 5 days in a row — the habit is doing the work.
+- Best habit: Reading at 82% over 30 days (11-day streak).
+- Focus is longest between 09:00 and 11:00 — 34% of all your focus.
+- Focus averages 96m on the days you wrote, against 61m on the days you did not.
+
+Examples of the readings DeepWork writes — computed from your own rows by plain, readable rules, never generated by a model.
+- Key figures with a trend Focus time, sessions and tasks, each with its change and a sparkline
+- What the numbers say Plain-language readings written from your own data
+- Focus consistency A 12-week heatmap — one square per day, darker for more focus
+- When you focus Focus by hour of day, with your peak window called out
+- Average focus by weekday Where the week actually goes
+- Task flow Created against closed, week by week, for 8 weeks
+- Where your work sits Completion by Eisenhower quadrant
+- Habit consistency 30 days of check-ins with completion rate, current and best streak
+- Journalling Days written, words, average entry, and how focus differs on days you wrote
+- Recent sessions Average session length and the share of sessions you interrupted
+
+Your data
+
+### It stays on your machine, and that is the feature
+
+Most productivity apps ask you to hand over your working life before they will show you a timer. DeepWork asks for nothing. No account, no cloud, no analytics on you — and a diagnostic trail you are allowed to read.
+- One SQLite file Tasks, sessions, habits, journal entries, water and settings live in a local database. There is no server to sync with, because there is no server.
+- No account, ever Nothing to sign up for, nothing to sign in to, and no email address collected — there is no mechanism to collect one.
+- One read-only request The update check reads the public GitHub release list for the app you are running. It sends nothing about you, it is cached for six hours, and it never delays the window.
+- A real exit Export the whole task list to CSV — 24 columns, your date range, your filters. Your data leaves in a format you can open in Excel, not in a format only this app reads.
+
+The same app, the same data, in the light theme. Both themes are designed rather than inverted.
+
+#### Five log files you can actually open
+
+When something goes wrong on a machine nobody can sit in front of, the app has already written down what it was doing. Settings has one button that opens the folder and another that copies the last 300 lines with the environment they happened in.
+- deepwork.log — everything, in order
+- system.log — app, window, tray and OS events
+- flow.log — pages, timer, imports and exports
+- crash.log — panics, unhandled errors and Angular errors
+- network.log — failed requests, going offline and back
+
+Each file rolls over at 512 KB, keeps its five most recent archives, and can never grow past roughly 15 MB. Identical lines inside two seconds are folded into one with a count, so a repeating fault cannot flood the file.
+
+#### Offline is the normal case
+
+The fonts travel with the app, the alert tones are synthesised rather than downloaded, and the database is a file on your disk. Nothing in the app needs the network to look like itself or to keep your records.
+- Inter and JetBrains Mono ship with the build — no font CDN, no third-party request.
+- The browser build registers a service worker, so it keeps working after the first visit.
+- Dark, light, or follow the system — applied before the first paint, with no flash of the wrong one.
+
+Desktop
+
+### An app, not a tab you will close
+
+The desktop build is the same Angular application inside a native shell — which is what makes a tray icon, an always-on-top timer and a floating widget possible at all. A browser tab cannot do any of those things, and this is the honest reason to install it.
+
+Launches when you sign in and opens normally without stealing focus from whatever you were doing. No installer writes a startup entry — you ask for it, in the app.
+
+Keeps the window above everything else, so the timer stays visible while you work in another application.
+
+The window’s close button puts DeepWork next to the clock instead of ending it, so a session can finish and ring while the window is hidden. Exit in the tray menu is how you really quit.
+
+The mini widget
+
+#### Minimise it and it keeps working
+
+- A 136×76 floating widget with genuinely transparent, rounded corners — the desktop shows through them.
+- Draggable anywhere, always above other windows, with play, skip and stop that work without expanding it.
+- The same countdown ring as the full window, filling in the same direction at the same speed.
+- When a session ends it becomes a bell: one press answers the alert and leaves the timer where it was.
+- On a repeat it shakes — for a length you choose, from 0.7 s to 4 s — and moves to the next of twelve colours.
+- Esc, or the arrow, restores the full window at its original size, fitted to the screen it lands on.
+
+Updates
+
+#### It tells you, once, and then installs
+
+DeepWork checks the public release list in the background on startup — never blocking the window, cached for six hours so it does not spend a rate limit, and reporting nothing back. A newer build shows up as a small pill beside the version, a system notification, and a card with one button.
+- Windows — the setup is downloaded with a progress bar and started; DeepWork closes behind it.
+- macOS — the disk image is downloaded and opened for you.
+- Linux — a .deb or .rpm goes to your installer, or an AppImage is made runnable and started.
+- A version you waved away with Later is not announced again.
+
+One honest caveat: the Windows and macOS installers are not code-signed yet, so Windows shows “Unknown publisher” and SmartScreen may interrupt the first run. The repository documents exactly what that means and how to verify a build. The web app avoids the question entirely, because there is nothing to install.
+
+How it works
+
+### Four steps, and the first one takes ten seconds
+
+#### Write it down
+
+The round add button is on every page and Ctrl+N opens the same dialog. One title is enough — the deadline, priority and quadrant are already filled in with sensible answers.
+
+#### Decide what matters
+
+Drag it into a quadrant. That single gesture is what the day planner schedules from, and what Insights measures you against later.
+
+#### Work in blocks
+
+Start a session and the ring fills. The planner has already laid your queue onto focus blocks with breaks between them — so the next thing is decided before you sit down.
+
+#### Read the week
+
+Analytics turns the sessions, tasks, habits and entries into numbers and sentences — where the time went, which habits held, and what your best hours actually are.
+
+Learn the method
+
+### What a Pomodoro actually is
+
+If you already work this way, skip ahead. If you have heard the word and never been told what it means, this is the whole idea in five steps — and then what DeepWork does with it.
+
+#### The technique, in five steps
+
+- 1 Choose one thingNot a project and not a list. One thing you could plausibly finish, or make real progress on, in a single sitting.
+- 2 Set twenty-five minutesThe number is a starting point rather than a rule, and it is the one thing about the technique people most often change.
+- 3 Work only on thatWhen something else arrives — a message, a thought, a job for later — write it down and go back to the one thing. The writing-down is what makes going back possible.
+- 4 Stop when it ringsTake five minutes away from the screen. The break is part of the sitting, not a reward for it, and skipping it is how the third hour becomes worse than the first.
+- 5 Every fourth one, stop for longerAfter four sessions, take a proper break — fifteen to thirty minutes. That is the shape of a morning, not a sprint.
+
+The Pomodoro Technique is a method described by Francesco Cirillo in the late 1980s. DeepWork is an independent implementation of the idea — it is not affiliated with, endorsed by or licensed from the author of the technique.
+
+#### How DeepWork implements it
+
+The defaults are the classic ones, and every one of them is a setting rather than a constant:
+- Focus session 25 minutes
+- Short break 5 minutes
+- Long break 15 minutes, after 4 sessions
+- All four configurable in Settings
+
+#### Why the size of the block matters more than the number
+
+A block has to be short enough that starting it is not a decision, and long enough to get somewhere. Twenty-five minutes is a common starting point; what makes the method work is not the number but the three things around it — one task per block, a defined end, and a break you actually take. If twenty-five is wrong for the work in front of you, change it and keep the shape.
+
+#### Plan the day in blocks, not in hours
+
+An hour is not a unit of work; it is a unit of clock. A block is a unit of attention, which is why DeepWork plans with them. Decide what matters first, let the planner place it into focus blocks with breaks already reserved, and then look at the shape of the day you have made. When it does not fit, that is information rather than failure — Fit day will tell you how much longer the day would have to be.
+
+Why DeepWork
+
+### What it is good at, and what it is not
+
+The fastest way to be disappointed by a tool is to be sold something it never claimed. So here is both halves.
+
+#### ✓ What it does well
+
+- Free, with nothing held backNo tiers, no trial, no feature kept for a plan that does not exist.
+- Open source under MITThe whole app is on GitHub under a permissive licence — read it, change it, ship your own version.
+- Local-first by constructionA SQLite file on your machine. No account, no cloud, no sync server to trust.
+- More than a timerFocus sessions, a day planner, tasks, matrix, habits, journal, hydration and analytics in one app.
+- Runs everywhere you workNative installers for Windows, macOS and Linux, plus a web app for everything else.
+- Honest about its behaviourReminders that wait for an answer, alerts that repeat until you deal with them, and logs you can actually read.
+- No dark patternsNo streak guilt, no artificial urgency, no upsell. Habit reminders are off until you ask for them.
+
+#### ! What it does not do
+
+- No cloud sync or multi-device sync — each install keeps its own local database.
+- No team, sharing or collaboration features; it is a single-person tool.
+- No native iOS or Android app — mobile means the web app in a browser.
+- Windows and macOS installers are unsigned, so SmartScreen and Gatekeeper will warn on first run.
+- The test suite covers the logic layer well and the pages lightly; the end-to-end browser suite is still reported as advisory in CI.
+
+Nothing on this list is a bug being hidden. Each one is a decision that could change if enough people ask — the issue tracker is open.
+
+MIT licensed
+
+### Built in the open
+
+The whole application is on GitHub — the Angular front end, the Rust desktop shell, the tests and the release pipeline. Clone it, run it, read how a feature actually works, or send a fix for something that annoys you.
+
+#### What it is built with
+
+#### What a change has to pass
+
+- ESLint across the TypeScript and the templates
+- Prettier on every changed file
+- Unit tests with a coverage gate that cannot go backwards
+- A production `ng build`
+- An advisory end-to-end Playwright run
+- Installers for Windows, Linux and macOS on every push to main
+
+Get started
+
+### Start in ten seconds. Keep it for as long as it helps.
+
+- 01 Open the web app
+
+#### Use it in the browser
+
+Nothing to install and nothing to sign up for. The web app is the same application, with the same features, running in any modern browser.
+- 02 Go to the latest release
+
+#### Install it on your desktop
+
+The Windows, macOS and Linux builds add the tray icon, the always-on-top window, the floating mini widget and native notifications. Take the file for your machine from the newest release.
+- 03 All releases
+
+#### Keep the web app as an app
+
+In Chrome or Edge, use the install icon in the address bar. On iPhone and iPad, tap Share and then “Add to Home Screen”. It gets its own window, its own icon, and it works offline.
+- Free. No account, no trial, no card, no upsell.
+- Windows 10 or later, recent macOS, or most Linux distributions — or any modern browser.
+- The desktop installers are unsigned, so Windows SmartScreen and macOS Gatekeeper will ask you to confirm the first run.
+
+### Free to use. Built for focused work.
+
+No subscription, no account and nothing to cancel. Open it in a browser tab and see whether it fits how you work — the desktop app will still be there when you want the tray icon.
+
+Questions
+
+### The things people ask before they start
+
+**Is DeepWork really free?**
+
+Yes. There is no paid tier, no subscription and no account to create. The web app and the desktop installers are free to download and use.
+
+**Where is my data kept?**
+
+On your machine. The desktop app writes to a local SQLite database and the browser build keeps its data in your own browser storage. There is no DeepWork server, no sync and no telemetry — the only network request the app makes on its own is a check of the public GitHub release list, and that can only ever read.
+
+**Does it work offline?**
+
+The desktop app works entirely offline: its fonts, sounds and database are all local. The browser build registers a service worker, so it keeps working after the first visit and can be installed to your home screen or desktop.
+
+**Do I need an account?**
+
+No. There is nothing to sign up for and nothing to sign in to. Open the app and start working.
+
+**Does it sync across my devices?**
+
+No, and by design. Each installation keeps its own database, so nothing leaves the machine it was written on. Tasks can be exported to CSV and imported back, which is the supported way to move work between them.
+
+**Which platforms can I use it on?**
+
+Windows, macOS and Linux as a desktop app, and any modern browser — including on a phone or tablet — as the web app. There is no native iOS or Android app.
+
+**Can I use it for a team?**
+
+Not currently. DeepWork is a single-person tool: it has no shared boards, no accounts and no collaboration features.
+
+**Is the source available?**
+
+The source is public on GitHub under the MIT licence, so you are free to read it, run it, change it and ship your own version — including commercially. The licence text is in the repository, and contributions and bug reports are welcome.
+
+**Why does Windows warn me about the installer?**
+
+The installers are not code-signed yet, so Windows shows "Unknown publisher" and SmartScreen may interrupt the first run. The app is honest about this and the repository documents it. The browser build avoids the question entirely, because there is nothing to install.
+
+Something not answered here? Open an issue — questions are welcome, and the answers usually end up on this page.
+
+---
+
+## About this file
+
+Generated from the rendered page by `tools/make-llms-txt.cjs`. Every statement in it is taken
+from the DeepWork application repository at version 2.0.17; nothing is invented, and there are
+no user counts, download figures, ratings or testimonials because the project publishes none.
+
+- Source code: https://github.com/malikrajat/deepwork
+- Downloads: https://github.com/malikrajat/deepwork/releases/latest
+- Web app: https://malikrajat.github.io/deepwork/

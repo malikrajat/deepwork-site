@@ -1,0 +1,56 @@
+<section class="section section--raised" id="matrix">
+  <div class="shell">
+    <div class="section__head" dwReveal>
+      <p class="eyebrow">Prioritisation</p>
+      <h2 class="h2 section__title">Decide once, in four boxes</h2>
+      <p class="lead section__lead">
+        A long task list is not a plan. The matrix is where a task stops being a line and becomes a
+        decision — and the decision is what the rest of the app works from.
+      </p>
+    </div>
+
+    <div class="matrix-grid" dwReveal>
+      @for (quadrant of quadrants; track quadrant.key) {
+        <div class="matrix-cell" [style.--q-color]="quadrant.color">
+          <span class="matrix-cell__key mono">{{ quadrant.key }}</span>
+          <span class="matrix-cell__name">{{ quadrant.name }}</span>
+          <span class="matrix-cell__desc">{{ quadrant.description }}</span>
+          <span class="matrix-cell__note">{{ quadrant.note }}</span>
+        </div>
+      }
+    </div>
+
+    <div class="story" style="margin-top: clamp(2rem, 4vw, 3.5rem)">
+      <div class="story__media" dwReveal [dwRevealDelay]="80">
+        <div class="frame">
+          <div class="frame__bar">
+            <span class="frame__dots" aria-hidden="true">
+              <span class="frame__dot"></span>
+              <span class="frame__dot"></span>
+              <span class="frame__dot"></span>
+            </span>
+            <span class="frame__title">DeepWork — Matrix</span>
+          </div>
+          <img
+            class="frame__screen"
+            ngSrc="{{ shot.src }}"
+            [width]="shot.width"
+            [height]="shot.height"
+            [alt]="shot.alt"
+          />
+        </div>
+      </div>
+
+      <div class="story__body" dwReveal>
+        <ul class="feature-list">
+          @for (point of points; track point) {
+            <li class="feature-list__item">
+              <span class="feature-list__tick" aria-hidden="true">✓</span>
+              <span>{{ point }}</span>
+            </li>
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

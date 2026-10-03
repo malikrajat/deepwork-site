@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  One page, so one URL — but the images are listed too. Google Images and the
+  image results inside AI answers both read the image extension, and every
+  screenshot here is of the real application, which makes them worth submitting.
+
+  `lastmod` is a real date: the day the page's content was last edited. It is
+  not regenerated on every build, because a date that moves without the content
+  moving is a lie told to a crawler. Update it when the copy changes.
+-->
+<urlset
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+>
+  <url>
+    <loc>https://malikrajat.github.io/deepwork-site/</loc>
+    <lastmod>2026-10-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+
+    <image:image>
+      <image:loc>https://malikrajat.github.io/deepwork-site/screenshots/dashboard-dark.webp</image:loc>
+      <image:title>DeepWork dashboard — focus clock and today's tasks</image:title>
+      <image:caption>The DeepWork dashboard: a focus session running, today's tasks, and cards for the session cycle, the day's plan and today's water intake.</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://malikrajat.github.io/deepwork-site/screenshots/tasks-dark.webp</image:loc>
+      <image:title>DeepWork task board — To Do, In Progress, Done</image:title>
+      <image:caption>The Tasks page: a three-column board with cards coloured by status, and the task list beside it.</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://malikrajat.github.io/deepwork-site/screenshots/calendar-dark.webp</image:loc>
+      <image:title>DeepWork day planner timeline</image:title>
+      <image:caption>The Calendar: a day timeline of focus blocks and breaks, a week strip, and the priority queue grouped by Eisenhower quadrant.</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://malikrajat.github.io/deepwork-site/screenshots/analytics-dark.webp</image:loc>
+      <image:title>DeepWork analytics — focus heatmap and weekly patterns</image:title>
+      <image:caption>Analytics: key figures with trends, a 12-week focus heatmap, focus by hour and weekday, task flow, habit consistency and journalling.</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://malikrajat.github.io/deepwork-site/screenshots/matrix-dark.webp</image:loc>
+      <image:title>DeepWork Eisenhower matrix</image:title>
+      <image:caption>The Eisenhower matrix: four coloured quadrants holding task cards, with the task list down the side.</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://malikrajat.github.io/deepwork-site/og-image.png</image:loc>
+      <image:title>DeepWork — Focus better. Work deeper.</image:title>
+      <image:caption>The DeepWork social preview card: the dashboard in a browser frame beside the product statement.</image:caption>
+    </image:image>
+  </url>
+</urlset>

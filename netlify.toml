@@ -1,0 +1,63 @@
+# Netlify configuration.
+#
+# Committed rather than configured in the dashboard, so the deploy is described
+# by the repository and a fork or a preview branch builds the same way.
+
+[build]
+  command = "npm run build"
+  publish = "dist/deepwork-site/browser"
+
+[build.environment]
+  NODE_VERSION = "24"
+
+# The site has a single route, so this redirect is not strictly required today.
+# It is here so that adding a second page later does not silently 404 on a deep
+# link — the failure mode that makes people think Netlify "does not do SPAs".
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Frame-Options = "SAMEORIGIN"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=(), interest-cohort=()"
+
+# Angular hashes every build artefact (`outputHashing: all`), so these can be
+# cached for as long as a browser will honour.
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Screenshots and the social card are not hashed, so they get a long-but-finite
+# cache: long enough to be useful, short enough that a replaced screenshot is
+# not stuck in a visitor's browser for a year.
+[[headers]]
+  for = "/screenshots/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+[[headers]]
+  for = "/og-image.png"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+# The shell itself must never be cached: it names the hashed files.
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"

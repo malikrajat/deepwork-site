@@ -1,0 +1,43 @@
+<section class="section section--raised" id="product">
+  <div class="shell shell--wide">
+    <div class="section__head section__head--center" dwReveal>
+      <p class="eyebrow">The product</p>
+      <h2 class="h2 section__title">One window for the whole working day</h2>
+      <p class="lead section__lead" style="margin-inline: auto">
+        DeepWork is not a timer with a task list bolted on. It is a single window where the session
+        you are running, the work you promised yourself, the day you planned and the progress you
+        made all live in the same place.
+      </p>
+    </div>
+
+    <div dwReveal>
+      <div class="frame frame--hero">
+        <div class="frame__bar">
+          <span class="frame__dots" aria-hidden="true">
+            <span class="frame__dot"></span>
+            <span class="frame__dot"></span>
+            <span class="frame__dot"></span>
+          </span>
+          <span class="frame__title">DeepWork — Tasks</span>
+        </div>
+        <img
+          class="frame__screen"
+          ngSrc="{{ shot.src }}"
+          [width]="shot.width"
+          [height]="shot.height"
+          [alt]="shot.alt"
+        />
+      </div>
+    </div>
+
+    <ul class="grid grid--4" style="margin-top: clamp(1.75rem, 3vw, 2.5rem)">
+      @for (callout of callouts; track callout.title; let i = $index) {
+        <li class="card card--edge" dwReveal [dwRevealDelay]="i * 70">
+          <span class="card__icon" aria-hidden="true">{{ callout.glyph }}</span>
+          <h3 class="card__title">{{ callout.title }}</h3>
+          <p class="card__body">{{ callout.body }}</p>
+        </li>
+      }
+    </ul>
+  </div>
+</section>

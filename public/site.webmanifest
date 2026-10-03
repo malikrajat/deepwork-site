@@ -1,0 +1,72 @@
+{
+  "id": "/deepwork-site/",
+  "name": "DeepWork — Focus better. Work deeper.",
+  "short_name": "DeepWork",
+  "description": "The DeepWork product site: a free Pomodoro timer, task manager and habit tracker that keeps its data on your own machine.",
+  "lang": "en",
+  "dir": "ltr",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "background_color": "#080613",
+  "theme_color": "#8b5cf6",
+  "categories": ["productivity", "utilities"],
+  "icons": [
+    {
+      "src": "icons/128x128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "screenshots/dashboard-phone.webp",
+      "sizes": "390x844",
+      "type": "image/webp",
+      "form_factor": "narrow",
+      "label": "The focus clock and today's tasks on a phone"
+    },
+    {
+      "src": "screenshots/dashboard-dark.webp",
+      "sizes": "1440x900",
+      "type": "image/webp",
+      "form_factor": "wide",
+      "label": "The DeepWork dashboard"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "What a Pomodoro is",
+      "short_name": "Learn",
+      "description": "The technique in five steps, and how DeepWork implements it",
+      "url": "./#learn",
+      "icons": [{ "src": "icons/128x128.png", "sizes": "128x128", "type": "image/png" }]
+    },
+    {
+      "name": "Get started",
+      "short_name": "Get started",
+      "description": "Open the web app or download the desktop build",
+      "url": "./#get-started",
+      "icons": [{ "src": "icons/128x128.png", "sizes": "128x128", "type": "image/png" }]
+    }
+  ]
+}

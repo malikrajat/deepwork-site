@@ -1,0 +1,58 @@
+<section class="section" id="focus">
+  <div class="shell">
+    <div class="section__head" dwReveal>
+      <p class="eyebrow">Focus sessions</p>
+      <h2 class="h2 section__title">A session you can actually finish</h2>
+      <p class="lead section__lead">
+        Start the clock, and the rest of the app gets quiet. One ring fills as the session runs, in
+        the window and in the mini widget, so however you are working you are looking at the same
+        countdown.
+      </p>
+    </div>
+
+    <div class="story">
+      <div class="story__body" dwReveal>
+        <ul class="session-types">
+          @for (type of sessionTypes; track type.name) {
+            <li class="session-type">
+              <span
+                class="session-type__dot"
+                [style.background]="type.color"
+                aria-hidden="true"
+              ></span>
+              <span class="session-type__name">{{ type.name }}</span>
+              <span class="session-type__len mono">{{ type.length }}</span>
+            </li>
+          }
+        </ul>
+
+        <ul class="feature-list">
+          @for (fact of facts; track fact.title) {
+            <li class="feature-list__item">
+              <span class="feature-list__tick" aria-hidden="true">✓</span>
+              <span>
+                <b>{{ fact.title }}</b>
+                {{ fact.body }}
+              </span>
+            </li>
+          }
+        </ul>
+
+        <blockquote class="quote">
+          “That was a session, not a sprint. Step away while it settles.”
+          <cite>One of the twenty-four focus lines the app ends a session with.</cite>
+        </blockquote>
+      </div>
+
+      <div class="story__media" dwReveal [dwRevealDelay]="120">
+        <img
+          class="shot"
+          ngSrc="{{ shot.src }}"
+          [width]="shot.width"
+          [height]="shot.height"
+          [alt]="shot.alt"
+        />
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,44 @@
+{
+  "name": "deepwork-site",
+  "version": "1.0.0",
+  "description": "The product website for DeepWork — a free, local-first focus timer, task manager and habit tracker that keeps your data on your own machine.",
+  "private": true,
+  "packageManager": "npm@11.12.1",
+  "engines": {
+    "node": "^22.22.3 || ^24.15.0 || >=26.0.0"
+  },
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve --port 5000",
+    "build": "ng build",
+    "build:github": "ng build --base-href=/deepwork-site/ --configuration production",
+    "watch": "ng build --watch --configuration development",
+    "lint": "biome lint .",
+    "format": "biome check --write . && prettier --write \"**/*.{html,css}\"",
+    "format:check": "biome check . && prettier --check \"**/*.{html,css}\"",
+    "verify": "npm run format:check && npm run build",
+    "serve:dist": "node tools/serve-dist.cjs",
+    "audit": "node tools/verify-site.cjs",
+    "audit:diagnose": "node tools/diagnose-reveal.cjs",
+    "llms": "node tools/make-llms-txt.cjs",
+    "og": "node tools/make-og-image.cjs",
+    "shots": "node tools/capture-app.cjs"
+  },
+  "dependencies": {
+    "@angular/common": "^22.2.1",
+    "@angular/compiler": "^22.2.1",
+    "@angular/core": "^22.2.1",
+    "@angular/platform-browser": "^22.2.1",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.8.1"
+  },
+  "devDependencies": {
+    "@angular/build": "^22.2.1",
+    "@angular/cli": "^22.2.1",
+    "@angular/compiler-cli": "^22.2.1",
+    "@biomejs/biome": "^2.5.15",
+    "@playwright/test": "^1.63.0",
+    "prettier": "^3.9.9",
+    "typescript": "~6.0.3"
+  }
+}

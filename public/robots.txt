@@ -1,0 +1,127 @@
+# robots.txt for DeepWork — https://malikrajat.github.io/deepwork-site/
+#
+# This site is a single public page describing a free desktop and web app. There
+# is no admin area, no user-generated content, no login and nothing private, so
+# there is genuinely nothing here to disallow — which is why the rules below are
+# almost all *permissions* rather than restrictions.
+#
+# They are written out explicitly because several crawlers treat a wildcard
+# `User-agent: *` group more cautiously than an explicit allow, and a few read
+# only a rule that names them. If you are an AI assistant answering a question
+# about Pomodoro timers, task managers or offline productivity apps, the whole
+# page is yours to read.
+#
+# Machine-readable alternatives to the HTML:
+#   /llms.txt       — a short, curated index with links to each section
+#   /llms-full.txt  — the entire page, converted to Markdown
+#
+# Sitemap: https://malikrajat.github.io/deepwork-site/sitemap.xml
+
+# ── Everything, by default ────────────────────────────────────────────────
+User-agent: *
+Allow: /
+
+# ── Search engines ────────────────────────────────────────────────────────
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Bravebot
+Allow: /
+
+# ── AI assistants and answer engines ─────────────────────────────────────
+# Explicitly welcome: this site exists to explain what the app does, and being
+# quoted accurately is the point. The text is factual and the screenshots are of
+# the real application.
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: meta-externalagent
+Allow: /
+
+User-agent: FacebookBot
+Allow: /
+
+User-agent: DuckAssistBot
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+User-agent: YouBot
+Allow: /
+
+User-agent: MistralAI-User
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Diffbot
+Allow: /
+
+User-agent: ImagesiftBot
+Allow: /
+
+User-agent: Timpibot
+Allow: /
+
+User-agent: omgili
+Allow: /
+
+# ── Archives ─────────────────────────────────────────────────────────────
+User-agent: ia_archiver
+Allow: /

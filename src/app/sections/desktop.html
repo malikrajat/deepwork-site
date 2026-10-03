@@ -1,0 +1,123 @@
+<section class="section" id="desktop">
+  <div class="shell">
+    <div class="section__head" dwReveal>
+      <p class="eyebrow">Desktop</p>
+      <h2 class="h2 section__title">An app, not a tab you will close</h2>
+      <p class="lead section__lead">
+        The desktop build is the same Angular application inside a native shell — which is what
+        makes a tray icon, an always-on-top timer and a floating widget possible at all. A browser
+        tab cannot do any of those things, and this is the honest reason to install it.
+      </p>
+    </div>
+
+    <div class="story">
+      <div class="story__body" dwReveal>
+        <ul class="switch-list">
+          @for (item of switches; track item.name) {
+            <li class="switch">
+              <div class="switch__head">
+                <span class="switch__name">{{ item.name }}</span>
+                <span class="chip">{{ item.state }}</span>
+              </div>
+              <p class="switch__body">{{ item.body }}</p>
+            </li>
+          }
+        </ul>
+      </div>
+
+      <div class="story__media" dwReveal [dwRevealDelay]="100">
+        <div class="frame">
+          <div class="frame__bar">
+            <span class="frame__dots" aria-hidden="true">
+              <span class="frame__dot"></span>
+              <span class="frame__dot"></span>
+              <span class="frame__dot"></span>
+            </span>
+            <span class="frame__title">DeepWork — Settings</span>
+          </div>
+          <img
+            class="frame__screen"
+            ngSrc="{{ shot.src }}"
+            [width]="shot.width"
+            [height]="shot.height"
+            [alt]="shot.alt"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid--2" style="margin-top: clamp(2rem, 4vw, 3rem)">
+      <article class="card card--edge" dwReveal>
+        <p class="eyebrow">The mini widget</p>
+        <h3 class="card__title" style="font-size: var(--fs-h3)">
+          Minimise it and it keeps working
+        </h3>
+        <ul class="feature-list">
+          @for (line of widget; track line) {
+            <li class="feature-list__item">
+              <span class="feature-list__tick" aria-hidden="true">✓</span>
+              <span>{{ line }}</span>
+            </li>
+          }
+        </ul>
+      </article>
+
+      <article class="card" dwReveal [dwRevealDelay]="90">
+        <p class="eyebrow">Updates</p>
+        <h3 class="card__title" style="font-size: var(--fs-h3)">
+          It tells you, once, and then installs
+        </h3>
+        <p class="card__body" style="margin-bottom: 1rem">
+          DeepWork checks the public release list in the background on startup — never blocking the
+          window, cached for six hours so it does not spend a rate limit, and reporting nothing
+          back. A newer build shows up as a small pill beside the version, a system notification,
+          and a card with one button.
+        </p>
+        <ul class="feature-list">
+          <li class="feature-list__item">
+            <span class="feature-list__tick" aria-hidden="true">✓</span>
+            <span
+              ><b>Windows</b> — the setup is downloaded with a progress bar and started; DeepWork
+              closes behind it.</span
+            >
+          </li>
+          <li class="feature-list__item">
+            <span class="feature-list__tick" aria-hidden="true">✓</span>
+            <span><b>macOS</b> — the disk image is downloaded and opened for you.</span>
+          </li>
+          <li class="feature-list__item">
+            <span class="feature-list__tick" aria-hidden="true">✓</span>
+            <span
+              ><b>Linux</b> — a .deb or .rpm goes to your installer, or an AppImage is made runnable
+              and started.</span
+            >
+          </li>
+          <li class="feature-list__item">
+            <span class="feature-list__tick" aria-hidden="true">✓</span>
+            <span>A version you waved away with <b>Later</b> is not announced again.</span>
+          </li>
+        </ul>
+      </article>
+    </div>
+
+    <div class="platforms" style="margin-top: clamp(2rem, 4vw, 3rem)" dwReveal>
+      @for (platform of platforms; track platform.id) {
+        <div class="platform">
+          <span class="platform__glyph" aria-hidden="true">{{ platform.glyph }}</span>
+          <span>
+            <span class="platform__name">{{ platform.name }}</span>
+            <span class="platform__note">{{ platform.note }}</span>
+          </span>
+          <span class="platform__meta">{{ platform.artifact }}</span>
+        </div>
+      }
+    </div>
+
+    <p class="disclaimer" dwReveal>
+      <strong>One honest caveat:</strong> the Windows and macOS installers are not code-signed yet,
+      so Windows shows “Unknown publisher” and SmartScreen may interrupt the first run. The
+      repository documents exactly what that means and how to verify a build. The web app avoids the
+      question entirely, because there is nothing to install.
+    </p>
+  </div>
+</section>

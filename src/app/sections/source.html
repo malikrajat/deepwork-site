@@ -1,0 +1,85 @@
+<section class="section section--raised" id="source">
+  <div class="shell">
+    <div class="section__head" dwReveal>
+      <p class="eyebrow">{{ sourceLabel }}</p>
+      <h2 class="h2 section__title">Built in the open</h2>
+      <p class="lead section__lead">
+        The whole application is on GitHub — the Angular front end, the Rust desktop shell, the
+        tests and the release pipeline. Clone it, run it, read how a feature actually works, or send
+        a fix for something that annoys you.
+      </p>
+    </div>
+
+    <div class="story">
+      <div class="story__body" dwReveal>
+        <div class="code">
+          <div class="code__bar">
+            <span class="frame__dots" aria-hidden="true">
+              <span class="frame__dot"></span>
+              <span class="frame__dot"></span>
+              <span class="frame__dot"></span>
+            </span>
+            <span class="code__title mono">deepwork</span>
+          </div>
+          <pre class="code__body mono"><code>git clone {{ site.repoUrl }}.git
+cd deepwork
+npm install</code></pre>
+          @for (item of commands; track item.command) {
+            <pre
+              class="code__body code__body--cont mono"
+            ><code><span class="code__comment">{{ item.comment }}</span>
+{{ item.command }}</code></pre>
+          }
+        </div>
+
+        <div class="btn-row" style="margin-top: 1.5rem">
+          <a class="btn btn--primary" [href]="site.repoUrl" target="_blank" rel="noopener">
+            View on GitHub
+          </a>
+          <a class="btn btn--ghost" [href]="site.issuesUrl" target="_blank" rel="noopener">
+            Report an issue
+          </a>
+          <a class="btn btn--ghost" [href]="site.changelogUrl" target="_blank" rel="noopener">
+            Changelog
+          </a>
+        </div>
+
+        @if (!hasLicense) {
+          <p class="disclaimer" style="margin-top: 1.5rem">
+            <strong>The licensing position, stated plainly:</strong> the repository is public and
+            you are welcome to read, run and build it — but it does not currently carry a LICENSE
+            file, so reuse rights have not been formally granted. That is a one-file fix and it is
+            on the list; until it is done, this site says “public source” rather than claiming a
+            licence the project has not given.
+          </p>
+        }
+      </div>
+
+      <div class="story__media" dwReveal [dwRevealDelay]="90">
+        <article class="card">
+          <h3 class="card__title">What it is built with</h3>
+          <div class="tech" style="margin-top: 1rem">
+            @for (item of stack; track item.name) {
+              <div class="tech__row">
+                <span class="tech__name">{{ item.name }}</span>
+                <span class="tech__role">{{ item.role }}</span>
+              </div>
+            }
+          </div>
+        </article>
+
+        <article class="card" style="margin-top: 1rem">
+          <h3 class="card__title">What a change has to pass</h3>
+          <ul class="feature-list" style="margin-top: 1rem">
+            @for (step of pipeline; track step) {
+              <li class="feature-list__item">
+                <span class="feature-list__tick" aria-hidden="true">✓</span>
+                <span>{{ step }}</span>
+              </li>
+            }
+          </ul>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>

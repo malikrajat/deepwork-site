@@ -1,0 +1,23 @@
+<section class="section" id="faq">
+  <div class="shell">
+    <div class="section__head" dwReveal>
+      <p class="eyebrow">Questions</p>
+      <h2 class="h2 section__title">The things people ask before they start</h2>
+    </div>
+
+    <div class="faq">
+      @for (item of items; track item.question; let i = $index) {
+        <details class="faq__item" dwReveal [dwRevealDelay]="i * 30">
+          <summary class="faq__question">{{ item.question }}</summary>
+          <p class="faq__answer">{{ item.answer }}</p>
+        </details>
+      }
+    </div>
+
+    <p class="faq__more" dwReveal>
+      Something not answered here?
+      <a [href]="site.issuesUrl" target="_blank" rel="noopener">Open an issue</a> — questions are
+      welcome, and the answers usually end up on this page.
+    </p>
+  </div>
+</section>

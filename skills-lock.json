@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "skills": {
+    "angular-developer": {
+      "source": "angular/skills",
+      "sourceType": "github",
+      "skillPath": "angular-developer/SKILL.md",
+      "computedHash": "32f8bbf4f42515bd122eccb7aebf0b9e3acb87fde3fdd65a5b560384fbc0f80a"
+    },
+    "modern-web-guidance": {
+      "source": "GoogleChrome/modern-web-guidance",
+      "sourceType": "github",
+      "skillPath": "skills/modern-web-guidance/SKILL.md",
+      "computedHash": "bbbbd23f3f3174e9960024c56f0fcae58f661faf31a64442c1d65b8f56c8d854"
+    }
+  }
+}

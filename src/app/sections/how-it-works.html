@@ -1,0 +1,18 @@
+<section class="section section--raised" id="how">
+  <div class="shell">
+    <div class="section__head section__head--center" dwReveal>
+      <p class="eyebrow">How it works</p>
+      <h2 class="h2 section__title">Four steps, and the first one takes ten seconds</h2>
+    </div>
+
+    <ol class="steps">
+      @for (step of steps; track step.num; let i = $index) {
+        <li class="step" dwReveal [dwRevealDelay]="i * 80">
+          <span class="step__num">{{ step.num }}</span>
+          <h3 class="step__title">{{ step.title }}</h3>
+          <p class="step__body">{{ step.body }}</p>
+        </li>
+      }
+    </ol>
+  </div>
+</section>

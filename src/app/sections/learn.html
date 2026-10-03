@@ -1,0 +1,66 @@
+<section class="section" id="learn">
+  <div class="shell">
+    <div class="section__head" dwReveal>
+      <p class="eyebrow">Learn the method</p>
+      <h2 class="h2 section__title">What a Pomodoro actually is</h2>
+      <p class="lead section__lead">
+        If you already work this way, skip ahead. If you have heard the word and never been told
+        what it means, this is the whole idea in five steps — and then what DeepWork does with it.
+      </p>
+    </div>
+
+    <div class="story">
+      <div class="story__body" dwReveal>
+        <h3 class="h3" style="margin-bottom: 1.5rem">The technique, in five steps</h3>
+
+        <ol class="method-list">
+          @for (step of method; track step.title; let i = $index) {
+            <li class="method-step">
+              <span class="method-step__num mono" aria-hidden="true">{{ i + 1 }}</span>
+              <span>
+                <span class="method-step__title">{{ step.title }}</span>
+                <span class="method-step__body">{{ step.body }}</span>
+              </span>
+            </li>
+          }
+        </ol>
+
+        <p class="attribution">
+          The Pomodoro Technique is a method described by Francesco Cirillo in the late 1980s.
+          DeepWork is an independent implementation of the idea — it is not affiliated with,
+          endorsed by or licensed from the author of the technique.
+        </p>
+      </div>
+
+      <div class="story__body" dwReveal [dwRevealDelay]="100">
+        <article class="card card--edge">
+          <h3 class="card__title">How DeepWork implements it</h3>
+          <p class="card__body" style="margin-bottom: 1.25rem">
+            The defaults are the classic ones, and every one of them is a setting rather than a
+            constant:
+          </p>
+          <ul class="impl-list">
+            @for (item of implementation; track item.label) {
+              <li class="impl">
+                <span class="impl__label">{{ item.label }}</span>
+                <span class="impl__value mono">{{ item.value }}</span>
+              </li>
+            }
+          </ul>
+          <a class="btn btn--primary" [href]="site.webAppUrl" target="_blank" rel="noopener">
+            Run one session
+          </a>
+        </article>
+      </div>
+    </div>
+
+    <ul class="grid grid--2" style="margin-top: clamp(2rem, 4vw, 3rem)">
+      @for (item of practice; track item.title; let i = $index) {
+        <li class="card card--hover" dwReveal [dwRevealDelay]="i * 80">
+          <h3 class="card__title" style="font-size: var(--fs-h3)">{{ item.title }}</h3>
+          <p class="card__body">{{ item.body }}</p>
+        </li>
+      }
+    </ul>
+  </div>
+</section>

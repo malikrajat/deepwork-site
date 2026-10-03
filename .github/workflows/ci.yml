@@ -1,0 +1,80 @@
+name: CI
+
+# Everything a change has to survive before it is worth deploying: it must be
+# formatted, pass the linter, compile, and still render correctly in a browser
+# at ten viewport widths. Runs on every pull request, on every push to main, and
+# on demand.
+#
+# Dependency vulnerability scanning is deliberately NOT part of this pipeline.
+# `npm audit` is one command away and `.npmrc` documents the trade-off; see the
+# README section "What this pipeline does not do".
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Format, lint, build and audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      # Biome formats and lints the TypeScript, the JSON and the tooling
+      # scripts; Prettier formats the Angular templates and the stylesheet,
+      # because Biome's HTML parser does not understand `@if` / `@for`. One
+      # command runs both so a contributor never has to remember which is which.
+      - name: Check formatting
+        run: npm run format:check
+
+      - name: Lint
+        run: npm run lint
+
+      # `build:github` is the same build the Pages workflow publishes, so this
+      # job is testing the artefact that actually ships.
+      - name: Build
+        run: npm run build:github
+
+      # The audit drives the real page in a real browser. It needs Chromium, and
+      # nothing else in this project does.
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Audit the built site
+        run: npm run audit
+
+      # `llms-full.txt` is generated from the rendered page, so it can go stale
+      # the moment somebody edits a sentence. Regenerating it here and failing on
+      # a diff is what stops the file an AI crawler reads from quietly describing
+      # an older version of the site.
+      - name: Check that llms-full.txt is up to date
+        run: |
+          npm run llms
+          if ! git diff --quiet --exit-code public/llms-full.txt; then
+            echo "::error::public/llms-full.txt is out of date. Run 'npm run llms' and commit the result."
+            git --no-pager diff --stat public/llms-full.txt
+            exit 1
+          fi
+          echo "llms-full.txt is up to date."
