@@ -882,6 +882,14 @@ html[data-theme='light'] .section--raised {
   }
 }
 
+/* The positioning context for the two callout cards in the hero. Without it
+   they anchor to `.hero`, which is full-bleed, so `left: -1.5rem` put the first
+   card off the left edge of the window and `.hero { overflow: hidden }` cut its
+   text in half — the same rule `.story__media` already carries. */
+.hero__media {
+  position: relative;
+}
+
 .hero__badge {
   display: inline-flex;
   align-items: center;
