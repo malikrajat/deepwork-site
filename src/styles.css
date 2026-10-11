@@ -1873,6 +1873,16 @@ html[data-theme='light'] .footer {
   align-items: stretch;
 }
 
+/* ===== Every screen =================================================== */
+/* The tall card beside it is one concern — where the layout changes. These two
+   are the other one — how you drive it — so they stack rather than sitting in a
+   grid of their own and pretending to be peers of the breakpoint list. */
+.devices__group {
+  display: grid;
+  gap: clamp(1rem, 1.8vw, 1.5rem);
+  align-content: start;
+}
+
 /* ===== Hydration ====================================================== */
 .option-table {
   display: grid;

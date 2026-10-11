@@ -1,0 +1,100 @@
+<section class="section" id="devices">
+  <div class="shell">
+    <div class="section__head section__head--center" dwReveal>
+      <p class="eyebrow">Every screen</p>
+      <h2 class="h2 section__title">Built for the device you are holding</h2>
+      <p class="lead section__lead" style="margin-inline: auto">
+        Open DeepWork on a phone, a tablet, a laptop, a desktop monitor or a television browser and
+        you get the same application and the same features. What changes is the layout: it is built
+        around the width it is given, rather than shrunk until it fits.
+      </p>
+    </div>
+
+    <div class="grid grid--2">
+      <article class="card card--edge" dwReveal>
+        <p class="eyebrow">Its own shape at every width</p>
+        <h3 class="card__title" style="font-size: var(--fs-h3)">Seven layouts, one app</h3>
+        <p class="card__body" style="margin-bottom: 1rem">
+          These are the widths at which the interface actually rearranges itself — the real
+          breakpoints in the code, not round numbers picked to sound tidy.
+        </p>
+        <ul class="feature-list">
+          @for (size of sizes; track size.range) {
+            <li class="feature-list__item">
+              <span class="feature-list__tick" aria-hidden="true">✓</span>
+              <span>
+                <b>{{ size.range }}</b> — {{ size.state }}. {{ size.detail }}
+              </span>
+            </li>
+          }
+        </ul>
+      </article>
+
+      <div class="devices__group">
+        <article class="card" dwReveal [dwRevealDelay]="90">
+          <p class="eyebrow">By touch</p>
+          <h3 class="card__title" style="font-size: var(--fs-h3)">Fingers are not cursors</h3>
+          <ul class="feature-list">
+            @for (line of touch; track line) {
+              <li class="feature-list__item">
+                <span class="feature-list__tick" aria-hidden="true">✓</span>
+                <span>{{ line }}</span>
+              </li>
+            }
+          </ul>
+        </article>
+
+        <article class="card" dwReveal [dwRevealDelay]="140">
+          <p class="eyebrow">By keyboard</p>
+          <h3 class="card__title" style="font-size: var(--fs-h3)">And keys still work</h3>
+          <ul class="feature-list">
+            @for (line of keyboard; track line) {
+              <li class="feature-list__item">
+                <span class="feature-list__tick" aria-hidden="true">✓</span>
+                <span>{{ line }}</span>
+              </li>
+            }
+          </ul>
+        </article>
+      </div>
+    </div>
+
+    <div class="grid grid--3" style="margin-top: clamp(2rem, 4vw, 3rem)">
+      <article class="card card--edge card--hover" dwReveal>
+        <span class="card__icon" aria-hidden="true">⌂</span>
+        <h3 class="card__title" style="font-size: var(--fs-h3)">No browser chrome</h3>
+        <p class="card__body">
+          The web app is installable. Once it is on your home screen or your desktop it opens in its
+          own window — its own icon, no address bar, no tab strip. It is the same application; it
+          simply stops looking like a website.
+        </p>
+      </article>
+
+      <article class="card card--edge card--hover" dwReveal [dwRevealDelay]="90">
+        <span class="card__icon" aria-hidden="true">⌁</span>
+        <h3 class="card__title" style="font-size: var(--fs-h3)">The same app on the train</h3>
+        <p class="card__body">
+          The browser build registers a service worker, so it keeps working after the first visit
+          with no connection at all — on a phone, a tablet or a laptop that has gone offline.
+        </p>
+      </article>
+
+      <article class="card card--edge card--hover" dwReveal [dwRevealDelay]="140">
+        <span class="card__icon" aria-hidden="true">◐</span>
+        <h3 class="card__title" style="font-size: var(--fs-h3)">It remembers how you left it</h3>
+        <p class="card__body">
+          Your theme, your session lengths and your preferences are stored on the device and
+          restored before the first paint, so the app does not flash the wrong background at you
+          when it opens on a phone.
+        </p>
+      </article>
+    </div>
+
+    <p class="disclaimer" dwReveal>
+      <strong>One thing that does not change:</strong> nothing syncs across these devices. Each
+      browser and each installation keeps its own local database, so the same app on two screens is
+      two separate sets of data — on purpose, and exactly as it is on the desktop. Moving work
+      between them is a CSV export and import, which is written down in the FAQ.
+    </p>
+  </div>
+</section>

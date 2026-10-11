@@ -309,6 +309,56 @@ DeepWork checks the public release list in the background on startup — never b
 
 One honest caveat: the Windows and macOS installers are not code-signed yet, so Windows shows “Unknown publisher” and SmartScreen may interrupt the first run. The repository documents exactly what that means and how to verify a build. The web app avoids the question entirely, because there is nothing to install.
 
+Every screen
+
+### Built for the device you are holding
+
+Open DeepWork on a phone, a tablet, a laptop, a desktop monitor or a television browser and you get the same application and the same features. What changes is the layout: it is built around the width it is given, rather than shrunk until it fits.
+
+Its own shape at every width
+
+#### Seven layouts, one app
+
+These are the widths at which the interface actually rearranges itself — the real breakpoints in the code, not round numbers picked to sound tidy.
+- 1600px and wider — Room to spend. The dashboard widens the clock card and opens up its spacing.
+- 1100px – 1600px — The desktop layout. The sidebar is a 240px column, and the wide two-column pages stay two columns.
+- 900px – 1100px — One column at a time. A two-column chart page gives up its right-hand column before the navigation moves.
+- 760px – 900px — The drawer. The sidebar slides away and a top bar with a menu button takes its place.
+- 640px – 760px — One column. The board scrolls sideways rather than squeezing three columns into the width.
+- 380px – 640px — The phone layout. Every multi-column grid stacks into one, controls grow to a thumb-sized target, and the fields stop iOS zooming the page in.
+- 320px – 380px — The narrowest. Titles, subtitles and the calendar toolbar tighten to fit rather than overflow.
+
+By touch
+
+#### Fingers are not cursors
+
+- Buttons, select fields, task cards and the drag grip all take a 44px minimum target.
+- On a coarse pointer — a phone or tablet, including a touchscreen laptop — the scrollbars slim to 8px and stop reserving a desktop track.
+- Text fields go to 16px below 640px, which is the size below which iOS Safari zooms the whole page in on focus.
+- The outer padding follows `env(safe-area-inset-*)`, so the navigation and content clear the notch, the rounded corners and the home indicator.
+
+By keyboard
+
+#### And keys still work
+
+- Escape closes the navigation drawer — and is what closes the topmost layer first.
+- Task cards move along the board with 1, 2, 3 and the arrow keys.
+- Nothing depends on hover, so no action is unreachable without a pointer.
+
+#### No browser chrome
+
+The web app is installable. Once it is on your home screen or your desktop it opens in its own window — its own icon, no address bar, no tab strip. It is the same application; it simply stops looking like a website.
+
+#### The same app on the train
+
+The browser build registers a service worker, so it keeps working after the first visit with no connection at all — on a phone, a tablet or a laptop that has gone offline.
+
+#### It remembers how you left it
+
+Your theme, your session lengths and your preferences are stored on the device and restored before the first paint, so the app does not flash the wrong background at you when it opens on a phone.
+
+One thing that does not change: nothing syncs across these devices. Each browser and each installation keeps its own local database, so the same app on two screens is two separate sets of data — on purpose, and exactly as it is on the desktop. Moving work between them is a CSV export and import, which is written down in the FAQ.
+
 How it works
 
 ### Four steps, and the first one takes ten seconds

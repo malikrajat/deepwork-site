@@ -141,6 +141,92 @@ export const PLATFORMS: readonly Platform[] = [
   },
 ];
 
+export interface DisplaySize {
+  /** The width, in CSS pixels, at which the app changes shape. */
+  range: string;
+  /** The app's own name for that shape. */
+  state: string;
+  /** What actually changes there. */
+  detail: string;
+}
+
+/**
+ * How DeepWork is laid out at each width, largest to smallest.
+ *
+ * These are the breakpoints the application actually declares, not round
+ * numbers chosen to sound tidy, and they were read from the code:
+ *
+ * - `1600px` / `1024px` / `640px` — `pages/dashboard/dashboard.component.ts`
+ * - `1360px` — `pages/calendar/calendar.component.ts`
+ * - `1100px` — `pages/analytics/analytics.component.ts`, `pages/tasks/tasks.component.ts`
+ * - `960px` — `shared/components/task-board/task-board.component.ts`
+ * - `900px` — the shell. `COMPACT_LAYOUT_QUERY` in `app/app.ts` has to repeat
+ *   the same number the stylesheets use, because a custom property cannot be
+ *   read inside a media query condition and JavaScript has to agree with the
+ *   CSS about when the shell has changed shape.
+ * - `560px` — `pages/matrix/matrix.component.ts`
+ * - `380px` — `pages/calendar/calendar.component.ts`
+ *
+ * The sidebar's 240px is `shared/components/sidebar/sidebar.component.ts`, and
+ * the 320px floor is the narrowest width the pages carry rules for at all. The
+ * desktop window can be dragged to 800×600 — `minWidth`/`minHeight` in
+ * `src-tauri/tauri.conf.json` — which lands inside the compact layout by
+ * design, because at that size the width is worth more than a permanent menu.
+ */
+export const DISPLAY_SIZES: readonly DisplaySize[] = [
+  {
+    range: '1600px and wider',
+    state: 'Room to spend',
+    detail: 'The dashboard widens the clock card and opens up its spacing.',
+  },
+  {
+    range: '1100px – 1600px',
+    state: 'The desktop layout',
+    detail: 'The sidebar is a 240px column, and the wide two-column pages stay two columns.',
+  },
+  {
+    range: '900px – 1100px',
+    state: 'One column at a time',
+    detail: 'A two-column chart page gives up its right-hand column before the navigation moves.',
+  },
+  {
+    range: '760px – 900px',
+    state: 'The drawer',
+    detail: 'The sidebar slides away and a top bar with a menu button takes its place.',
+  },
+  {
+    range: '640px – 760px',
+    state: 'One column',
+    detail: 'The board scrolls sideways rather than squeezing three columns into the width.',
+  },
+  {
+    range: '380px – 640px',
+    state: 'The phone layout',
+    detail:
+      'Every multi-column grid stacks into one, controls grow to a thumb-sized target, and the fields stop iOS zooming the page in.',
+  },
+  {
+    range: '320px – 380px',
+    state: 'The narrowest',
+    detail: 'Titles, subtitles and the calendar toolbar tighten to fit rather than overflow.',
+  },
+];
+
+/** The two input methods the app is laid out for, and what it does about each. */
+export const INPUT_NOTES = {
+  touch: [
+    'Buttons, select fields, task cards and the drag grip all take a 44px minimum target.',
+    'On a coarse pointer — a phone or tablet, including a touchscreen laptop — the scrollbars slim to 8px and stop reserving a desktop track.',
+    'Text fields go to 16px below 640px, which is the size below which iOS Safari zooms the whole page in on focus.',
+    'The outer padding follows `env(safe-area-inset-*)`, so the navigation and content clear the notch, the rounded corners and the home indicator.',
+  ],
+  keyboard: [
+    'Escape closes the navigation drawer — and is what closes the topmost layer first.',
+    'Task cards move along the board with 1, 2, 3 and the arrow keys.',
+    'Nothing depends on hover, so no action is unreachable without a pointer.',
+  ],
+} as const;
+
 export interface TechItem {
   name: string;
   /** What it actually does in the app, not a marketing gloss. */

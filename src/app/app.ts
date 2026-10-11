@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 
 import { Beyond } from './sections/beyond';
 import { Desktop } from './sections/desktop';
+import { Devices } from './sections/devices';
 import { Faq } from './sections/faq';
 import { Focus } from './sections/focus';
 import { Footer } from './sections/footer';
@@ -51,6 +52,7 @@ import { Why } from './sections/why';
     Insights,
     Privacy,
     Desktop,
+    Devices,
     HowItWorks,
     Learn,
     Why,

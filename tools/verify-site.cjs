@@ -51,6 +51,7 @@ const SECTION_IDS = [
   'insights',
   'your-data',
   'desktop',
+  'devices',
   'how',
   'learn',
   'why',
