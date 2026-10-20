@@ -25,6 +25,13 @@ export class Matrix {
     alt: 'The DeepWork Eisenhower matrix: four coloured quadrants with task cards inside them, and the task list down the side.',
   };
 
+  readonly collapseShot = {
+    src: 'screenshots/matrix-collapsed.webp',
+    width: 1440,
+    height: 900,
+    alt: 'The Eisenhower matrix after Schedule is collapsed: Do First spans the top of the board, Delegate and Eliminate sit side by side underneath, and Schedule is a one-line strip at the bottom.',
+  };
+
   readonly quadrants = [
     {
       key: 'Q1',
@@ -62,5 +69,13 @@ export class Matrix {
     'Collapse a quadrant, or the whole list, and the board still accepts a drop.',
     'Quadrant order is what the day planner schedules from — Q1 first, Q4 last.',
     'Insights shows completion per quadrant, so you can see where your work actually sits.',
+  ] as const;
+
+  readonly reflowPoints = [
+    'Three open quadrants put the first across the top and the other two side by side underneath; two sit side by side; one takes the whole board.',
+    'Maximise is the same thing as collapsing the other three, so there is one rule to understand rather than two.',
+    'Restore the layout hands back exactly what was there before.',
+    'The dividers drag by mouse or by arrow keys, with Home and End to even them out; neither side can go below 15%.',
+    'The split is stored as a share of the board, not as pixels, so it survives a window resize and comes back when a quadrant is reopened.',
   ] as const;
 }

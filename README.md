@@ -50,7 +50,7 @@ Everything else:
 npm run format            # Biome over TS/JSON/scripts, then Prettier over HTML/CSS
 npm run format:check      # what CI runs
 npm run lint              # Biome lint
-npm run audit             # drive the BUILT site in a browser and assert 60 things
+npm run audit             # drive the BUILT site in a browser and assert 72 things
 npm run llms              # regenerate public/llms-full.txt from the rendered page
 npm run shots             # re-capture the app screenshots
 npm run og                # regenerate the social preview card
@@ -66,33 +66,39 @@ npx playwright install chromium
 
 ## What is on the page
 
-Twenty sections, in the order they are argued. The `id` is the anchor.
+Twenty-three sections, in the order they are argued. The `id` is the anchor.
 
-| #   | `id`          | Section                                                   |
-| --- | ------------- | --------------------------------------------------------- |
-| 1   | —             | Hero — what it is, what it costs, where the data goes      |
-| 2   | `product`     | The product — the real window, with the parts named        |
-| 3   | `beyond`      | More than a Pomodoro — the twelve surfaces the app has     |
-| 4   | `focus`       | Focus sessions — the timer, the alerts, the tones          |
-| 5   | `planner`     | Day planner — tasks laid onto focus blocks                 |
-| 6   | `tasks`       | Tasks — the board, quick add, recurrence, import and export |
-| 7   | `matrix`      | Eisenhower matrix — Q1 to Q4                               |
-| 8   | `habits`      | Habits and journal                                         |
-| 9   | `hydration`   | The water reminder                                         |
-| 10  | `insights`    | Insights — ten real charts, and the readings beside them   |
-| 11  | `your-data`   | Your data — local SQLite, no account, five log files       |
-| 12  | `desktop`     | The desktop app — tray, always-on-top, the mini widget     |
-| 13  | `how`         | How it works — four steps                                  |
-| 14  | `learn`       | **Learn the method** — what a Pomodoro is, how to plan a day |
-| 15  | `why`         | Why DeepWork — the strengths *and* the limitations         |
-| 16  | `source`      | Built in the open — stack, pipeline, licensing position    |
-| 17  | `get-started` | Get started — browser, desktop, install as an app          |
-| 18  | `faq`         | Common questions                                           |
-| 19  | —             | Footer                                                     |
+| #   | `id`          | Section                                                      |
+| --- | ------------- | ------------------------------------------------------------ |
+| 1   | —             | Hero — what it is, what it costs, where the data goes         |
+| 2   | `product`     | The product — the real window, with the parts named           |
+| 3   | `whats-new`   | New in 3.0 — the headlines, then release by release           |
+| 4   | `beyond`      | More than a Pomodoro — the surfaces the app has               |
+| 5   | `focus`       | Focus sessions — the timer, the alerts, the tones             |
+| 6   | `planner`     | Day planner — tasks laid onto focus blocks                    |
+| 7   | `tasks`       | Tasks — the board, quick add, recurrence, import and export   |
+| 8   | `matrix`      | Eisenhower matrix — Q1 to Q4, and the space coming back       |
+| 9   | `time`        | Time by Task — the work the hours actually went to            |
+| 10  | `habits`      | Habits and journal                                            |
+| 11  | `hydration`   | The water reminder                                            |
+| 12  | `insights`    | Insights — ten real charts, and the readings beside them      |
+| 13  | `reminders`   | Standing reminders — the reminder that does not give up       |
+| 14  | `your-data`   | Your data — local SQLite, backups, the visit counter          |
+| 15  | `desktop`     | The desktop app — tray, always-on-top, the mini widget        |
+| 16  | `quiet`       | Quiet controls and answerable alerts                          |
+| 17  | `devices`     | Every screen — layouts, touch, keyboard, install modes        |
+| 18  | `how`         | How it works — four steps                                     |
+| 19  | `learn`       | **Learn the method** — what a Pomodoro is, how to plan a day  |
+| 20  | `why`         | Why DeepWork — the strengths *and* the limitations            |
+| 21  | `source`      | Built in the open — stack, pipeline, licensing position       |
+| 22  | `get-started` | Get started — browser, desktop, install as an app             |
+| 23  | `faq`         | Common questions                                              |
+| 24  | —             | Footer                                                        |
 
-Section 14 is the one that earns traffic rather than describing a product. Everything else answers
+Section 19 is the one that earns traffic rather than describing a product. Everything else answers
 "what does DeepWork do?"; `learn` answers "what is the Pomodoro Technique?", which is what somebody
-types into a search engine *before* they have heard of this app.
+types into a search engine *before* they have heard of this app. Sections 3, 9, 13 and 16 are the
+3.0 story: what changed, the new report, the new reminder and the new quiet controls.
 
 ---
 
@@ -154,7 +160,7 @@ which is why the whole page is also published as plain text.
 | `llms-full.txt`            | The **whole page** as Markdown, generated from the rendered page by `npm run llms`. This is what a crawler that runs no JavaScript actually reads.                                                                                          |
 | `site.webmanifest`         | Install metadata: shortcuts to `#learn` and `#get-started`, and screenshots for a richer install prompt.                                                                                                                                  |
 | `404.html`                 | A real, branded 404 with `noindex`, so an error page never ends up in a search result.                                                                                                                                                    |
-| `.well-known/security.txt` | RFC 9116, pointing at the issue tracker. No invented email address.                                                                                                                                                                        |
+| `.well-known/security.txt` | RFC 9116, with the project's contact address and the issue tracker.                                                                                                                                        |
 
 **Metadata.** The title leads with what people search for — *"DeepWork — Free Pomodoro Timer, Task
 Manager & Habits"*, 53 characters — rather than with the slogan. `max-image-preview:large` and
@@ -216,12 +222,15 @@ split by effort.
 ## Screenshots
 
 Every image in `public/screenshots` is the real application, captured from a production build.
+The pages are seeded through `tools/demo-seed.cjs` before the app starts, so a screenshot shows a
+real, reachable working state — every number is still computed by the app from those rows.
 
 ```bash
 # 1. build the app (in the application repository)
 npm run build                      # -> dist/deepwork/browser
 
-# 2. capture, with that build being served by any static server
+# 2. serve that build, then capture
+python tools/serve-app.py <app>/dist/deepwork/browser 5199
 APP_URL=http://127.0.0.1:5199 npm run shots
 
 # 3. convert to WebP and print a brightness/contrast report
@@ -231,18 +240,21 @@ python tools/make-webp.py
 npm run og
 ```
 
-Two captures are **element** screenshots (`.timer-card`, `.water-card`) rather than window
-screenshots, so they are exactly those panels at their own size and stay correct when the app's
-layout moves. `make-webp.py` prints brightness and contrast for every file: a blank page or a theme
-that failed to switch fails that check loudly, which is the only automated verification available on
-a pipeline whose output is pictures. Set `DETAILS_ONLY=1` to re-capture just the element shots.
+Five captures are **element** screenshots (`.timer-card`, `.water-card`, `.reminder-card`,
+`.install-card`, `.quiet-sheet`) rather than window screenshots, so they are exactly those panels
+at their own size and stay correct when the app's layout moves. `make-webp.py` prints brightness
+and contrast for every file: a blank page or a theme that failed to switch fails that check loudly,
+which is the only automated verification available on a pipeline whose output is pictures. Set
+`DETAILS_ONLY=1` to re-capture just the element shots, or `ONLY=time-dark,reminders-dark` to
+re-capture a subset. The install banner is dismissed through `localStorage` rather than clicked,
+because its close button also dismisses a completion toast.
 
 ---
 
 ## Checks
 
 `npm run audit` does not test anything in the abstract — it drives the **built site** in Chromium
-and asserts 60 specific things:
+and asserts 72 specific things:
 
 - crawler files exist and say the right things, and no invented rating is claimed;
 - content is not left hidden waiting for a scroll reveal, at reduced motion and after real input

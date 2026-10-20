@@ -10,6 +10,51 @@
       </p>
     </div>
 
+    <div class="story story--flip" style="margin-bottom: clamp(2.5rem, 5vw, 4rem)">
+      <div class="story__media" dwReveal>
+        <div class="frame">
+          <div class="frame__bar">
+            <span class="frame__dots" aria-hidden="true">
+              <span class="frame__dot"></span>
+              <span class="frame__dot"></span>
+              <span class="frame__dot"></span>
+            </span>
+            <span class="frame__title">DeepWork — install in this browser</span>
+          </div>
+          <img
+            class="frame__screen"
+            ngSrc="{{ installShot.src }}"
+            [width]="installShot.width"
+            [height]="installShot.height"
+            [alt]="installShot.alt"
+          />
+        </div>
+        <p class="caption">
+          The install dialog for a browser tab. The route is detected, not assumed.
+        </p>
+      </div>
+
+      <div class="story__body" dwReveal [dwRevealDelay]="90">
+        <div class="chip-row">
+          <span class="chip chip--accent">New in 3.0</span>
+          <span class="chip">Desktop, installed or tab</span>
+        </div>
+        <h3 class="h3">It knows whether it is an app, a tab or a phone</h3>
+        <p class="lead" style="font-size: var(--fs-sm)">
+          The three surfaces have different powers, and the app reads which one it is instead of
+          printing the same installation instructions to every browser.
+        </p>
+        <ul class="feature-list">
+          @for (point of installPoints; track point) {
+            <li class="feature-list__item">
+              <span class="feature-list__tick" aria-hidden="true">✓</span>
+              <span>{{ point }}</span>
+            </li>
+          }
+        </ul>
+      </div>
+    </div>
+
     <div class="grid grid--2">
       <article class="card card--edge" dwReveal>
         <p class="eyebrow">Its own shape at every width</p>

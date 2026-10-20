@@ -17,9 +17,13 @@ import { Matrix } from './sections/matrix';
 import { Nav } from './sections/nav';
 import { Planner } from './sections/planner';
 import { Privacy } from './sections/privacy';
+import { Quiet } from './sections/quiet';
+import { Reminders } from './sections/reminders';
 import { Showcase } from './sections/showcase';
 import { Source } from './sections/source';
 import { Tasks } from './sections/tasks';
+import { Time } from './sections/time';
+import { WhatsNew } from './sections/whats-new';
 import { Why } from './sections/why';
 
 /**
@@ -42,16 +46,20 @@ import { Why } from './sections/why';
     Nav,
     Hero,
     Showcase,
+    WhatsNew,
     Beyond,
     Focus,
     Planner,
     Tasks,
     Matrix,
+    Time,
     Habits,
     Hydration,
     Insights,
+    Reminders,
     Privacy,
     Desktop,
+    Quiet,
     Devices,
     HowItWorks,
     Learn,

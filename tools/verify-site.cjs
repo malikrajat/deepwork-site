@@ -42,15 +42,19 @@ const WIDTHS = [320, 360, 390, 430, 768, 1024, 1280, 1440, 1920, 2560];
 
 /** Every section the navigation promises. */
 const SECTION_IDS = [
+  'whats-new',
   'focus',
   'planner',
   'tasks',
   'matrix',
+  'time',
   'habits',
   'hydration',
   'insights',
+  'reminders',
   'your-data',
   'desktop',
+  'quiet',
   'devices',
   'how',
   'learn',

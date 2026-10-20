@@ -2194,3 +2194,275 @@ html[data-theme='light'] .code {
   font-size: var(--fs-sm);
   color: var(--text-3);
 }
+
+/* ===== New in 3.0 ===================================================== */
+@media (max-width: 900px) {
+  /* The drawer is small and the page behind it is dense; at 78% the section
+     heading showed through the bar. Nearly opaque, still blurred. */
+  .nav--stuck {
+    background: color-mix(in srgb, var(--bg) 96%, transparent);
+  }
+}
+
+.hero__new {
+  margin-top: 1.25rem;
+  font-size: var(--fs-sm);
+}
+.hero__new a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+}
+.hero__new a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.new__headlines {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.new__card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  color: inherit;
+  text-decoration: none;
+}
+.new__card:hover {
+  color: inherit;
+  text-decoration: none;
+}
+.new__card .chip {
+  align-self: flex-start;
+  margin-bottom: 1.1rem;
+}
+.new__card-title {
+  font-size: var(--fs-h3);
+  margin-bottom: 0.6rem;
+}
+.new__more {
+  margin-top: auto;
+  padding-top: 1.25rem;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.new__release {
+  margin-top: clamp(2.5rem, 5vw, 4.5rem);
+  padding-top: clamp(2rem, 4vw, 3rem);
+  border-top: 1px solid var(--border);
+}
+.new__release-head {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: clamp(1.5rem, 4vw, 4rem);
+  align-items: end;
+  margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+}
+.new__release-lead {
+  font-size: var(--fs-sm);
+  color: var(--text-2);
+}
+.release-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 clamp(2rem, 5vw, 4rem);
+}
+.release {
+  display: grid;
+  grid-template-columns: 58px minmax(0, 1fr);
+  gap: 1rem;
+  padding: 1.1rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.release__version {
+  align-self: start;
+  padding: 0.15rem 0.45rem;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  font-size: 10px;
+  color: var(--text-3);
+  text-align: center;
+}
+.release__title {
+  margin: 0 0 0.25rem;
+  font-size: var(--fs-sm);
+  font-weight: 650;
+  color: var(--text);
+}
+.release__body {
+  margin: 0;
+  font-size: var(--fs-xs);
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+/* ===== Time by Task =================================================== */
+.time__controls {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  margin-top: clamp(2rem, 4vw, 3rem);
+  padding: clamp(1.35rem, 2.5vw, 2rem);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+.time__ranges,
+.time__legend {
+  list-style: none;
+  margin: 0.75rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.35rem;
+}
+.time__range {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.time__range:last-child {
+  border-bottom: 0;
+}
+.time__range-label {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+}
+.time__range-note {
+  font-size: var(--fs-xs);
+  color: var(--text-3);
+  text-align: right;
+}
+.time__legend-item {
+  display: grid;
+  grid-template-columns: 14px minmax(0, 1fr);
+  gap: 0.65rem;
+  align-items: start;
+  padding: 0.35rem 0;
+  font-size: var(--fs-sm);
+  color: var(--text-2);
+}
+.time__legend-item b {
+  color: var(--text);
+  font-weight: 600;
+}
+.time__swatch {
+  width: 12px;
+  height: 12px;
+  margin-top: 0.35rem;
+  border-radius: 50%;
+}
+.time__detail {
+  margin-top: clamp(2.5rem, 5vw, 4.5rem);
+}
+
+/* ===== Standing reminders ============================================= */
+.reminders__ladder {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(1.5rem, 4vw, 4rem);
+  align-items: start;
+  margin-top: clamp(2.25rem, 4vw, 3.5rem);
+}
+.ladder-list {
+  list-style: none;
+  margin: 0;
+  padding: 1px;
+  display: grid;
+  gap: 1px;
+  border-radius: var(--radius);
+  background: var(--border);
+  overflow: hidden;
+}
+.ladder {
+  display: grid;
+  gap: 0.25rem;
+  padding: 1.1rem 1.25rem;
+  background: var(--surface-solid);
+}
+.ladder__name {
+  font-size: var(--fs-sm);
+  font-weight: 650;
+}
+.ladder__gaps {
+  font-size: var(--fs-xs);
+  color: var(--text-2);
+}
+.ladder__note {
+  font-size: var(--fs-xs);
+  color: var(--text-3);
+}
+.reminders__card-row {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(1.5rem, 4vw, 4rem);
+  align-items: center;
+  margin-top: clamp(2.25rem, 4vw, 3.5rem);
+}
+.reminders__card-figure {
+  margin: 0;
+}
+.reminders__card {
+  border-radius: var(--radius);
+  border: 1px solid var(--border-strong);
+  box-shadow: var(--shadow);
+}
+
+/* ===== Quiet & attention ============================================== */
+.quiet__panel {
+  max-width: 30rem;
+  margin-inline: auto;
+}
+.quiet__panel-shot {
+  width: 100%;
+  border-radius: var(--radius);
+  border: 1px solid var(--border-strong);
+  box-shadow: var(--shadow);
+}
+.quiet__alerts {
+  margin-top: clamp(2.5rem, 5vw, 4.5rem);
+  padding-top: clamp(2rem, 4vw, 3rem);
+  border-top: 1px solid var(--border);
+}
+.quiet__alerts-head {
+  max-width: 52rem;
+  margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
+}
+.quiet__actions {
+  margin-top: clamp(1.5rem, 3vw, 2.25rem);
+}
+.quiet__action-title {
+  margin: 0 0 0.35rem;
+  font-size: var(--fs-h4);
+  font-weight: 650;
+}
+.quiet__alert-points {
+  margin-top: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+@media (max-width: 900px) {
+  .new__release-head,
+  .time__controls,
+  .reminders__ladder,
+  .reminders__card-row {
+    grid-template-columns: 1fr;
+  }
+  .release-list {
+    grid-template-columns: 1fr;
+  }
+  .new__release-head {
+    gap: 0.75rem;
+  }
+}

@@ -5,11 +5,13 @@
 > rendered page. A shorter, curated index is at /llms.txt.
 
 ---
-Free · MIT licensed · v2.0.17
+Free · MIT licensed · v3.0.0
 
 ## Focus better. Work deeper .
 
-DeepWork is a free focus timer, task list, day planner and habit tracker in one window — and it keeps every byte on your own machine. Run a session, plan the day in focus blocks, and watch the week actually add up. No account. No cloud. No subscription.
+DeepWork is a free focus timer, task list, day planner and habit tracker in one window — and it keeps every byte on your own machine. Now it also remembers what the hours were for, and keeps asking about the one thing you cannot afford to miss. No account. No cloud. No subscription.
+
+New in 3.0 — Time by Task, standing reminders and quiet controls →
 - Windows · macOS · Linux · any browser
 - No account, no cloud
 - Works offline
@@ -36,6 +38,113 @@ Focused cards move along the board with 1, 2, 3 and the arrow keys. Ctrl+N adds 
 
 Today, Matrix, Calendar, Habits, Journal and Insights are one click apart.
 
+New in 3.0
+
+### What changed since you last looked
+
+This page described version 2.0.17. Since then the app gained a new page, a new kind of reminder and a quieter set of controls — plus a long list of smaller corrections. These are the ones that change how a working day actually goes.
+- New pageTime by TaskEvery focus session grouped by the work it paid for. A daily Code review becomes one line with one total, one rhythm and one consistency figure — not thirty rows to add up.Read the section →
+
+#### Time by Task
+
+Every focus session grouped by the work it paid for. A daily Code review becomes one line with one total, one rhythm and one consistency figure — not thirty rows to add up.
+- New featureStanding RemindersA reminder for the presentation, the class or the dose that keeps asking — on the desktop, in the app, and after a restart — until you press Done, Snooze or Stop.Read the section →
+
+#### Standing Reminders
+
+A reminder for the presentation, the class or the dose that keeps asking — on the desktop, in the app, and after a restart — until you press Done, Snooze or Stop.
+- New controlsA pause that pauses everythingPause, mute and focus in one panel on every surface, a mute that ends by itself, and a completion alert that can be answered without opening the window.Read the section →
+
+#### A pause that pauses everything
+
+Pause, mute and focus in one panel on every surface, a mute that ends by itself, and a completion alert that can be answered without opening the window.
+
+Also new
+
+#### Release by release
+
+Shipped between 2.0.18 and 3.0.0, in the app’s own words. The three headlines above have their own sections; this is everything else.
+- 3.0
+
+##### A tray menu for the work
+
+New task opens quick-add from wherever the app is, Settings brings the full window up on the right page, Pause offers 5, 10, 15 or 30 minutes, and the mute moved into a submenu of its own lengths.
+- 3.0
+
+##### A first launch that asks once
+
+One dialog offers to start DeepWork with the computer. Not now is an answer: it starts four or five quiet nudges a day, each with a Stop asking button, instead of asking the same question every launch.
+- 3.0
+
+##### A taskbar reminder that tells the truth
+
+Windows will not let an ordinary app pin itself. DeepWork asks the shell first; where the request would be refused, the button becomes Yes, show me and opens the app list where you can pin it.
+- 3.0
+
+##### A matrix that gives its space back
+
+A folded quadrant becomes a one-line strip and the open quadrants reflow into the room. The dividers drag by mouse or arrow keys, and the split is remembered as a share of the board.
+- 3.0
+
+##### Settings that fill the screen
+
+Settings and About now pack as many 380–600 px cards as the window fits, with the reading measure kept inside each card, instead of a 560 px strip in the middle of a 1920 px monitor.
+- 3.0
+
+##### An app that knows how it is running
+
+The desktop app, an installed web app and a browser tab are three different surfaces. The install dialog explains the one route this browser actually has, and an installed web app is told what it cannot do.
+- 3.0
+
+##### Every question answerable where it is asked
+
+The startup, taskbar and water questions carry Yes and Not now on their desktop notification, and the completion alert carries Pause, Next, Resume and Hold up — so answering does not mean finding the window.
+- 2.0.22
+
+##### A timeline that says what is running
+
+The session in progress is drawn inside the span it was booked for, and its own start and end times sit on the card instead of in a hover tooltip.
+- 2.0.22
+
+##### Today stays today
+
+Add to Today now carries the day it was set on. Yesterday’s starred work no longer follows you into this morning’s board, and a session started without a task is no longer filed against last week’s task.
+- 2.0.21
+
+##### The database is protected like the only copy it is
+
+The file is checked read-only before it is opened; a database that is there and unreadable stops startup instead of being replaced by an empty one; and every launch copies it into a backups folder before migrations touch it.
+- 2.0.20
+
+##### Edit a task where you read it
+
+A pencil on every board and matrix card, an edit control in the calendar, and Edit task on the dashboard’s current-focus card all open the one task form with the task already in its fields.
+- 2.0.20
+
+##### Add to the day you are looking at
+
+Today carries Add task, each date section has its own +, and every matrix quadrant has one that opens the form already in that quadrant.
+- 2.0.20
+
+##### An update you can turn down for good
+
+The update card gained Skip this version — that release is never offered again — while closing it and Remind me later are a twelve-hour snooze, not a silent goodbye.
+- 2.0.19
+
+##### Always on top now stays on top
+
+The flag is written straight to the window and read back from it, and a watcher re-asserts it when another application, a display change or a fullscreen window takes the spot away.
+- 2.0.18
+
+##### A drink is 30 ml, and the reminder is on
+
+The water nudge is on by default and counts the smallest thing anyone would call a drink, so a day of sipping adds up honestly instead of a handful of guesses at half a litre each.
+- 2.0.18
+
+##### A visitor count, said out loud
+
+The hosted web app counts visits with GoatCounter. It is off with one switch, never runs in the desktop build, and sends the page — never a task, a journal entry or an identifier.
+
 More than a Pomodoro
 
 ### A timer counts down. DeepWork keeps the whole day.
@@ -46,11 +155,14 @@ Most focus timers stop at the countdown and hand the rest of your day back to a 
 - Tasks Board, dates and deadlines
 - Eisenhower matrix Four quadrants, drag to prioritise
 - Today Only the work that belongs to today
+- Time by Task The work your hours actually went to
+- Standing reminders They keep asking until you answer
 - Habits Check in, keep a streak
 - Journal A dated entry per day
 - Water reminder Asks, counts, and stays quiet outside your hours
 - Insights Your own numbers, read back to you
-- Import & export Excel and CSV in, CSV out
+- Import & export Excel and CSV in, CSV and JSON out
+- Quiet controls Pause, mute and focus on every surface
 - Desktop behaviour Tray, mini widget, always on top
 - Local database One SQLite file, on your machine
 
@@ -66,6 +178,7 @@ Start the clock, and the rest of the app gets quiet. One ring fills as the sessi
 - Long break 15 min
 - Four sessions, then a long break The cycle you would expect from Pomodoro, and every part of it is a setting: the three lengths and how many sessions come before the long one.
 - An alert that will not be missed A finished session rings, raises a system notification, and moves both the widget and the card to the next of twelve colours — repeating until you answer it. Start, skip or stop answers it too.
+- An alert you can answer The completion alert carries Pause, Next, Resume and Hold up. Next moves on and starts the next session, and a crossed alert comes back after three minutes — because swiping it away is not an answer.
 - Tones generated, not downloaded Four choices — bell, chime, ding or none — synthesised with the Web Audio API, with the volume under your system controls and a tray mute.
 - A sentence, not a beep Every finished session draws a different line from twenty-four written for focus and twenty-four for breaks, walked in order so the same one does not come back twice.
 
@@ -110,8 +223,11 @@ Tasks
 Three columns, and a card moves between them by being dragged or by a single key. What makes it useful is what happens around that: the date filing, the keyboard, and the fact that your existing spreadsheet is not thrown away.
 - Cards are dragged between columns — the colour is the status, everywhere at once.
 - On Tasks the board is filed by date and the sections fold away, so a long list stays readable.
-- Today shows only today: an overdue task, one dated today, or one written today.
+- Today shows only today: an overdue task, one dated today, or one written today and starred onto it.
+- The star that puts a task on Today carries the day it was set on, so yesterday’s starred work expires instead of following you in.
 - Unfinished work carries forward by default. Turn it off and yesterday closes itself.
+- A pencil on every card — board, matrix, calendar, dashboard — opens the one task form with the task already in its fields.
+- Every date section has its own +, Today has Add task, and each matrix quadrant has one that opens the form in that quadrant.
 
 #### Adding a task takes one field
 
@@ -133,12 +249,64 @@ Prioritisation
 
 ### Decide once, in four boxes
 
-A long task list is not a plan. The matrix is where a task stops being a line and becomes a decision — and the decision is what the rest of the app works from.
+A long task list is not a plan. The matrix is where a task stops being a line and becomes a decision — and the decision is what the rest of the app works from. Fold a quadrant and the board gives its space to the ones still open.
 - Drag a card into a quadrant and its priority stops being a feeling.
 - The task list beside the board is resizable, and every quadrant scrolls on its own.
 - Collapse a quadrant, or the whole list, and the board still accepts a drop.
 - Quadrant order is what the day planner schedules from — Q1 first, Q4 last.
 - Insights shows completion per quadrant, so you can see where your work actually sits.
+
+Schedule folded into a strip. The three open quadrants took the space it gave up.
+
+#### The space comes back
+
+A collapsed quadrant used to hide its contents and keep its share of the board, which is why minimising Schedule never made Do First any bigger. Now the board reflows around what is open, and the split is yours to drag.
+- Three open quadrants put the first across the top and the other two side by side underneath; two sit side by side; one takes the whole board.
+- Maximise is the same thing as collapsing the other three, so there is one rule to understand rather than two.
+- Restore the layout hands back exactly what was there before.
+- The dividers drag by mouse or by arrow keys, with Home and End to even them out; neither side can go below 15%.
+- The split is stored as a share of the board, not as pixels, so it survives a window resize and comes back when a quadrant is reopened.
+
+Time by Task
+
+### The work your hours actually went to
+
+Your Code review is a new task row every morning. Count the rows and you learn nothing. Time by Task groups every focus session by the work’s title, so a daily routine becomes one line — one total, one first session, one last, one rhythm.
+- It groups the work, not the row Code review on Monday and Code review on Tuesday become one line: one all-time total, one first session, one last, one rhythm.
+- It answers over months Active days, sessions, average block and consistency sit beside the total, so a habit and a project do not look the same.
+- The shape has names Repeats daily, weekly or monthly, multi-day, one-off or untasked — the rhythm is detected from the days worked, and a configured recurrence wins when there is one.
+- The sessions are still there Open a row for the breakdown by week, the averages and the individual sessions behind the number.
+- Untasked time is shown Time the timer recorded without a task appears as Untasked focus, with the one sentence that fixes it next time, instead of being quietly dropped.
+
+> “Read the shape, not only the total.” The heading on the page’s own reading card.
+
+This month, grouped by work. The reading above the list is written from the same rows.
+
+The range switch
+- Today the hours since midnight
+- This week since Monday
+- This month the default view
+- This year month by month
+- All time everything recorded
+- Custom any two dates, or one day twice
+
+What a bar means
+- Repeating work daily, weekly or monthly
+- One-off a single piece of work
+- Multi-day one task across several days
+- Untasked time recorded without a task
+
+One solid colour per bar. The ring around a bar is “now” — this day, week, month or year — not a second colour to decode.
+
+#### Open the row. The total becomes evidence.
+
+A single figure can be a coincidence. The detail sheet is what lets you check it — and what lets the list stay a list, because the row itself keeps a fixed height.
+- This period and all time, side by side.
+- Average session length, and consistency across the days in the span.
+- A week-by-week table of time, sessions and days.
+- The recent sessions themselves, with their start times and durations.
+
+The list is virtualised: only the rows inside the scroll viewport exist in the page, so a year of work scrolls like a page rather than building a thousand cards.
 
 Habits & journal
 
@@ -172,19 +340,19 @@ Hydration
 
 ### Stay focused without forgetting the basics
 
-Deep work is not the only thing a long afternoon is missing. The water reminder is off until you switch it on, and when it is on it behaves like a question rather than a notification.
+Deep work is not the only thing a long afternoon is missing. The water reminder is on out of the box — it asks a question rather than announcing a fact, so “Not now” is one click — and a drink counts as 30 ml, the smallest thing anyone would call a drink.
 
 #### Every answer is a choice, not a field
 
 The useful range for each setting is narrow, and a number you have to type is a number you can mistype. So the reminder offers the sensible ones and nothing else.
 - Remind me every 15 · 20 · 25 · 30 · 45 · 60 · 90 · 120 · 180 min default 60
-- One drink counts as 30 · 50 · 70 · 90 · 100 · 150 · 200 · 250 · 300 · 400 · 500 · 750 · 1000 ml default 500 ml
+- One drink counts as 30 · 50 · 70 · 90 · 100 · 150 · 200 · 250 · 300 · 400 · 500 · 750 · 1000 ml default 30 ml
 - Daily target 1.5 · 2 · 2.5 · 3 L default 2 L
 - Working hours A from and a to time — reminders fire between them default 09:00 – 18:00
 
 #### Today, on the dashboard
 
-The card reads out the day against the target, how many drinks that is, when the last one was and what the reminder is doing next. + 500 ml logs a glass at the size you chose; Undo takes it back if you pressed it twice.
+The card reads out the day against the target, how many drinks that is, when the last one was and what the reminder is doing next. + 250 ml logs a glass at the size you chose; Undo takes it back if you pressed it twice.
 
 > “Focus is easier when you are not quietly dehydrated.” One of the ten lines the water reminder rotates through.
 
@@ -195,6 +363,14 @@ The water card, as it sits on the dashboard.
 #### It asks, it does not announce
 
 A card appears with the glass, the day so far and two answers: “Yes, I drank …” logs it, “Not now” closes it. Nothing else dismisses it — not a timer, not a click elsewhere — so a reminder cannot be lost by standing up for a minute.
+
+#### It is on out of the box
+
+The nudge is on by default and counts 30 ml a drink — the smallest thing anyone would call a drink — so a day of sipping adds up honestly. Both are still choices in Settings.
+
+#### It can be answered on the notification
+
+When the reminder arrives as a desktop notification, Yes, drank logs the glass and Not now closes it. Either answer takes the notification down again.
 
 #### It never stacks
 
@@ -244,17 +420,70 @@ Examples of the readings DeepWork writes — computed from your own rows by plai
 - Journalling Days written, words, average entry, and how focus differs on days you wrote
 - Recent sessions Average session length and the share of sessions you interrupted
 
+Standing reminders
+
+### A reminder that does not give up
+
+Write down the one thing you cannot afford to forget. When its moment arrives it keeps asking — on the desktop, in the app, and after a restart — until you answer it. It never brings the window forward, and a closed laptop is not an answer.
+
+Two standing, one kept. The card in front is the question; the count behind it is the queue.
+- It escalates, not repeats A quick first nudge, then longer gaps — three, five, ten, fifteen, twenty minutes, then every thirty for Insistent. The gap is measured from the last actual ring, so a snooze cannot shorten it.
+- It is stored, not scheduled A closed laptop is not an answer. Open the app after lunch and the morning’s reminder is still waiting, with the time it was due and the line “We kept it for you.”
+- One at a time Two things due together are a queue, not a stack of cards to dismiss. The card says how many are waiting behind it, and answering the first brings the next forward.
+- Crossing is not answering A notification swiped away in the middle of a call comes back after three minutes — because you were busy, not because you meant no.
+- It never steals the stage No window jumps in front of the room. The question waits on the sticky desktop notification and in the app, which is exactly where it can be answered without interrupting the presentation it is about.
+- Three exits, no cross Done keeps the promise. Snooze 10 min moves it on. Stop ends it honestly. Done and Stop are kept apart in the history, because one is an achievement and the other is a decision.
+
+Three rhythms
+
+#### Pick how hard it insists
+
+The rhythm is the user’s choice at the moment of writing it down — not a technical setting. Every ladder ends in the same last gap repeating, because none of them ever gives up.
+- Insistent 3 · 5 · 10 · 15 · 20 · then every 30 min A presentation, a class, a dose or a train.
+- Steady 10 · 20 · 30 · 45 · 60 · then every 60 min An ordinary appointment.
+- Gentle 30 · 45 · 60 · 90 · 120 · then every 120 min Something that can wait.
+
+The card, at its own size. There is no cross in the corner and no timeout; the only exits are the three buttons.
+
+#### It is not a calendar event, and not a task
+
+A standing reminder has no quadrant, no project and no completion semantics beyond “handled”, because the things it exists for — a presentation, a class, a dose, a train — are often not work at all.
+- Done, Snooze 10 min, Stop. The same three answers travel on the desktop notification.
+- A pause holds it; the mute does not. A pause stops the asking without erasing the reminder, and the overdue one speaks when the pause ends.
+- No quiet-hours bypass. A reminder respects the pause you set and the quiet hours your OS decides on; it does not override either.
+
 Your data
 
 ### It stays on your machine, and that is the feature
 
-Most productivity apps ask you to hand over your working life before they will show you a timer. DeepWork asks for nothing. No account, no cloud, no analytics on you — and a diagnostic trail you are allowed to read.
-- One SQLite file Tasks, sessions, habits, journal entries, water and settings live in a local database. There is no server to sync with, because there is no server.
+Most productivity apps ask you to hand over your working life before they will show you a timer. DeepWork asks for nothing: no account, no cloud, no analytics on your work. The hosted web app has one visit count, it says so here, and you can switch it off.
+- One SQLite file, copied before it is touched Tasks, sessions, habits, journal entries, water and settings live in a local database. Every launch copies it and its write-ahead log into a backups folder before migrations run, and a database that is there but unreadable stops startup with its path instead of being replaced by an empty one.
 - No account, ever Nothing to sign up for, nothing to sign in to, and no email address collected — there is no mechanism to collect one.
-- One read-only request The update check reads the public GitHub release list for the app you are running. It sends nothing about you, it is cached for six hours, and it never delays the window.
-- A real exit Export the whole task list to CSV — 24 columns, your date range, your filters. Your data leaves in a format you can open in Excel, not in a format only this app reads.
+- A short list of calls you can name The update check reads the public GitHub release list for the app you are running. An installer is downloaded only when you press Update. Links open in your own browser. That is the complete list for the desktop app — and the hosted web app has one more, below.
+- A real exit One JSON file exports sessions, tasks, habits, journal and water records, and importing it restores them after a confirmation. The task list also exports to a 24-column CSV you can open in Excel — not a format only this app reads.
 
 The same app, the same data, in the light theme. Both themes are designed rather than inverted.
+
+The one exception
+
+#### The hosted web app counts visits
+
+The app has no server of its own, so the web build uses GoatCounter — the same counter that runs on the author’s site. It exists so “is anybody using this?” has an answer without DeepWork running a backend.
+- It is GoatCounter, on the hosted web app only.
+- It sends the page — path, title, referrer, screen width, language and time zone — never a task, a journal entry or an identifier.
+- GoatCounter stores no IP address and sets no cookie of its own for this.
+- Count my visits is a switch in Settings → Visitor Counter → Details. With it off the script is never fetched at all.
+- The desktop build is never counted: it has no web address to report, and its Settings row says so.
+
+Backups
+
+#### The database is the only copy
+
+The one piece of state that exists nowhere else gets treated that way: checked before it is opened, copied before it is migrated, and never quietly replaced by an empty file that looks the same.
+- The file is checked read-only before anything opens it, so the check cannot itself be the thing that loses the data.
+- A truncated file, or one whose committed changes are still in its write-ahead log, is treated as data to protect rather than as an empty file to replace.
+- Backups are kept rather than rotated: a rolling series is the only thing that helps after a bad upgrade.
+- Every migration this app has shipped adds to the schema; none drops a table, a column or a row.
 
 #### Five log files you can actually open
 
@@ -280,9 +509,9 @@ Desktop
 
 The desktop build is the same Angular application inside a native shell — which is what makes a tray icon, an always-on-top timer and a floating widget possible at all. A browser tab cannot do any of those things, and this is the honest reason to install it.
 
-Launches when you sign in and opens normally without stealing focus from whatever you were doing. No installer writes a startup entry — you ask for it, in the app.
+A full dialog on first launch offers to start DeepWork when you sign in, leading with what that is worth. No installer writes a startup entry — you ask for it, in the app — and an install whose entry already exists never sees the question.
 
-Keeps the window above everything else, so the timer stays visible while you work in another application.
+Keeps the window above everything else, so the timer stays visible while you work in another application. The flag is read back from the window and re-asserted when another application, a display change or a fullscreen window takes the spot away.
 
 The window’s close button puts DeepWork next to the clock instead of ending it, so a session can finish and ring while the window is hidden. Exit in the tray menu is how you really quit.
 
@@ -301,19 +530,91 @@ Updates
 
 #### It tells you, once, and then installs
 
-DeepWork checks the public release list in the background on startup — never blocking the window, cached for six hours so it does not spend a rate limit, and reporting nothing back. A newer build shows up as a small pill beside the version, a system notification, and a card with one button.
+DeepWork checks the public release list in the background on startup — never blocking the window, cached for six hours so it does not spend a rate limit, and reporting nothing back. A newer build shows up as a small pill beside the version, a system notification, and a card that offers Update when the release carries something it can run, or Download when it does not.
 - Windows — the setup is downloaded with a progress bar and started; DeepWork closes behind it.
 - macOS — the disk image is downloaded and opened for you.
 - Linux — a .deb or .rpm goes to your installer, or an AppImage is made runnable and started.
-- A version you waved away with Later is not announced again.
+- A release with only portable archives gets a Download button that goes to the file for this machine, and says why it is not an Update.
+- Later is a twelve-hour snooze; Skip this version ends that release for good. A newer release is still a new question.
+
+The tray menu
+
+#### For the work, not just the window
+
+The tray used to be a place to show or hide the app. It now carries the things you reach for in the middle of a session.
+- New task opens quick-add from wherever the app is — expanding the widget first, because a 136×76 frame cannot hold a form.
+- Settings brings the full window up on the right page.
+- Pause offers 5, 10, 15 or 30 minutes, and Resume restarts only a timer the pause itself had stopped.
+- The mute moved into a submenu of its own lengths: 30 minutes, an hour, four hours or the rest of today.
+- Start with system and Always on top stay beside Exit, where they always were.
+
+Taskbar
+
+#### A pin reminder that tells the truth
+
+Windows 11 keeps programmatic pinning for apps it has packaged itself. The reminder asks the shell first instead of pretending the request always works.
+- The taskbar reminder asks the shell whether programmatic pinning is allowed before it offers anything.
+- Where the request would be accepted, Yes raises Windows’ own confirmation.
+- Where it would not — the usual unpackaged case — the button becomes Yes, show me and opens the installed-app list, where right-clicking DeepWork offers Pin to taskbar.
+- The taskbar is re-read before every reminder and after every answer, so “already pinned” silences the feature instead of nagging through it.
+- It is Windows-only and reports itself as unsupported elsewhere, because a reminder whose answer can never be observed should not exist.
 
 One honest caveat: the Windows and macOS installers are not code-signed yet, so Windows shows “Unknown publisher” and SmartScreen may interrupt the first run. The repository documents exactly what that means and how to verify a build. The web app avoids the question entirely, because there is nothing to install.
+
+Quiet & attention
+
+### A pause that pauses everything
+
+Pause, mute and focus used to live only in the system tray — which meant no way in on a Linux desktop without tray icons, in a browser tab, or on a phone. They are now one panel in four places, and each control means exactly one thing.
+- Focus mode Hides the navigation and puts the timer on its own. Every reminder keeps running, because a focus session is exactly when the completion alert matters.
+- Pause reminders 30 minutes, 1 hour, 4 hours or until you resume. It stops the timer, the cards and the system notifications together, and restarts only a timer it stopped.
+- Reminder sound 30 minutes, 1 hour or the rest of today. It mutes the tone only, so cards still arrive, and it expires by itself — even after a restart.
+
+The same panel opens from the sidebar’s footer, the phone’s top bar, Settings and Ctrl+Shift+Q . The tray menu is one more caller, so Windows, macOS and Linux cannot disagree about what “Pause for 30 minutes” does.
+
+The panel, shown on its own. Its three controls are independent: focus leaves the reminders running, a pause holds them, and a mute only stops the sound.
+
+Answerable alerts
+
+#### The clock can be driven from the notification
+
+A finished session posts four answers with the alert: Pause, Next, Resume and Hold up. Next moves on and starts the next session, so answering is all it takes to carry on. The in-app card draws the same four, which keeps the alert answerable on platforms whose notifications cannot report a press.
+
+##### Pause
+
+Pauses whatever is running when it is pressed, even if the alert has been in the notification centre for a while.
+
+##### Next
+
+Moves to the next session and starts it, so one answer carries on rather than leaving a full clock behind a second press.
+
+##### Resume
+
+Starts the session that is waiting.
+
+##### Hold up
+
+Closes the alert and leaves the clock exactly as it was.
+- The alert waits on screen instead of sliding away, and every button on it is an answer.
+- Crossing it is not an answer: a swiped alert comes back after three minutes, and every three minutes after that.
+- The startup, taskbar and water questions carry Yes and Not now on the notification too.
+- On Windows, DeepWork asks the shell whether a notification is welcome — Focus Assist, a fullscreen game, presentation mode or a locked screen — and holds the suggestion cards. A session’s own completion alert still arrives.
 
 Every screen
 
 ### Built for the device you are holding
 
 Open DeepWork on a phone, a tablet, a laptop, a desktop monitor or a television browser and you get the same application and the same features. What changes is the layout: it is built around the width it is given, rather than shrunk until it fits.
+
+The install dialog for a browser tab. The route is detected, not assumed.
+
+#### It knows whether it is an app, a tab or a phone
+
+The three surfaces have different powers, and the app reads which one it is instead of printing the same installation instructions to every browser.
+- In a browser tab, one bar explains the one install route this browser actually has — Chromium’s address bar, Safari’s File menu, a phone’s Share sheet, or the honest “this browser cannot”.
+- The system suggestion is offered once a week at most, and only when notifications are already permitted, so it never nags through a permission it cannot use.
+- Installed, the app asks once whether to open with the computer and shows exactly where that setting lives on Windows, macOS and Linux — because a web app is not allowed to write a login item.
+- Where the browser supports Document Picture-in-Picture, the installed app offers a small floating timer that stays above other windows.
 
 Its own shape at every width
 
@@ -377,7 +678,7 @@ Start a session and the ring fills. The planner has already laid your queue onto
 
 #### Read the week
 
-Analytics turns the sessions, tasks, habits and entries into numbers and sentences — where the time went, which habits held, and what your best hours actually are.
+Time by Task groups the sessions by the work they paid for, and Analytics turns the sessions, tasks, habits and entries into numbers and sentences — where the time went, which habits held, and what your best hours actually are.
 
 Learn the method
 
@@ -425,15 +726,15 @@ The fastest way to be disappointed by a tool is to be sold something it never cl
 - More than a timerFocus sessions, a day planner, tasks, matrix, habits, journal, hydration and analytics in one app.
 - Runs everywhere you workNative installers for Windows, macOS and Linux, plus a web app for everything else.
 - Honest about its behaviourReminders that wait for an answer, alerts that repeat until you deal with them, and logs you can actually read.
-- No dark patternsNo streak guilt, no artificial urgency, no upsell. Habit reminders are off until you ask for them.
+- No dark patternsNo streak guilt, no artificial urgency, no upsell.
 
 #### ! What it does not do
 
 - No cloud sync or multi-device sync — each install keeps its own local database.
 - No team, sharing or collaboration features; it is a single-person tool.
 - No native iOS or Android app — mobile means the web app in a browser.
+- No external calendar sync — the Calendar is the app’s own plan of your tasks, not a CalDAV client.
 - Windows and macOS installers are unsigned, so SmartScreen and Gatekeeper will warn on first run.
-- The test suite covers the logic layer well and the pages lightly; the end-to-end browser suite is still reported as advisory in CI.
 
 Nothing on this list is a bug being hidden. Each one is a decision that could change if enough people ask — the issue tracker is open.
 
@@ -451,7 +752,7 @@ The whole application is on GitHub — the Angular front end, the Rust desktop s
 - Prettier on every changed file
 - Unit tests with a coverage gate that cannot go backwards
 - A production `ng build`
-- An advisory end-to-end Playwright run
+- An end-to-end Playwright run
 - Installers for Windows, Linux and macOS on every push to main
 
 Get started
@@ -491,7 +792,7 @@ Yes. There is no paid tier, no subscription and no account to create. The web ap
 
 **Where is my data kept?**
 
-On your machine. The desktop app writes to a local SQLite database and the browser build keeps its data in your own browser storage. There is no DeepWork server, no sync and no telemetry — the only network request the app makes on its own is a check of the public GitHub release list, and that can only ever read.
+On your machine. The desktop app writes to a local SQLite database and the browser build keeps its data in your own browser storage. There is no DeepWork server and no sync. The desktop makes only the public GitHub release check, an installer download you press, and links you open; the hosted web app also counts visits, and that is the one exception — see “Does the web app count my visit?”.
 
 **Does it work offline?**
 
@@ -503,7 +804,7 @@ No. There is nothing to sign up for and nothing to sign in to. Open the app and 
 
 **Does it sync across my devices?**
 
-No, and by design. Each installation keeps its own database, so nothing leaves the machine it was written on. Tasks can be exported to CSV and imported back, which is the supported way to move work between them.
+No, and by design. Each installation keeps its own database, so nothing leaves the machine it was written on. A full JSON backup restores everything on another machine, and tasks can also be exported to CSV and imported back.
 
 **Which platforms can I use it on?**
 
@@ -521,6 +822,34 @@ The source is public on GitHub under the MIT licence, so you are free to read it
 
 The installers are not code-signed yet, so Windows shows "Unknown publisher" and SmartScreen may interrupt the first run. The app is honest about this and the repository documents it. The browser build avoids the question entirely, because there is nothing to install.
 
+**What is Time by Task?**
+
+A page that groups every focus session by the work’s title rather than by the task row. A daily Code review is a new task every morning, so counting rows would scatter the history; Time by Task shows one line with one all-time total, the sessions and active days, the first and last session, and whether the work repeats daily, weekly, monthly or is a one-off. It is at /time, and Ctrl+7 opens it.
+
+**What is a standing reminder?**
+
+A reminder for the things a normal reminder is worst at — a presentation, a class, a dose, a train — where you may be standing in front of a room and cannot answer. It is stored rather than scheduled, so closing the laptop does not cancel it; it escalates rather than repeating on a stopwatch; and it keeps asking until you press Done, Snooze 10 min or Stop. There is no close cross and no timeout.
+
+**Will a standing reminder interrupt a presentation?**
+
+No. It posts a sticky desktop notification and an in-app card, and it never brings the window forward. The notification carries the same three answers as the card, so the question can be dealt with where it is, without the app covering the thing it is reminding you about.
+
+**What is the difference between pause, mute and focus mode?**
+
+A pause stops the timer, the cards and the system notifications together, and restarts only a timer it stopped. A mute changes the sound only — cards still arrive — and expires by itself, even after a restart. Focus mode hides the navigation and leaves every reminder running, because a focus session is exactly when the completion alert matters.
+
+**Does the web app count my visit?**
+
+The hosted browser build counts visits with GoatCounter, so “is anybody using this?” has an answer without DeepWork running a server. It sends the page — path, title, referrer, screen width, language and time zone — never a task, a journal entry or an identifier, and GoatCounter stores no IP address for it. Count my visits is a switch in Settings, and with it off the script is never fetched. The desktop build is never counted.
+
+**What happens if my database is damaged?**
+
+A database that is present but unreadable stops startup with a card naming the file and the reason, instead of being replaced by an empty one that looks the same. Every launch also copies the database and its write-ahead log into a backups folder beside it before migrations run, and those copies are kept rather than rotated.
+
+**Does DeepWork use AI?**
+
+No. The readings on Analytics and Time by Task are rule-based sentences and totals computed from your own rows. Same records, same reading, every time. There is no model in the loop and nothing is sent anywhere to be analysed.
+
 Something not answered here? Open an issue — questions are welcome, and the answers usually end up on this page.
 
 ---
@@ -528,7 +857,7 @@ Something not answered here? Open an issue — questions are welcome, and the an
 ## About this file
 
 Generated from the rendered page by `tools/make-llms-txt.cjs`. Every statement in it is taken
-from the DeepWork application repository at version 2.0.17; nothing is invented, and there are
+from the DeepWork application repository; nothing is invented, and there are
 no user counts, download figures, ratings or testimonials because the project publishes none.
 
 - Source code: https://github.com/malikrajat/deepwork

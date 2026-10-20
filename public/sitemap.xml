@@ -14,7 +14,7 @@
 >
   <url>
     <loc>https://deepwork-pomodoro.netlify.app/</loc>
-    <lastmod>2026-10-03</lastmod>
+    <lastmod>2026-10-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
 
@@ -46,6 +46,48 @@
       <image:loc>https://deepwork-pomodoro.netlify.app/screenshots/matrix-dark.webp</image:loc>
       <image:title>DeepWork Eisenhower matrix</image:title>
       <image:caption>The Eisenhower matrix: four coloured quadrants holding task cards, with the task list down the side.</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://deepwork-pomodoro.netlify.app/screenshots/time-dark.webp</image:loc>
+      <image:title>DeepWork Time by Task — the work your hours went to</image:title>
+      <image:caption>Time by Task: this month's focused time, sessions and active days, a plain-language reading, and Code review grouped as one line with its all-time total and rhythm.</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://deepwork-pomodoro.netlify.app/screenshots/time-detail.webp</image:loc>
+      <image:title>DeepWork Time by Task detail sheet</image:title>
+      <image:caption>The detail sheet behind one piece of work: this period and all-time totals, average session, consistency, a week-by-week breakdown and the recent sessions.</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://deepwork-pomodoro.netlify.app/screenshots/reminders-dark.webp</image:loc>
+      <image:title>DeepWork standing reminders</image:title>
+      <image:caption>The Reminders page: standing reminders, the current question with Done, Snooze 10 min and Stop, and the ones waiting behind it.</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://deepwork-pomodoro.netlify.app/screenshots/quiet-sheet.webp</image:loc>
+      <image:title>DeepWork Focus &amp; reminders panel</image:title>
+      <image:caption>The Focus &amp; reminders panel: focus mode, pause for 30 minutes to 4 hours or until resume, and a sound mute for 30 minutes, an hour or the rest of today.</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://deepwork-pomodoro.netlify.app/screenshots/completion-dark.webp</image:loc>
+      <image:title>DeepWork answerable completion alert</image:title>
+      <image:caption>The dashboard with a completion alert offering Pause, Next, Resume and Hold up on the alert itself.</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://deepwork-pomodoro.netlify.app/screenshots/matrix-collapsed.webp</image:loc>
+      <image:title>DeepWork matrix with a folded quadrant</image:title>
+      <image:caption>The Eisenhower matrix after Schedule is folded: Do First spans the top, Delegate and Eliminate sit side by side, and Schedule is a one-line strip at the bottom.</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://deepwork-pomodoro.netlify.app/screenshots/install-dark.webp</image:loc>
+      <image:title>DeepWork install dialog in a browser</image:title>
+      <image:caption>The install dialog for a browser tab, showing the one install route that browser has and the line “Nothing leaves this device.”</image:caption>
     </image:image>
 
     <image:image>

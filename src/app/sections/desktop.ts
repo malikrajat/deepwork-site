@@ -32,19 +32,35 @@ export class Desktop {
   readonly switches = [
     {
       name: 'Start with system',
-      state: 'Off by default',
-      body: 'Launches when you sign in and opens normally without stealing focus from whatever you were doing. No installer writes a startup entry — you ask for it, in the app.',
+      state: 'Asked once',
+      body: 'A full dialog on first launch offers to start DeepWork when you sign in, leading with what that is worth. No installer writes a startup entry — you ask for it, in the app — and an install whose entry already exists never sees the question.',
     },
     {
       name: 'Always on top',
       state: 'Off by default',
-      body: 'Keeps the window above everything else, so the timer stays visible while you work in another application.',
+      body: 'Keeps the window above everything else, so the timer stays visible while you work in another application. The flag is read back from the window and re-asserted when another application, a display change or a fullscreen window takes the spot away.',
     },
     {
       name: 'Keep running in the tray',
       state: 'On by default',
       body: 'The window’s close button puts DeepWork next to the clock instead of ending it, so a session can finish and ring while the window is hidden. Exit in the tray menu is how you really quit.',
     },
+  ] as const;
+
+  readonly tray = [
+    'New task opens quick-add from wherever the app is — expanding the widget first, because a 136×76 frame cannot hold a form.',
+    'Settings brings the full window up on the right page.',
+    'Pause offers 5, 10, 15 or 30 minutes, and Resume restarts only a timer the pause itself had stopped.',
+    'The mute moved into a submenu of its own lengths: 30 minutes, an hour, four hours or the rest of today.',
+    'Start with system and Always on top stay beside Exit, where they always were.',
+  ] as const;
+
+  readonly launch = [
+    'The taskbar reminder asks the shell whether programmatic pinning is allowed before it offers anything.',
+    'Where the request would be accepted, Yes raises Windows’ own confirmation.',
+    'Where it would not — the usual unpackaged case — the button becomes Yes, show me and opens the installed-app list, where right-clicking DeepWork offers Pin to taskbar.',
+    'The taskbar is re-read before every reminder and after every answer, so “already pinned” silences the feature instead of nagging through it.',
+    'It is Windows-only and reports itself as unsupported elsewhere, because a reminder whose answer can never be observed should not exist.',
   ] as const;
 
   readonly widget = [

@@ -39,7 +39,7 @@ export class Source {
     'Prettier on every changed file',
     'Unit tests with a coverage gate that cannot go backwards',
     'A production `ng build`',
-    'An advisory end-to-end Playwright run',
+    'An end-to-end Playwright run',
     'Installers for Windows, Linux and macOS on every push to main',
   ] as const;
 }

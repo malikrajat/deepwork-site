@@ -5,7 +5,8 @@
       <h2 class="h2 section__title">Decide once, in four boxes</h2>
       <p class="lead section__lead">
         A long task list is not a plan. The matrix is where a task stops being a line and becomes a
-        decision — and the decision is what the rest of the app works from.
+        decision — and the decision is what the rest of the app works from. Fold a quadrant and the
+        board gives its space to the ones still open.
       </p>
     </div>
 
@@ -44,6 +45,52 @@
       <div class="story__body" dwReveal>
         <ul class="feature-list">
           @for (point of points; track point) {
+            <li class="feature-list__item">
+              <span class="feature-list__tick" aria-hidden="true">✓</span>
+              <span>{{ point }}</span>
+            </li>
+          }
+        </ul>
+      </div>
+    </div>
+
+    <div class="story story--flip" style="margin-top: clamp(2.5rem, 5vw, 4.5rem)">
+      <div class="story__media" dwReveal [dwRevealDelay]="80">
+        <div class="frame">
+          <div class="frame__bar">
+            <span class="frame__dots" aria-hidden="true">
+              <span class="frame__dot"></span>
+              <span class="frame__dot"></span>
+              <span class="frame__dot"></span>
+            </span>
+            <span class="frame__title">DeepWork — Matrix with Schedule folded</span>
+          </div>
+          <img
+            class="frame__screen"
+            ngSrc="{{ collapseShot.src }}"
+            [width]="collapseShot.width"
+            [height]="collapseShot.height"
+            [alt]="collapseShot.alt"
+          />
+        </div>
+        <p class="caption">
+          Schedule folded into a strip. The three open quadrants took the space it gave up.
+        </p>
+      </div>
+
+      <div class="story__body" dwReveal>
+        <div class="chip-row">
+          <span class="chip chip--accent">New in 3.0</span>
+          <span class="chip">A layout, not fixed columns</span>
+        </div>
+        <h3 class="h3">The space comes back</h3>
+        <p class="lead" style="font-size: var(--fs-sm)">
+          A collapsed quadrant used to hide its contents and keep its share of the board, which is
+          why minimising Schedule never made Do First any bigger. Now the board reflows around what
+          is open, and the split is yours to drag.
+        </p>
+        <ul class="feature-list">
+          @for (point of reflowPoints; track point) {
             <li class="feature-list__item">
               <span class="feature-list__tick" aria-hidden="true">✓</span>
               <span>{{ point }}</span>

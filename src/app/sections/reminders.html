@@ -1,0 +1,128 @@
+<section class="section" id="reminders">
+  <div class="shell">
+    <div class="section__head" dwReveal>
+      <p class="eyebrow">Standing reminders</p>
+      <h2 class="h2 section__title">A reminder that does not give up</h2>
+      <p class="lead section__lead">
+        Write down the one thing you cannot afford to forget. When its moment arrives it keeps
+        asking — on the desktop, in the app, and after a restart — until you answer it. It never
+        brings the window forward, and a closed laptop is not an answer.
+      </p>
+    </div>
+
+    <div class="story story--flip">
+      <div class="story__media" dwReveal [dwRevealDelay]="80">
+        <div class="frame">
+          <div class="frame__bar">
+            <span class="frame__dots" aria-hidden="true">
+              <span class="frame__dot"></span>
+              <span class="frame__dot"></span>
+              <span class="frame__dot"></span>
+            </span>
+            <span class="frame__title">DeepWork — Reminders</span>
+          </div>
+          <img
+            class="frame__screen"
+            ngSrc="{{ shot.src }}"
+            [width]="shot.width"
+            [height]="shot.height"
+            [alt]="shot.alt"
+          />
+        </div>
+        <p class="caption">
+          Two standing, one kept. The card in front is the question; the count behind it is the
+          queue.
+        </p>
+      </div>
+
+      <div class="story__body" dwReveal>
+        <div class="chip-row">
+          <span class="chip chip--accent">New feature</span>
+          <span class="chip">The newest in 3.0</span>
+        </div>
+
+        <ul class="feature-list">
+          @for (point of points; track point.title) {
+            <li class="feature-list__item">
+              <span class="feature-list__tick" aria-hidden="true">✓</span>
+              <span>
+                <b>{{ point.title }}</b>
+                {{ point.body }}
+              </span>
+            </li>
+          }
+        </ul>
+      </div>
+    </div>
+
+    <div class="reminders__ladder" dwReveal>
+      <div>
+        <p class="eyebrow">Three rhythms</p>
+        <h3 class="h3">Pick how hard it insists</h3>
+        <p class="lead" style="font-size: var(--fs-sm); margin-top: 0.75rem">
+          The rhythm is the user’s choice at the moment of writing it down — not a technical
+          setting. Every ladder ends in the same last gap repeating, because none of them ever gives
+          up.
+        </p>
+      </div>
+
+      <ul class="ladder-list">
+        @for (rhythm of rhythms; track rhythm.name) {
+          <li class="ladder">
+            <span class="ladder__name">{{ rhythm.name }}</span>
+            <span class="ladder__gaps mono">{{ rhythm.ladder }}</span>
+            <span class="ladder__note">{{ rhythm.note }}</span>
+          </li>
+        }
+      </ul>
+    </div>
+
+    <div class="reminders__card-row" dwReveal>
+      <figure class="reminders__card-figure">
+        <img
+          class="shot reminders__card"
+          ngSrc="{{ cardShot.src }}"
+          [width]="cardShot.width"
+          [height]="cardShot.height"
+          [alt]="cardShot.alt"
+        />
+        <figcaption class="caption">
+          The card, at its own size. There is no cross in the corner and no timeout; the only exits
+          are the three buttons.
+        </figcaption>
+      </figure>
+
+      <div class="reminders__card-copy">
+        <h3 class="h3">It is not a calendar event, and not a task</h3>
+        <p class="lead" style="font-size: var(--fs-sm)">
+          A standing reminder has no quadrant, no project and no completion semantics beyond
+          “handled”, because the things it exists for — a presentation, a class, a dose, a train —
+          are often not work at all.
+        </p>
+        <ul class="feature-list">
+          <li class="feature-list__item">
+            <span class="feature-list__tick" aria-hidden="true">✓</span>
+            <span
+              ><b>Done, Snooze 10 min, Stop.</b> The same three answers travel on the desktop
+              notification.</span
+            >
+          </li>
+          <li class="feature-list__item">
+            <span class="feature-list__tick" aria-hidden="true">✓</span>
+            <span
+              ><b>A pause holds it; the mute does not.</b> A pause stops the asking without erasing
+              the reminder, and the overdue one speaks when the pause ends.</span
+            >
+          </li>
+          <li class="feature-list__item">
+            <span class="feature-list__tick" aria-hidden="true">✓</span>
+            <span
+              ><b>No quiet-hours bypass.</b> A reminder respects the pause you set and the quiet
+              hours your OS decides on; it does not override either.</span
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

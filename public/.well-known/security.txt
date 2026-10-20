@@ -6,9 +6,10 @@
 #
 # There is no bug bounty, no paid programme and no security team: this is a
 # static site published by one developer, and the honest description of the
-# process is "open an issue and it will be looked at". No email address is
-# listed because inventing one would be worse than having none.
+# process is "write to the address below, or open an issue, and it will be
+# looked at". Both routes are listed; the address is a real one the owner reads.
 
+Contact: mailto:contact@rajatmalik.dev
 Contact: https://github.com/malikrajat/deepwork/issues/new
 Expires: 2027-10-03T00:00:00.000Z
 Preferred-Languages: en

@@ -30,7 +30,7 @@ export class Hero {
     src: 'screenshots/dashboard-dark.webp',
     width: 1440,
     height: 900,
-    alt: 'The DeepWork dashboard: a focus clock mid-session, today’s tasks, and cards for the current cycle, the day’s plan and today’s water intake.',
+    alt: 'The DeepWork dashboard: a 25-minute focus session linked to Write the launch note, four of eight sessions done today, today’s four focus sessions on the timeline, and the cycle and schedule cards below.',
   };
 
   readonly facts = [

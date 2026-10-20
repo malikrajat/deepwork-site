@@ -16,8 +16,10 @@
 
     <p class="faq__more" dwReveal>
       Something not answered here?
-      <a [href]="site.issuesUrl" target="_blank" rel="noopener">Open an issue</a> — questions are
-      welcome, and the answers usually end up on this page.
+      <a [href]="site.issuesUrl" target="_blank" rel="noopener">Open an issue</a>, email
+      <a [href]="supportUrl">{{ site.supportEmail }}</a> for help with the app, or
+      <a [href]="contactUrl">{{ site.contactEmail }}</a> for anything else — questions are welcome,
+      and the answers usually end up on this page.
     </p>
   </div>
 </section>

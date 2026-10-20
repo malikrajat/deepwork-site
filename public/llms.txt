@@ -1,12 +1,12 @@
 # DeepWork
 
-> DeepWork is a free, local-first Pomodoro timer, task manager and habit tracker
-> for Windows, macOS and Linux desktops, and for any modern web browser. It runs
-> entirely offline and keeps every byte of data in a local SQLite database: no
-> account, no cloud sync, no telemetry, no subscription. It is more than a
-> countdown — focus sessions, a daily timeline planner, a task board, an
-> Eisenhower matrix, habits, journalling, hydration reminders and on-device
-> analytics all live in one window.
+> DeepWork is a free, local-first Pomodoro timer, task manager and standing-reminder
+> app for Windows, macOS and Linux desktops, and for any modern web browser. It
+> runs entirely offline and keeps every byte of data in a local SQLite database:
+> no account, no cloud sync, no telemetry on the user's work, no subscription. It
+> is more than a countdown — focus sessions, a daily timeline planner, a task
+> board, an Eisenhower matrix, Time by Task reporting, standing reminders, habits,
+> journalling, hydration reminders and on-device analytics all live in one window.
 
 Key facts, all verifiable against the repository:
 
@@ -14,9 +14,13 @@ Key facts, all verifiable against the repository:
 - **Platforms:** Windows 10+ (.exe/.msi), macOS Intel and Apple Silicon (.dmg/.app), Linux
   (.AppImage/.deb/.rpm), and the web app in any modern browser — including on a phone or tablet.
   There is no native iOS or Android app.
-- **Data:** a local SQLite file on the user's own machine. The only network request the app makes on
-  its own is a read of the public GitHub release list for update checking, cached for six hours.
-- **Version described here:** 2.0.17
+- **Data:** a local SQLite file on the user's own machine. The desktop app's own network calls are
+  the public GitHub release check, an installer download the user presses, and links the user opens.
+  The hosted web app has one more: an opt-out GoatCounter visit count that sends the page, never a
+  task, a journal entry or an identifier. The desktop build is never counted.
+- **Backups:** every launch copies the database and its write-ahead log into a `backups` folder
+  before migrations run; an unreadable database stops startup instead of being replaced.
+- **Version described here:** 3.0.0
 - **Built with:** Angular 22, TypeScript, Tauri 2, Rust, SQLite, Tailwind CSS 4.
 - **Licence:** MIT. The source is at https://github.com/malikrajat/deepwork and the licence text is
   at https://github.com/malikrajat/deepwork/blob/main/LICENSE — you may read it, change it and ship
@@ -29,27 +33,49 @@ Canonical page: https://deepwork-pomodoro.netlify.app/
 Web app: https://malikrajat.github.io/deepwork/
 Downloads: https://github.com/malikrajat/deepwork/releases/latest
 
+## New in 3.0
+
+- [Time by Task](https://deepwork-pomodoro.netlify.app/#time): every focus session grouped by the
+  work's title rather than the task row, so a daily Code review is one line with one all-time total,
+  sessions, active days, first and last session, and a detected rhythm (daily, weekly, monthly,
+  multi-day, one-off or untasked). Ranges are Today, This week, This month, This year, All time and
+  Custom; opening a row shows the period and all-time totals, average session, consistency, a
+  week-by-week breakdown and the sessions themselves. Untasked time is shown, not hidden.
+- [Standing reminders](https://deepwork-pomodoro.netlify.app/#reminders): a stored reminder, not a
+  scheduled timer, for a presentation, a class, a dose or a train. It escalates instead of repeating
+  on a stopwatch — insistent is 3, 5, 10, 15, 20 then every 30 minutes, with longer ladders for
+  Steady and Gentle — survives a closed laptop and a restart, asks one at a time and says how many
+  are behind it. A crossed notification returns after three minutes. The only exits are Done,
+  Snooze 10 min and Stop; there is no close cross, and it never brings the window forward.
+- [Quiet controls](https://deepwork-pomodoro.netlify.app/#quiet): one Focus & reminders panel on the
+  sidebar, the phone's top bar, Settings and Ctrl+Shift+Q. Pause stops the timer, cards and system
+  notifications together and restarts only a timer it stopped. A sound mute lasts 30 minutes, 1
+  hour or the rest of today and expires by itself. Focus mode hides the navigation and leaves every
+  reminder running. The completion alert carries Pause, Next, Resume and Hold up; a crossed alert
+  comes back after three minutes, and on Windows the app asks the shell whether a notification is
+  welcome before it shows a suggestion.
+
 ## Focus sessions
 
-- [Focus sessions](https://deepwork-pomodoro.netlify.app/#focus): the Pomodoro workflow — 25-minute focus sessions, 5-minute short breaks and 15-minute long breaks by default, four sessions before a long break, every length configurable. A circular ring fills as the session runs. A finished session rings, raises a system notification and repeats until it is answered, moving through a twelve-colour palette; each completion also draws one of twenty-four written lines for focus and twenty-four for breaks.
+- [Focus sessions](https://deepwork-pomodoro.netlify.app/#focus): the Pomodoro workflow — 25-minute focus sessions, 5-minute short breaks and 15-minute long breaks by default, four sessions before a long break, every length configurable. A circular ring fills as the session runs. A finished session rings, raises a system notification and repeats until it is answered, moving through a twelve-colour palette; each completion also draws one of twenty-four written lines for focus and twenty-four for breaks. The alert can be answered with Pause, Next, Resume or Hold up, and Next starts the next session.
 
 ## Planning and tasks
 
 - [Day planner](https://deepwork-pomodoro.netlify.app/#planner): queued tasks are laid onto a timeline of focus blocks, with breaks reserved between them, in Eisenhower-quadrant order. Tasks can be pinned to a time, span several blocks, or be pulled into the day by "Fit day". The day reports its own focus minutes, break minutes, pomodoros and task count.
-- [Tasks and matrix](https://deepwork-pomodoro.netlify.app/#tasks): a To Do / In Progress / Done board with drag and drop and full keyboard control (`1`, `2`, `3`, arrow keys, `Enter`). Quick add is on every page and on `Ctrl+N`. Tasks carry a title, description, priority P1–P4, deadline, quadrant, tags and a repeat rule (daily, weekly or monthly, with weekdays and an end date). Import from Excel or CSV with a validated preview, and export to CSV with 24 columns.
-- [Eisenhower matrix](https://deepwork-pomodoro.netlify.app/#matrix): four quadrants — Q1 Do First, Q2 Schedule, Q3 Delegate, Q4 Eliminate — that decide the order the planner schedules from and that analytics reports completion against.
+- [Tasks and matrix](https://deepwork-pomodoro.netlify.app/#tasks): a To Do / In Progress / Done board with drag and drop and full keyboard control (`1`, `2`, `3`, arrow keys, `Enter`). Quick add is on every page and on `Ctrl+N`. Tasks carry a title, description, priority P1–P4, deadline, quadrant, tags and a repeat rule (daily, weekly or monthly, with weekdays and an end date). Every card that shows a task carries a way into the one editor; date sections, Today and every quadrant have their own add button. The star that puts a task on Today is scoped to the day. Import from Excel or CSV with a validated preview, and export to CSV with 24 columns.
+- [Eisenhower matrix](https://deepwork-pomodoro.netlify.app/#matrix): four quadrants — Q1 Do First, Q2 Schedule, Q3 Delegate, Q4 Eliminate — that decide the order the planner schedules from and that analytics reports completion against. A collapsed quadrant becomes a one-line strip and the open ones reflow; dividers drag by mouse or arrow keys, with a 15% minimum, and the split is remembered as a share of the board.
 
 ## Habits, wellbeing and reflection
 
 - [Habits and journal](https://deepwork-pomodoro.netlify.app/#habits): habits with a name and an icon, a one-press check-in, current and best streaks, a completion percentage, an all-time count and a 30-day strip showing exactly which days were missed. The journal is one dated entry per day with writing prompts, saved as you type, with days written, words all-time, average entry, streaks and 30-day consistency.
-- [Hydration](https://deepwork-pomodoro.netlify.app/#hydration): an optional water reminder that asks rather than announces, with two answers. Intervals from 15 to 180 minutes, drink sizes from 30 to 1000 ml, targets of 1.5 to 3 litres, and a working-hours window. It never stacks an unanswered question, stays quiet outside working hours, and counts the glass by itself when the window is minimised. This is a habit nudge, not medical advice.
+- [Hydration](https://deepwork-pomodoro.netlify.app/#hydration): a water reminder that is on out of the box and asks rather than announces, with two answers. One drink counts as 30 ml by default — the smallest thing anyone would call a drink — with intervals from 15 to 180 minutes, drink sizes up to 1000 ml, targets of 1.5 to 3 litres, and a 09:00–18:00 working-hours window. It never stacks an unanswered question, stays quiet outside working hours, can be answered from the desktop notification (Yes, drank / Not now), and counts the glass by itself when the window is minimised. This is a habit nudge, not medical advice.
 
 ## Insight and privacy
 
 - [Insights](https://deepwork-pomodoro.netlify.app/#insights): a 12-week focus heatmap, focus by hour of day with the peak window called out, average focus by weekday, task flow (created against closed), completion by quadrant, habit consistency, journalling statistics, and average session length with the share of interrupted sessions. Every chart is paired with a plain-language reading computed from the user's own rows by fixed rules. **There is no AI and no model of any kind in this app** — the readings are deterministic.
-- [Your data](https://deepwork-pomodoro.netlify.app/#your-data): local SQLite storage, no accounts, no cloud, five rolling log files the user can open and copy, CSV as a real exit, and fonts that ship with the app so it renders identically offline.
-- [Desktop app](https://deepwork-pomodoro.netlify.app/#desktop): the Tauri build adds a tray icon, an always-on-top window, a 136×76 draggable floating mini widget with the same countdown ring, and in-app updates that download and start the right installer for the platform.
-- [Common questions](https://deepwork-pomodoro.netlify.app/#faq): free, offline, where the data lives, why there is no sync, platform support, team use, licensing and the unsigned-installer warning.
+- [Your data](https://deepwork-pomodoro.netlify.app/#your-data): local SQLite storage with a backup before every migration and a read-only preflight check, no accounts, no cloud, five rolling log files the user can open and copy, a full JSON backup and CSV export as real exits, and fonts that ship with the app so it renders identically offline. The hosted web app's GoatCounter visit count is the one exception, is disclosed, can be switched off, and never runs in the desktop build.
+- [Desktop app](https://deepwork-pomodoro.netlify.app/#desktop): the Tauri build adds a tray icon whose menu can add a task, open Settings and pause for 5 to 30 minutes; an always-on-top window that re-asserts itself; a 136×76 draggable floating mini widget with the same countdown ring; a first-launch question about starting with the computer; and an honest taskbar-pin reminder that asks Windows whether pinning is allowed. Updates download and start the right installer for the platform, Later is a twelve-hour snooze, and Skip this version ends that release.
+- [Common questions](https://deepwork-pomodoro.netlify.app/#faq): free, offline, where the data lives, why there is no sync, platform support, team use, licensing, the unsigned-installer warning, Time by Task, standing reminders, pause versus mute versus focus mode, the visit counter and database recovery.
 
 ## Optional
 
@@ -58,3 +84,5 @@ Downloads: https://github.com/malikrajat/deepwork/releases/latest
 - [Licence text](https://github.com/malikrajat/deepwork/blob/main/LICENSE): MIT.
 - [Changelog](https://github.com/malikrajat/deepwork/blob/main/CHANGELOG.md): the written history of every release.
 - [Report an issue](https://github.com/malikrajat/deepwork/issues/new): bug reports and feature requests.
+- [Contact](mailto:contact@rajatmalik.dev): general enquiries about the project and this site.
+- [Support](mailto:support@rajatmalik.dev): help installing or using DeepWork.

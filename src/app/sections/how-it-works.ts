@@ -35,7 +35,7 @@ export class HowItWorks {
     {
       num: '04',
       title: 'Read the week',
-      body: 'Analytics turns the sessions, tasks, habits and entries into numbers and sentences — where the time went, which habits held, and what your best hours actually are.',
+      body: 'Time by Task groups the sessions by the work they paid for, and Analytics turns the sessions, tasks, habits and entries into numbers and sentences — where the time went, which habits held, and what your best hours actually are.',
     },
   ] as const;
 }

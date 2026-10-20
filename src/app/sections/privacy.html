@@ -5,8 +5,8 @@
       <h2 class="h2 section__title">It stays on your machine, and that is the feature</h2>
       <p class="lead section__lead">
         Most productivity apps ask you to hand over your working life before they will show you a
-        timer. DeepWork asks for nothing. No account, no cloud, no analytics on you — and a
-        diagnostic trail you are allowed to read.
+        timer. DeepWork asks for nothing: no account, no cloud, no analytics on your work. The
+        hosted web app has one visit count, it says so here, and you can switch it off.
       </p>
     </div>
 
@@ -48,6 +48,44 @@
           inverted.
         </p>
       </div>
+    </div>
+
+    <div class="grid grid--2" style="margin-top: clamp(2rem, 4vw, 3rem)">
+      <article class="card card--edge" dwReveal>
+        <p class="eyebrow">The one exception</p>
+        <h3 class="card__title">The hosted web app counts visits</h3>
+        <p class="card__body" style="margin-bottom: 1rem">
+          The app has no server of its own, so the web build uses GoatCounter — the same counter
+          that runs on the author’s site. It exists so “is anybody using this?” has an answer
+          without DeepWork running a backend.
+        </p>
+        <ul class="feature-list">
+          @for (line of counter; track line) {
+            <li class="feature-list__item">
+              <span class="feature-list__tick" aria-hidden="true">✓</span>
+              <span>{{ line }}</span>
+            </li>
+          }
+        </ul>
+      </article>
+
+      <article class="card" dwReveal [dwRevealDelay]="90">
+        <p class="eyebrow">Backups</p>
+        <h3 class="card__title">The database is the only copy</h3>
+        <p class="card__body" style="margin-bottom: 1rem">
+          The one piece of state that exists nowhere else gets treated that way: checked before it
+          is opened, copied before it is migrated, and never quietly replaced by an empty file that
+          looks the same.
+        </p>
+        <ul class="feature-list">
+          @for (line of backup; track line) {
+            <li class="feature-list__item">
+              <span class="feature-list__tick" aria-hidden="true">✓</span>
+              <span>{{ line }}</span>
+            </li>
+          }
+        </ul>
+      </article>
     </div>
 
     <div class="grid grid--2" style="margin-top: clamp(2rem, 4vw, 3rem)">

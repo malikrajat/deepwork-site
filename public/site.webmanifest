@@ -2,7 +2,7 @@
   "id": "/deepwork-site/",
   "name": "DeepWork — Focus better. Work deeper.",
   "short_name": "DeepWork",
-  "description": "The DeepWork product site: a free Pomodoro timer, task manager and habit tracker that keeps its data on your own machine.",
+  "description": "The DeepWork product site: a free Pomodoro timer, task manager and standing-reminder app that keeps its data on your own machine.",
   "lang": "en",
   "dir": "ltr",
   "start_url": ".",
@@ -40,20 +40,48 @@
   "screenshots": [
     {
       "src": "screenshots/dashboard-phone.webp",
-      "sizes": "390x844",
+      "sizes": "900x1948",
       "type": "image/webp",
       "form_factor": "narrow",
       "label": "The focus clock and today's tasks on a phone"
     },
     {
       "src": "screenshots/dashboard-dark.webp",
-      "sizes": "1440x900",
+      "sizes": "1800x1125",
       "type": "image/webp",
       "form_factor": "wide",
       "label": "The DeepWork dashboard"
+    },
+    {
+      "src": "screenshots/time-dark.webp",
+      "sizes": "1800x1125",
+      "type": "image/webp",
+      "form_factor": "wide",
+      "label": "Time by Task: the work your hours went to"
+    },
+    {
+      "src": "screenshots/reminders-dark.webp",
+      "sizes": "1800x1125",
+      "type": "image/webp",
+      "form_factor": "wide",
+      "label": "Standing reminders that keep asking until answered"
     }
   ],
   "shortcuts": [
+    {
+      "name": "What's new in 3.0",
+      "short_name": "What's new",
+      "description": "Time by Task, standing reminders and quiet controls",
+      "url": "./#whats-new",
+      "icons": [{ "src": "icons/128x128.png", "sizes": "128x128", "type": "image/png" }]
+    },
+    {
+      "name": "Time by Task",
+      "short_name": "Time by Task",
+      "description": "The work your focus hours actually went to",
+      "url": "./#time",
+      "icons": [{ "src": "icons/128x128.png", "sizes": "128x128", "type": "image/png" }]
+    },
     {
       "name": "What a Pomodoro is",
       "short_name": "Learn",

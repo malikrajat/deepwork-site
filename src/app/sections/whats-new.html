@@ -1,0 +1,56 @@
+<section class="section section--tight" id="whats-new">
+  <div class="shell">
+    <div class="section__head" dwReveal>
+      <p class="eyebrow">New in 3.0</p>
+      <h2 class="h2 section__title">What changed since you last looked</h2>
+      <p class="lead section__lead">
+        This page described version 2.0.17. Since then the app gained a new page, a new kind of
+        reminder and a quieter set of controls — plus a long list of smaller corrections. These are
+        the ones that change how a working day actually goes.
+      </p>
+    </div>
+
+    <ul class="grid grid--3 new__headlines">
+      @for (item of headlines; track item.title; let i = $index) {
+        <li>
+          <a
+            class="card card--edge card--hover new__card"
+            [href]="item.href"
+            dwReveal
+            [dwRevealDelay]="i * 70"
+          >
+            <span class="chip chip--accent">{{ item.chip }}</span>
+            <h3 class="card__title new__card-title">{{ item.title }}</h3>
+            <p class="card__body">{{ item.body }}</p>
+            <span class="new__more">Read the section <span aria-hidden="true">→</span></span>
+          </a>
+        </li>
+      }
+    </ul>
+
+    <div class="new__release" dwReveal>
+      <div class="new__release-head">
+        <div>
+          <p class="eyebrow">Also new</p>
+          <h3 class="h3">Release by release</h3>
+        </div>
+        <p class="lead new__release-lead">
+          Shipped between 2.0.18 and 3.0.0, in the app’s own words. The three headlines above have
+          their own sections; this is everything else.
+        </p>
+      </div>
+
+      <ul class="release-list">
+        @for (note of notes; track note.title) {
+          <li class="release">
+            <span class="release__version mono">{{ note.version }}</span>
+            <div>
+              <h4 class="release__title">{{ note.title }}</h4>
+              <p class="release__body">{{ note.body }}</p>
+            </div>
+          </li>
+        }
+      </ul>
+    </div>
+  </div>
+</section>

@@ -37,7 +37,7 @@ export class Hydration {
     {
       label: 'One drink counts as',
       value: '30 · 50 · 70 · 90 · 100 · 150 · 200 · 250 · 300 · 400 · 500 · 750 · 1000 ml',
-      def: '500 ml',
+      def: '30 ml',
     },
     { label: 'Daily target', value: '1.5 · 2 · 2.5 · 3 L', def: '2 L' },
     {
@@ -51,6 +51,14 @@ export class Hydration {
     {
       title: 'It asks, it does not announce',
       body: 'A card appears with the glass, the day so far and two answers: “Yes, I drank …” logs it, “Not now” closes it. Nothing else dismisses it — not a timer, not a click elsewhere — so a reminder cannot be lost by standing up for a minute.',
+    },
+    {
+      title: 'It is on out of the box',
+      body: 'The nudge is on by default and counts 30 ml a drink — the smallest thing anyone would call a drink — so a day of sipping adds up honestly. Both are still choices in Settings.',
+    },
+    {
+      title: 'It can be answered on the notification',
+      body: 'When the reminder arrives as a desktop notification, Yes, drank logs the glass and Not now closes it. Either answer takes the notification down again.',
     },
     {
       title: 'It never stacks',

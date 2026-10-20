@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { LICENSE_SPDX, SITE, SOURCE_LABEL } from '../core/site';
+import { CONTACT_URL, LICENSE_SPDX, SITE, SOURCE_LABEL, SUPPORT_URL } from '../core/site';
 
 interface FooterLink {
   label: string;
@@ -36,9 +36,13 @@ export class Footer {
     {
       heading: 'Product',
       links: [
+        { label: "What's new in 3.0", href: '#whats-new' },
         { label: 'Focus sessions', href: '#focus' },
         { label: 'Day planner', href: '#planner' },
         { label: 'Tasks & matrix', href: '#tasks' },
+        { label: 'Time by Task', href: '#time' },
+        { label: 'Standing reminders', href: '#reminders' },
+        { label: 'Quiet controls', href: '#quiet' },
         { label: 'Habits & journal', href: '#habits' },
         { label: 'Insights', href: '#insights' },
         { label: 'Desktop app', href: '#desktop' },
@@ -52,6 +56,7 @@ export class Footer {
         { label: 'Download for desktop', href: SITE.latestReleaseUrl, external: true },
         { label: 'All releases', href: SITE.releasesUrl, external: true },
         { label: 'Common questions', href: '#faq' },
+        { label: 'Support', href: SUPPORT_URL },
       ],
     },
     {
@@ -60,6 +65,7 @@ export class Footer {
         { label: 'Source on GitHub', href: SITE.repoUrl, external: true },
         { label: 'Report an issue', href: SITE.issuesUrl, external: true },
         { label: 'Changelog', href: SITE.changelogUrl, external: true },
+        { label: 'Contact', href: CONTACT_URL },
         { label: `Built by ${SITE.author}`, href: SITE.authorUrl, external: true },
       ],
     },

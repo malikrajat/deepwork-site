@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 import { Reveal } from '../core/reveal';
-import { FAQ, SITE } from '../core/site';
+import { CONTACT_URL, FAQ, SITE, SUPPORT_URL } from '../core/site';
 
 /**
  * Common questions.
@@ -22,4 +22,6 @@ import { FAQ, SITE } from '../core/site';
 export class Faq {
   readonly items = FAQ;
   readonly site = SITE;
+  readonly contactUrl = CONTACT_URL;
+  readonly supportUrl = SUPPORT_URL;
 }

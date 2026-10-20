@@ -41,6 +41,10 @@ export class Focus {
       body: 'A finished session rings, raises a system notification, and moves both the widget and the card to the next of twelve colours — repeating until you answer it. Start, skip or stop answers it too.',
     },
     {
+      title: 'An alert you can answer',
+      body: 'The completion alert carries Pause, Next, Resume and Hold up. Next moves on and starts the next session, and a crossed alert comes back after three minutes — because swiping it away is not an answer.',
+    },
+    {
       title: 'Tones generated, not downloaded',
       body: 'Four choices — bell, chime, ding or none — synthesised with the Web Audio API, with the volume under your system controls and a tray mute.',
     },

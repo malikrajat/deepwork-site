@@ -58,7 +58,10 @@ export class Tasks {
   readonly boardNotes = [
     'Cards are dragged between columns — the colour is the status, everywhere at once.',
     'On Tasks the board is filed by date and the sections fold away, so a long list stays readable.',
-    'Today shows only today: an overdue task, one dated today, or one written today.',
+    'Today shows only today: an overdue task, one dated today, or one written today and starred onto it.',
+    'The star that puts a task on Today carries the day it was set on, so yesterday’s starred work expires instead of following you in.',
     'Unfinished work carries forward by default. Turn it off and yesterday closes itself.',
+    'A pencil on every card — board, matrix, calendar, dashboard — opens the one task form with the task already in its fields.',
+    'Every date section has its own +, Today has Add task, and each matrix quadrant has one that opens the form in that quadrant.',
   ] as const;
 }

@@ -71,7 +71,8 @@
           DeepWork checks the public release list in the background on startup — never blocking the
           window, cached for six hours so it does not spend a rate limit, and reporting nothing
           back. A newer build shows up as a small pill beside the version, a system notification,
-          and a card with one button.
+          and a card that offers Update when the release carries something it can run, or Download
+          when it does not.
         </p>
         <ul class="feature-list">
           <li class="feature-list__item">
@@ -94,8 +95,56 @@
           </li>
           <li class="feature-list__item">
             <span class="feature-list__tick" aria-hidden="true">✓</span>
-            <span>A version you waved away with <b>Later</b> is not announced again.</span>
+            <span
+              >A release with only portable archives gets a <b>Download</b> button that goes to the
+              file for this machine, and says why it is not an Update.</span
+            >
           </li>
+          <li class="feature-list__item">
+            <span class="feature-list__tick" aria-hidden="true">✓</span>
+            <span
+              ><b>Later</b> is a twelve-hour snooze; <b>Skip this version</b> ends that release for
+              good. A newer release is still a new question.</span
+            >
+          </li>
+        </ul>
+      </article>
+
+      <article class="card card--edge" dwReveal [dwRevealDelay]="140">
+        <p class="eyebrow">The tray menu</p>
+        <h3 class="card__title" style="font-size: var(--fs-h3)">
+          For the work, not just the window
+        </h3>
+        <p class="card__body" style="margin-bottom: 1rem">
+          The tray used to be a place to show or hide the app. It now carries the things you reach
+          for in the middle of a session.
+        </p>
+        <ul class="feature-list">
+          @for (line of tray; track line) {
+            <li class="feature-list__item">
+              <span class="feature-list__tick" aria-hidden="true">✓</span>
+              <span>{{ line }}</span>
+            </li>
+          }
+        </ul>
+      </article>
+
+      <article class="card" dwReveal [dwRevealDelay]="180">
+        <p class="eyebrow">Taskbar</p>
+        <h3 class="card__title" style="font-size: var(--fs-h3)">
+          A pin reminder that tells the truth
+        </h3>
+        <p class="card__body" style="margin-bottom: 1rem">
+          Windows 11 keeps programmatic pinning for apps it has packaged itself. The reminder asks
+          the shell first instead of pretending the request always works.
+        </p>
+        <ul class="feature-list">
+          @for (line of launch; track line) {
+            <li class="feature-list__item">
+              <span class="feature-list__tick" aria-hidden="true">✓</span>
+              <span>{{ line }}</span>
+            </li>
+          }
         </ul>
       </article>
     </div>

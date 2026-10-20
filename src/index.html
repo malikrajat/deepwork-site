@@ -9,7 +9,7 @@
       timer, task manager & habits" is the part that has to survive being read
       in a list of ten blue links. 53 characters, so it is not truncated.
     -->
-    <title>DeepWork — Free Pomodoro Timer, Task Manager &amp; Habits</title>
+    <title>DeepWork — Free Pomodoro Timer, Tasks &amp; Reminders</title>
     <base href="/" />
 
     <!-- `viewport-fit=cover` is what lets the page reach under an iPhone's rounded
@@ -19,7 +19,7 @@
 
     <meta
       name="description"
-      content="A free Pomodoro timer, task manager and habit tracker for Windows, macOS, Linux and any browser. Offline, no account, no cloud — your data stays on your machine."
+      content="A free Pomodoro timer, task manager and standing-reminder app for Windows, macOS, Linux and any browser. Time by Task, reminders that keep asking, offline, no account, no cloud — your data stays on your machine."
     />
     <link rel="canonical" href="https://deepwork-pomodoro.netlify.app/" />
 
@@ -44,10 +44,10 @@
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="DeepWork" />
     <meta property="og:locale" content="en" />
-    <meta property="og:title" content="DeepWork — Free Pomodoro Timer, Task Manager &amp; Habits" />
+    <meta property="og:title" content="DeepWork — Free Pomodoro Timer, Tasks &amp; Reminders" />
     <meta
       property="og:description"
-      content="A free Pomodoro timer, task manager and habit tracker for desktop and browser. No account, no cloud — your data stays on your machine."
+      content="A free Pomodoro timer, task manager and standing-reminder app for desktop and browser. Time by Task, reminders that keep asking, no account, no cloud."
     />
     <meta property="og:url" content="https://deepwork-pomodoro.netlify.app/" />
     <meta property="og:image" content="https://deepwork-pomodoro.netlify.app/og-image.png" />
@@ -60,13 +60,10 @@
     />
 
     <meta name="twitter:card" content="summary_large_image" />
-    <meta
-      name="twitter:title"
-      content="DeepWork — Free Pomodoro Timer, Task Manager &amp; Habits"
-    />
+    <meta name="twitter:title" content="DeepWork — Free Pomodoro Timer, Tasks &amp; Reminders" />
     <meta
       name="twitter:description"
-      content="A free Pomodoro timer, task manager and habit tracker for desktop and browser. No account, no cloud — your data stays on your machine."
+      content="A free Pomodoro timer, task manager and standing-reminder app for desktop and browser. Time by Task, reminders that keep asking, no account, no cloud."
     />
     <meta name="twitter:image" content="https://deepwork-pomodoro.netlify.app/og-image.png" />
     <meta
@@ -149,13 +146,13 @@
             "@type": "SoftwareApplication",
             "@id": "https://deepwork-pomodoro.netlify.app/#app",
             "name": "DeepWork",
-            "alternateName": "DeepWork — Pomodoro timer and task manager",
+            "alternateName": "DeepWork — Pomodoro timer, tasks and reminders",
             "applicationCategory": "ProductivityApplication",
-            "applicationSubCategory": "Pomodoro timer, task manager, habit tracker",
-            "operatingSystem": "Windows, macOS, Linux, Android, iOS, Web browser",
-            "softwareVersion": "2.0.17",
+            "applicationSubCategory": "Pomodoro timer, task manager, standing reminders",
+            "operatingSystem": "Windows, macOS, Linux, Web browser",
+            "softwareVersion": "3.0.0",
             "isAccessibleForFree": true,
-            "description": "A free, local-first focus timer, task manager and habit tracker. Pomodoro-style focus sessions, a daily timeline planner, a task board and Eisenhower matrix, habits, journalling, hydration reminders and on-device analytics, all stored in a local SQLite database with no account and no cloud.",
+            "description": "A free, local-first focus timer, task manager and standing-reminder app. Pomodoro-style focus sessions, a day planner, a task board and Eisenhower matrix, Time by Task reporting, habits, journalling, hydration reminders and on-device analytics, all stored in a local SQLite database with no account and no cloud.",
             "url": "https://deepwork-pomodoro.netlify.app/",
             "installUrl": "https://malikrajat.github.io/deepwork/",
             "downloadUrl": "https://github.com/malikrajat/deepwork/releases/latest",
@@ -170,6 +167,11 @@
               "Daily timeline planner that schedules queued tasks into focus blocks",
               "Task board with To Do, In Progress and Done columns and drag and drop",
               "Eisenhower matrix for prioritising tasks across four quadrants",
+              "Time by Task: focus sessions grouped by the work’s title, with rhythm, consistency and a detail sheet",
+              "Standing reminders that keep asking across a closed laptop and a restart until Done, Snooze or Stop",
+              "Quiet controls: pause, a timed sound mute, and focus mode on every surface",
+              "Answerable completion alerts with Pause, Next, Resume and Hold up, and a crossed alert that returns in three minutes",
+              "A matrix that reflows around folded quadrants, with draggable dividers",
               "Habit tracking with streaks and a 30-day check-in strip",
               "Daily journal with writing statistics",
               "Water reminder and hydration tracking against a daily target",
@@ -177,7 +179,7 @@
               "Recurring tasks (daily, weekly or monthly) with weekdays and an end date",
               "Import tasks from Excel or CSV, and export to CSV with 24 columns",
               "Desktop tray, an always-on-top window and a draggable floating mini widget",
-              "Local SQLite storage with no account, no cloud sync and no telemetry",
+              "Local SQLite storage with no account, no cloud sync and no telemetry on your work",
               "Dark, light and system themes",
               "Works offline: fonts ship with the app and alert tones are generated"
             ]
@@ -199,7 +201,7 @@
                 "name": "Where is my data kept?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "On your machine. The desktop app writes to a local SQLite database and the browser build keeps its data in your own browser storage. There is no DeepWork server, no sync and no telemetry — the only network request the app makes on its own is a check of the public GitHub release list, and that can only ever read."
+                  "text": "On your machine. The desktop app writes to a local SQLite database and the browser build keeps its data in your own browser storage. There is no DeepWork server and no sync. The desktop makes only the public GitHub release check, an installer download you press, and links you open; the hosted web app also counts visits, and that is the one exception — see “Does the web app count my visit?”."
                 }
               },
               {
@@ -223,7 +225,7 @@
                 "name": "Does it sync across my devices?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "No, and by design. Each installation keeps its own database, so nothing leaves the machine it was written on. Tasks can be exported to CSV and imported back, which is the supported way to move work between them."
+                  "text": "No, and by design. Each installation keeps its own database, so nothing leaves the machine it was written on. A full JSON backup restores everything on another machine, and tasks can also be exported to CSV and imported back."
                 }
               },
               {
@@ -256,6 +258,62 @@
                 "acceptedAnswer": {
                   "@type": "Answer",
                   "text": "The installers are not code-signed yet, so Windows shows \"Unknown publisher\" and SmartScreen may interrupt the first run. The app is honest about this and the repository documents it. The browser build avoids the question entirely, because there is nothing to install."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "What is Time by Task?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "A page that groups every focus session by the work’s title rather than by the task row. A daily Code review is a new task every morning, so counting rows would scatter the history; Time by Task shows one line with one all-time total, the sessions and active days, the first and last session, and whether the work repeats daily, weekly, monthly or is a one-off. It is at /time, and Ctrl+7 opens it."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "What is a standing reminder?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "A reminder for the things a normal reminder is worst at — a presentation, a class, a dose, a train — where you may be standing in front of a room and cannot answer. It is stored rather than scheduled, so closing the laptop does not cancel it; it escalates rather than repeating on a stopwatch; and it keeps asking until you press Done, Snooze 10 min or Stop. There is no close cross and no timeout."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Will a standing reminder interrupt a presentation?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "No. It posts a sticky desktop notification and an in-app card, and it never brings the window forward. The notification carries the same three answers as the card, so the question can be dealt with where it is, without the app covering the thing it is reminding you about."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "What is the difference between pause, mute and focus mode?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "A pause stops the timer, the cards and the system notifications together, and restarts only a timer it stopped. A mute changes the sound only — cards still arrive — and expires by itself, even after a restart. Focus mode hides the navigation and leaves every reminder running, because a focus session is exactly when the completion alert matters."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Does the web app count my visit?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "The hosted browser build counts visits with GoatCounter, so “is anybody using this?” has an answer without DeepWork running a server. It sends the page — path, title, referrer, screen width, language and time zone — never a task, a journal entry or an identifier, and GoatCounter stores no IP address for it. Count my visits is a switch in Settings, and with it off the script is never fetched. The desktop build is never counted."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "What happens if my database is damaged?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "A database that is present but unreadable stops startup with a card naming the file and the reason, instead of being replaced by an empty one that looks the same. Every launch also copies the database and its write-ahead log into a backups folder beside it before migrations run, and those copies are kept rather than rotated."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Does DeepWork use AI?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "No. The readings on Analytics and Time by Task are rule-based sentences and totals computed from your own rows. Same records, same reading, every time. There is no model in the loop and nothing is sent anywhere to be analysed."
                 }
               }
             ]

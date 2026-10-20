@@ -222,7 +222,7 @@ async function main() {
     '## About this file',
     '',
     'Generated from the rendered page by `tools/make-llms-txt.cjs`. Every statement in it is taken',
-    'from the DeepWork application repository at version 2.0.17; nothing is invented, and there are',
+    'from the DeepWork application repository; nothing is invented, and there are',
     'no user counts, download figures, ratings or testimonials because the project publishes none.',
     '',
     '- Source code: https://github.com/malikrajat/deepwork',

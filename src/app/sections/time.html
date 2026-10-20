@@ -1,0 +1,141 @@
+<section class="section section--raised" id="time">
+  <div class="shell">
+    <div class="section__head" dwReveal>
+      <p class="eyebrow">Time by Task</p>
+      <h2 class="h2 section__title">The work your hours actually went to</h2>
+      <p class="lead section__lead">
+        Your Code review is a new task row every morning. Count the rows and you learn nothing. Time
+        by Task groups every focus session by the work’s title, so a daily routine becomes one line
+        — one total, one first session, one last, one rhythm.
+      </p>
+    </div>
+
+    <div class="story">
+      <div class="story__body" dwReveal>
+        <div class="chip-row">
+          <span class="chip chip--accent">New in 3.0</span>
+          <span class="chip">A new page</span>
+        </div>
+
+        <ul class="feature-list">
+          @for (point of points; track point.title) {
+            <li class="feature-list__item">
+              <span class="feature-list__tick" aria-hidden="true">✓</span>
+              <span>
+                <b>{{ point.title }}</b>
+                {{ point.body }}
+              </span>
+            </li>
+          }
+        </ul>
+
+        <blockquote class="quote">
+          “Read the shape, not only the total.”
+          <cite>The heading on the page’s own reading card.</cite>
+        </blockquote>
+      </div>
+
+      <div class="story__media" dwReveal [dwRevealDelay]="100">
+        <div class="frame">
+          <div class="frame__bar">
+            <span class="frame__dots" aria-hidden="true">
+              <span class="frame__dot"></span>
+              <span class="frame__dot"></span>
+              <span class="frame__dot"></span>
+            </span>
+            <span class="frame__title">DeepWork — Time by Task</span>
+          </div>
+          <img
+            class="frame__screen"
+            ngSrc="{{ shot.src }}"
+            [width]="shot.width"
+            [height]="shot.height"
+            [alt]="shot.alt"
+          />
+        </div>
+        <p class="caption">
+          This month, grouped by work. The reading above the list is written from the same rows.
+        </p>
+      </div>
+    </div>
+
+    <div class="time__controls" dwReveal>
+      <div>
+        <p class="eyebrow">The range switch</p>
+        <ul class="time__ranges">
+          @for (range of ranges; track range.label) {
+            <li class="time__range">
+              <span class="time__range-label">{{ range.label }}</span>
+              <span class="time__range-note">{{ range.note }}</span>
+            </li>
+          }
+        </ul>
+      </div>
+
+      <div>
+        <p class="eyebrow">What a bar means</p>
+        <ul class="time__legend">
+          @for (cadence of cadences; track cadence.name) {
+            <li class="time__legend-item">
+              <span
+                class="time__swatch"
+                [style.background]="cadence.colour"
+                aria-hidden="true"
+              ></span>
+              <span>
+                <b>{{ cadence.name }}</b>
+                {{ cadence.meaning }}
+              </span>
+            </li>
+          }
+        </ul>
+        <p class="reading-note">
+          One solid colour per bar. The ring around a bar is “now” — this day, week, month or year —
+          not a second colour to decode.
+        </p>
+      </div>
+    </div>
+
+    <div class="story story--flip time__detail">
+      <div class="story__media" dwReveal [dwRevealDelay]="80">
+        <div class="frame">
+          <div class="frame__bar">
+            <span class="frame__dots" aria-hidden="true">
+              <span class="frame__dot"></span>
+              <span class="frame__dot"></span>
+              <span class="frame__dot"></span>
+            </span>
+            <span class="frame__title">DeepWork — Code review, detailed</span>
+          </div>
+          <img
+            class="frame__screen"
+            ngSrc="{{ detailShot.src }}"
+            [width]="detailShot.width"
+            [height]="detailShot.height"
+            [alt]="detailShot.alt"
+          />
+        </div>
+      </div>
+
+      <div class="story__body" dwReveal>
+        <h3 class="h3">Open the row. The total becomes evidence.</h3>
+        <p class="lead" style="font-size: var(--fs-sm)">
+          A single figure can be a coincidence. The detail sheet is what lets you check it — and
+          what lets the list stay a list, because the row itself keeps a fixed height.
+        </p>
+        <ul class="feature-list">
+          @for (point of detailPoints; track point) {
+            <li class="feature-list__item">
+              <span class="feature-list__tick" aria-hidden="true">✓</span>
+              <span>{{ point }}</span>
+            </li>
+          }
+        </ul>
+        <p class="reading-note">
+          The list is virtualised: only the rows inside the scroll viewport exist in the page, so a
+          year of work scrolls like a page rather than building a thousand cards.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

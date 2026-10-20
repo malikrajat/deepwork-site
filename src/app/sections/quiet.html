@@ -1,0 +1,103 @@
+<section class="section section--raised" id="quiet">
+  <div class="shell">
+    <div class="section__head" dwReveal>
+      <p class="eyebrow">Quiet & attention</p>
+      <h2 class="h2 section__title">A pause that pauses everything</h2>
+      <p class="lead section__lead">
+        Pause, mute and focus used to live only in the system tray — which meant no way in on a
+        Linux desktop without tray icons, in a browser tab, or on a phone. They are now one panel in
+        four places, and each control means exactly one thing.
+      </p>
+    </div>
+
+    <div class="story">
+      <div class="story__body" dwReveal>
+        <div class="chip-row">
+          <span class="chip chip--accent">New controls</span>
+          <span class="chip">One service, every surface</span>
+        </div>
+
+        <ul class="feature-list">
+          @for (control of controls; track control.title) {
+            <li class="feature-list__item">
+              <span class="feature-list__tick" aria-hidden="true">✓</span>
+              <span>
+                <b>{{ control.title }}</b>
+                {{ control.body }}
+              </span>
+            </li>
+          }
+        </ul>
+
+        <p class="reading-note">
+          The same panel opens from the sidebar’s footer, the phone’s top bar, Settings and
+          <span class="mono">Ctrl+Shift+Q</span>. The tray menu is one more caller, so Windows,
+          macOS and Linux cannot disagree about what “Pause for 30 minutes” does.
+        </p>
+      </div>
+
+      <div class="story__media quiet__panel" dwReveal [dwRevealDelay]="80">
+        <img
+          class="shot quiet__panel-shot"
+          ngSrc="{{ panelShot.src }}"
+          [width]="panelShot.width"
+          [height]="panelShot.height"
+          [alt]="panelShot.alt"
+        />
+        <p class="caption">
+          The panel, shown on its own. Its three controls are independent: focus leaves the
+          reminders running, a pause holds them, and a mute only stops the sound.
+        </p>
+      </div>
+    </div>
+
+    <div class="quiet__alerts" dwReveal>
+      <div class="quiet__alerts-head">
+        <p class="eyebrow">Answerable alerts</p>
+        <h3 class="h3">The clock can be driven from the notification</h3>
+        <p class="lead" style="font-size: var(--fs-sm)">
+          A finished session posts four answers with the alert: Pause, Next, Resume and Hold up.
+          Next moves on and starts the next session, so answering is all it takes to carry on. The
+          in-app card draws the same four, which keeps the alert answerable on platforms whose
+          notifications cannot report a press.
+        </p>
+      </div>
+
+      <div class="frame">
+        <div class="frame__bar">
+          <span class="frame__dots" aria-hidden="true">
+            <span class="frame__dot"></span>
+            <span class="frame__dot"></span>
+            <span class="frame__dot"></span>
+          </span>
+          <span class="frame__title">DeepWork — completion alert</span>
+        </div>
+        <img
+          class="frame__screen"
+          ngSrc="{{ alertShot.src }}"
+          [width]="alertShot.width"
+          [height]="alertShot.height"
+          [alt]="alertShot.alt"
+        />
+      </div>
+
+      <div class="grid grid--2 quiet__actions">
+        @for (action of actions; track action.title; let i = $index) {
+          <article class="card" dwReveal [dwRevealDelay]="i * 60">
+            <h4 class="quiet__action-title">{{ action.title }}</h4>
+            <p class="card__body">{{ action.body }}</p>
+          </article>
+        }
+      </div>
+
+      <ul class="feature-list quiet__alert-points">
+        @for (point of alertPoints; track point) {
+          <li class="feature-list__item">
+            <span class="feature-list__tick" aria-hidden="true">✓</span>
+            <span>{{ point }}</span>
+          </li>
+        }
+      </ul>
+    </div>
+  </div>
+</section>
