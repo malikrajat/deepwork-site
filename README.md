@@ -66,7 +66,7 @@ npx playwright install chromium
 
 ## What is on the page
 
-Twenty-three sections, in the order they are argued. The `id` is the anchor.
+Twenty-four sections, in the order they are argued. The `id` is the anchor.
 
 | #   | `id`          | Section                                                      |
 | --- | ------------- | ------------------------------------------------------------ |
@@ -90,10 +90,11 @@ Twenty-three sections, in the order they are argued. The `id` is the anchor.
 | 18  | `how`         | How it works — four steps                                     |
 | 19  | `learn`       | **Learn the method** — what a Pomodoro is, how to plan a day  |
 | 20  | `why`         | Why DeepWork — the strengths *and* the limitations            |
-| 21  | `source`      | Built in the open — stack, pipeline, licensing position       |
-| 22  | `get-started` | Get started — browser, desktop, install as an app             |
-| 23  | `faq`         | Common questions                                              |
-| 24  | —             | Footer                                                        |
+| 21  | `compare`     | How it compares — ten moments, one honest table               |
+| 22  | `source`      | Built in the open — stack, pipeline, licensing position       |
+| 23  | `get-started` | Get started — browser, desktop, install as an app             |
+| 24  | `faq`         | Common questions                                              |
+| 25  | —             | Footer                                                        |
 
 Section 19 is the one that earns traffic rather than describing a product. Everything else answers
 "what does DeepWork do?"; `learn` answers "what is the Pomodoro Technique?", which is what somebody

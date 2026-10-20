@@ -45,6 +45,7 @@ export class Footer {
         { label: 'Quiet controls', href: '#quiet' },
         { label: 'Habits & journal', href: '#habits' },
         { label: 'Insights', href: '#insights' },
+        { label: 'How it compares', href: '#compare' },
         { label: 'Desktop app', href: '#desktop' },
         { label: 'What a Pomodoro is', href: '#learn' },
       ],

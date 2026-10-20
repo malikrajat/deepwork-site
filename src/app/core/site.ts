@@ -98,6 +98,7 @@ export const NAV_LINKS: readonly NavLink[] = [
   { id: 'tasks', label: 'Tasks' },
   { id: 'time', label: 'Time by Task' },
   { id: 'reminders', label: 'Reminders' },
+  { id: 'compare', label: 'Compare' },
   { id: 'get-started', label: 'Get started' },
 ];
 
@@ -594,6 +595,76 @@ export interface Strength {
   title: string;
   body: string;
 }
+
+export interface ComparisonRow {
+  /** The moment in a working day the row is about. */
+  moment: string;
+  /** What the common shape of a Pomodoro app does there. */
+  typical: string;
+  /** What DeepWork does instead. */
+  deepwork: string;
+}
+
+/**
+ * The honest comparison.
+ *
+ * “A typical Pomodoro app” is the common shape of the category, not one named
+ * product: session counters, notifications that fade, a mute that stays muted
+ * and data in an account. The page says so above the table. Every DeepWork cell
+ * is something this repository implements; nothing is a promise.
+ */
+export const COMPARISON: readonly ComparisonRow[] = [
+  {
+    moment: 'A routine you do every day',
+    typical: 'One task row per day; you add the rows up yourself',
+    deepwork: 'One line, one all-time total, one rhythm — Time by Task',
+  },
+  {
+    moment: 'A reminder lands while you are presenting',
+    typical: 'A toast that fades in four seconds',
+    deepwork: 'Keeps asking, on the card and the notification; never opens a window',
+  },
+  {
+    moment: 'You swipe a notification away',
+    typical: 'Gone',
+    deepwork: 'Back in three minutes — crossing is not answering',
+  },
+  {
+    moment: 'You close the laptop mid-reminder',
+    typical: 'Lost',
+    deepwork: 'Still standing, with the time it was due',
+  },
+  {
+    moment: 'You pause for lunch',
+    typical: 'The clock stops; reminders still fire',
+    deepwork: 'The clock, cards and notifications are held together; the count is kept',
+  },
+  {
+    moment: 'You want quiet',
+    typical: 'Mute forever, or until you remember it is on',
+    deepwork: '30 min · 1 h · 4 h · today, then it ends itself',
+  },
+  {
+    moment: 'You want to know where the month went',
+    typical: 'Minutes per day',
+    deepwork: 'Hours per work, with consistency and the sessions behind the total',
+  },
+  {
+    moment: 'Your data',
+    typical: 'An account and a cloud',
+    deepwork: 'A local database, JSON backup, no account',
+  },
+  {
+    moment: 'Offline',
+    typical: 'Partly',
+    deepwork: 'The whole app',
+  },
+  {
+    moment: 'Price',
+    typical: 'A subscription',
+    deepwork: 'Free, MIT, yours to keep',
+  },
+];
 
 /** What DeepWork is genuinely good at — every claim traceable to the repository. */
 export const STRENGTHS: readonly Strength[] = [

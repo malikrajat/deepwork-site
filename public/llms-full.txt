@@ -738,6 +738,14 @@ The fastest way to be disappointed by a tool is to be sold something it never cl
 
 Nothing on this list is a bug being hidden. Each one is a decision that could change if enough people ask — the issue tracker is open.
 
+The honest comparison
+
+### If you already use a Pomodoro timer
+
+Not “better”. Different in the places that decide whether a focus app survives a real working day. “A typical Pomodoro app” is the common shape of the category, not one named product.
+
+The comparison describes the common shape of the category, not a specific app — check the one you use. One more difference worth naming: DeepWork has no AI. Its readings are deterministic rules over your own rows, and there is no model in the loop.
+
 MIT licensed
 
 ### Built in the open

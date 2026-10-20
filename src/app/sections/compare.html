@@ -1,0 +1,43 @@
+<section class="section" id="compare">
+  <div class="shell">
+    <div class="section__head" dwReveal>
+      <p class="eyebrow">The honest comparison</p>
+      <h2 class="h2 section__title">If you already use a Pomodoro timer</h2>
+      <p class="lead section__lead">
+        Not “better”. Different in the places that decide whether a focus app survives a real
+        working day. “A typical Pomodoro app” is the common shape of the category, not one named
+        product.
+      </p>
+    </div>
+
+    <div class="compare__wrap" dwReveal>
+      <table class="compare__table">
+        <caption class="sr-only">
+          What a typical Pomodoro app does in ten everyday moments, and what DeepWork does instead
+        </caption>
+        <thead>
+          <tr>
+            <th scope="col">The moment</th>
+            <th scope="col">A typical Pomodoro app</th>
+            <th scope="col" class="compare__deep-head">DeepWork</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (row of rows; track row.moment) {
+            <tr>
+              <th scope="row">{{ row.moment }}</th>
+              <td>{{ row.typical }}</td>
+              <td class="compare__deep">{{ row.deepwork }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <p class="reading-note compare__note" dwReveal>
+      The comparison describes the common shape of the category, not a specific app — check the one
+      you use. One more difference worth naming: DeepWork has <b>no AI</b>. Its readings are
+      deterministic rules over your own rows, and there is no model in the loop.
+    </p>
+  </div>
+</section>

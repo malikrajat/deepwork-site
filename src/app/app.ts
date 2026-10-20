@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
 import { Beyond } from './sections/beyond';
+import { Compare } from './sections/compare';
 import { Desktop } from './sections/desktop';
 import { Devices } from './sections/devices';
 import { Faq } from './sections/faq';
@@ -64,6 +65,7 @@ import { Why } from './sections/why';
     HowItWorks,
     Learn,
     Why,
+    Compare,
     Source,
     GetStarted,
     Faq,

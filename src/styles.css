@@ -769,6 +769,7 @@ html[data-theme='light'] .section--raised {
   color: var(--text-2);
   font-size: var(--fs-sm);
   font-weight: 500;
+  white-space: nowrap;
   transition:
     color 0.2s var(--ease),
     background-color 0.2s var(--ease);
@@ -787,6 +788,21 @@ html[data-theme='light'] .section--raised {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+}
+
+/* Eight links plus two calls to action stop fitting before the drawer
+   breakpoint; the repository link is the one that can wait, and the link
+   padding tightens in the last stretch before the drawer takes over. */
+@media (max-width: 1360px) {
+  .nav__actions .btn--ghost {
+    display: none;
+  }
+}
+
+@media (min-width: 1081px) and (max-width: 1180px) {
+  .nav__link {
+    padding-inline: 0.55rem;
+  }
 }
 
 .nav__icon-btn {
@@ -2450,6 +2466,126 @@ html[data-theme='light'] .code {
 }
 .quiet__alert-points {
   margin-top: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+/* ===== Comparison ===================================================== */
+.compare__wrap {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  -webkit-overflow-scrolling: touch;
+}
+.compare__table {
+  width: 100%;
+  min-width: 720px;
+  border-collapse: collapse;
+  font-size: var(--fs-sm);
+}
+.compare__table th,
+.compare__table td {
+  padding: 0.95rem 1.1rem;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  vertical-align: top;
+}
+.compare__table thead th {
+  padding-top: 1.1rem;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  border-bottom-color: var(--border-strong);
+}
+.compare__table tbody th {
+  width: 27%;
+  font-weight: 600;
+  color: var(--text);
+  font-size: var(--fs-sm);
+}
+.compare__table tbody td {
+  color: var(--text-2);
+}
+.compare__table tbody tr:last-child th,
+.compare__table tbody tr:last-child td {
+  border-bottom: 0;
+}
+.compare__deep-head {
+  color: var(--accent) !important;
+}
+.compare__deep {
+  background: var(--accent-soft);
+  color: var(--text) !important;
+  font-weight: 500;
+  border-left: 1px solid var(--accent-line);
+  border-right: 1px solid var(--accent-line);
+}
+.compare__note {
+  max-width: 62rem;
+}
+
+@media (max-width: 760px) {
+  .compare__wrap {
+    overflow: visible;
+    border: 0;
+    background: none;
+  }
+  .compare__table {
+    display: block;
+    min-width: 0;
+  }
+  .compare__table thead {
+    display: none;
+  }
+  .compare__table tbody {
+    display: grid;
+    gap: 0.75rem;
+  }
+  .compare__table tbody tr {
+    display: block;
+    padding: 1rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+  }
+  .compare__table tbody th {
+    display: block;
+    width: auto;
+    padding: 0 0 0.6rem;
+    margin-bottom: 0.6rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .compare__table tbody td {
+    display: grid;
+    grid-template-columns: 6.5rem minmax(0, 1fr);
+    gap: 0.65rem;
+    padding: 0.4rem 0;
+    border: 0;
+    font-size: var(--fs-xs);
+  }
+  .compare__table tbody td::before {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    line-height: 1.6;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-3);
+  }
+  .compare__table tbody td:nth-of-type(1)::before {
+    content: 'Pomodoro app';
+  }
+  .compare__table tbody td:nth-of-type(2)::before {
+    content: 'DeepWork';
+    color: var(--accent);
+  }
+  .compare__deep {
+    margin-top: 0.35rem;
+    border: 0;
+    border-radius: 8px;
+    padding: 0.6rem 0.65rem !important;
+  }
 }
 
 @media (max-width: 900px) {

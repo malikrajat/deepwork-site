@@ -59,6 +59,7 @@ const SECTION_IDS = [
   'how',
   'learn',
   'why',
+  'compare',
   'source',
   'get-started',
   'faq',
