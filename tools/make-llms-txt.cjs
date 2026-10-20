@@ -155,10 +155,13 @@ function extract() {
     out.push(`\n${text}`);
   }
 
-  // Collapse runs of blank lines without touching anything else.
+  // Collapse runs of blank lines without touching anything else. Inline links
+  // and the text after them are separate nodes, so extraction can leave a space
+  // before a comma; that is not how the page reads.
   return out
     .join('\n')
     .replace(/\n{3,}/g, '\n\n')
+    .replace(/[ \t]+([,.;:!?])/g, '$1')
     .replace(/^\s+|\s+$/g, '');
 }
 

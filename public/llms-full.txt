@@ -7,7 +7,7 @@
 ---
 Free · MIT licensed · v3.0.0
 
-## Focus better. Work deeper .
+## Focus better. Work deeper.
 
 DeepWork is a free focus timer, task list, day planner and habit tracker in one window — and it keeps every byte on your own machine. Now it also remembers what the hours were for, and keeps asking about the one thing you cannot afford to miss. No account. No cloud. No subscription.
 
@@ -239,7 +239,7 @@ A task can repeat daily, weekly or monthly, on the weekdays you choose, with an 
 
 #### Your spreadsheet still works
 
-Import .xlsx, .xlsm or .csv — with a downloadable template that documents every column — and see a validated preview before a single row is written. Repeated titles are labelled, never silently dropped.
+Import.xlsx,.xlsm or.csv — with a downloadable template that documents every column — and see a validated preview before a single row is written. Repeated titles are labelled, never silently dropped.
 
 #### An export that opens cleanly
 
@@ -533,7 +533,7 @@ Updates
 DeepWork checks the public release list in the background on startup — never blocking the window, cached for six hours so it does not spend a rate limit, and reporting nothing back. A newer build shows up as a small pill beside the version, a system notification, and a card that offers Update when the release carries something it can run, or Download when it does not.
 - Windows — the setup is downloaded with a progress bar and started; DeepWork closes behind it.
 - macOS — the disk image is downloaded and opened for you.
-- Linux — a .deb or .rpm goes to your installer, or an AppImage is made runnable and started.
+- Linux — a.deb or.rpm goes to your installer, or an AppImage is made runnable and started.
 - A release with only portable archives gets a Download button that goes to the file for this machine, and says why it is not an Update.
 - Later is a twelve-hour snooze; Skip this version ends that release for good. A newer release is still a new question.
 
@@ -570,7 +570,7 @@ Pause, mute and focus used to live only in the system tray — which meant no wa
 - Pause reminders 30 minutes, 1 hour, 4 hours or until you resume. It stops the timer, the cards and the system notifications together, and restarts only a timer it stopped.
 - Reminder sound 30 minutes, 1 hour or the rest of today. It mutes the tone only, so cards still arrive, and it expires by itself — even after a restart.
 
-The same panel opens from the sidebar’s footer, the phone’s top bar, Settings and Ctrl+Shift+Q . The tray menu is one more caller, so Windows, macOS and Linux cannot disagree about what “Pause for 30 minutes” does.
+The same panel opens from the sidebar’s footer, the phone’s top bar, Settings and Ctrl+Shift+Q. The tray menu is one more caller, so Windows, macOS and Linux cannot disagree about what “Pause for 30 minutes” does.
 
 The panel, shown on its own. Its three controls are independent: focus leaves the reminders running, a pause holds them, and a mute only stops the sound.
 
@@ -728,7 +728,7 @@ The fastest way to be disappointed by a tool is to be sold something it never cl
 - Honest about its behaviourReminders that wait for an answer, alerts that repeat until you deal with them, and logs you can actually read.
 - No dark patternsNo streak guilt, no artificial urgency, no upsell.
 
-#### ! What it does not do
+####! What it does not do
 
 - No cloud sync or multi-device sync — each install keeps its own local database.
 - No team, sharing or collaboration features; it is a single-person tool.
@@ -850,7 +850,7 @@ A database that is present but unreadable stops startup with a card naming the f
 
 No. The readings on Analytics and Time by Task are rule-based sentences and totals computed from your own rows. Same records, same reading, every time. There is no model in the loop and nothing is sent anywhere to be analysed.
 
-Something not answered here? Open an issue — questions are welcome, and the answers usually end up on this page.
+Something not answered here? Open an issue, email support@rajatmalik.dev for help with the app, or contact@rajatmalik.dev for anything else — questions are welcome, and the answers usually end up on this page.
 
 ---
 
