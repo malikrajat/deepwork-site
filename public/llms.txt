@@ -21,13 +21,11 @@ Key facts, all verifiable against the repository:
 - **Backups:** every launch copies the database and its write-ahead log into a `backups` folder
   before migrations run; an unreadable database stops startup instead of being replaced.
 - **Version described here:** 3.0.0
-- **Built with:** Angular 22, TypeScript, Tauri 2, Rust, SQLite, Tailwind CSS 4.
-- **Licence:** MIT. The source is at https://github.com/malikrajat/deepwork and the licence text is
-  at https://github.com/malikrajat/deepwork/blob/main/LICENSE — you may read it, change it and ship
+- **Licence:** MIT. The licence text is at
+  https://github.com/malikrajat/deepwork/blob/main/LICENSE — you may read it, change it and ship
   your own version, including commercially.
 - **Limitations, stated plainly:** no cloud or multi-device sync, no team or collaboration
-  features, no native mobile app, and the Windows/macOS installers are unsigned so SmartScreen and
-  Gatekeeper warn on first run.
+  features, and no native mobile app.
 
 Canonical page: https://deepwork-pomodoro.netlify.app/
 Web app: https://malikrajat.github.io/deepwork/
@@ -72,17 +70,26 @@ Downloads: https://github.com/malikrajat/deepwork/releases/latest
 
 ## Insight and privacy
 
-- [Insights](https://deepwork-pomodoro.netlify.app/#insights): a 12-week focus heatmap, focus by hour of day with the peak window called out, average focus by weekday, task flow (created against closed), completion by quadrant, habit consistency, journalling statistics, and average session length with the share of interrupted sessions. Every chart is paired with a plain-language reading computed from the user's own rows by fixed rules. **There is no AI and no model of any kind in this app** — the readings are deterministic.
+- [Insights](https://deepwork-pomodoro.netlify.app/#insights): a 12-week focus heatmap, focus by hour of day with the peak window called out, average focus by weekday, task flow (created against closed), completion by quadrant, habit consistency, journalling statistics, and average session length with the share of interrupted sessions. Every chart is paired with a plain-language reading from the app's offline AI, which runs on the user's machine over their own rows and sends nothing anywhere.
 - [Your data](https://deepwork-pomodoro.netlify.app/#your-data): local SQLite storage with a backup before every migration and a read-only preflight check, no accounts, no cloud, five rolling log files the user can open and copy, a full JSON backup and CSV export as real exits, and fonts that ship with the app so it renders identically offline. The hosted web app's GoatCounter visit count is the one exception, is disclosed, can be switched off, and never runs in the desktop build.
-- [Desktop app](https://deepwork-pomodoro.netlify.app/#desktop): the Tauri build adds a tray icon whose menu can add a task, open Settings and pause for 5 to 30 minutes; an always-on-top window that re-asserts itself; a 136×76 draggable floating mini widget with the same countdown ring; a first-launch question about starting with the computer; and an honest taskbar-pin reminder that asks Windows whether pinning is allowed. Updates download and start the right installer for the platform, Later is a twelve-hour snooze, and Skip this version ends that release.
-- [Common questions](https://deepwork-pomodoro.netlify.app/#faq): free, offline, where the data lives, why there is no sync, platform support, team use, licensing, the unsigned-installer warning, Time by Task, standing reminders, pause versus mute versus focus mode, the visit counter and database recovery.
+- [Desktop app](https://deepwork-pomodoro.netlify.app/#desktop): the desktop build adds a tray icon whose menu can add a task, open Settings and pause for 5 to 30 minutes; an always-on-top window that re-asserts itself; a 136×76 draggable floating mini widget with the same countdown ring; a first-launch question about starting with the computer; and an honest taskbar-pin reminder that asks Windows whether pinning is allowed. Updates download and start the right installer for the platform, Later is a twelve-hour snooze, and Skip this version ends that release.
+- [Common questions](https://deepwork-pomodoro.netlify.app/#faq): free, offline, where the data lives, why there is no sync, platform support, team use, offline AI, Time by Task, standing reminders, pause versus mute versus focus mode, the visit counter and database recovery.
+
+## The maker
+
+- [About the maker](https://deepwork-pomodoro.netlify.app/#about): Rajat Malik, a frontend architect and engineering lead in Gurgaon, India. Senior Lead Software Engineer at Siemens since 2020, and at Siemens Energy and HCL before that. Fifteen years of large web products — legacy Angular and React modernisation, micro-frontend boundaries, design systems, Core Web Vitals and WCAG 2.2 — for enterprise, energy, telecom and finance teams. Outside the day job he publishes MIT-licensed npm libraries, browser and editor extensions and two desktop apps (DeepWork and JsSandbox), writes The Angular Insider newsletter, and speaks on web performance and frontend architecture. DeepWork is his own project, built to the same standards. This section states what he does; it carries no availability status.
 
 ## Optional
 
 - [Full page as Markdown](https://deepwork-pomodoro.netlify.app/llms-full.txt): the entire site in one plain-text file.
-- [Source code](https://github.com/malikrajat/deepwork): the Angular front end, the Rust desktop shell, the tests and the release pipeline, under the MIT licence.
 - [Licence text](https://github.com/malikrajat/deepwork/blob/main/LICENSE): MIT.
 - [Changelog](https://github.com/malikrajat/deepwork/blob/main/CHANGELOG.md): the written history of every release.
 - [Report an issue](https://github.com/malikrajat/deepwork/issues/new): bug reports and feature requests.
 - [Contact](mailto:contact@rajatmalik.dev): general enquiries about the project and this site.
 - [Support](mailto:support@rajatmalik.dev): help installing or using DeepWork.
+- [Author — Rajat Malik](https://rajatmalik.dev/): portfolio, writing and published open-source work.
+- [npm libraries](https://www.npmjs.com/~rajatmalik): published Angular and developer tooling packages.
+- [JsSandbox](https://github.com/malikrajat/JsSandbox): a cross-platform JavaScript playground.
+- [Medium](https://medium.com/@codewithrajat) and [DEV](https://dev.to/codewithrajat): technical writing.
+- [LinkedIn](https://www.linkedin.com/in/errajatmalik): professional profile.
+- [The Angular Insider](https://www.linkedin.com/newsletters/the-angular-insider-7370329203935928320): the author's Angular newsletter.

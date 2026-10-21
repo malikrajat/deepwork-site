@@ -1,5 +1,43 @@
 <footer class="footer">
   <div class="shell">
+    <div class="footer__feature">
+      <article class="card footer__author">
+        <p class="eyebrow">Built by</p>
+        <h2 class="footer__author-name">
+          <a [href]="site.authorUrl" target="_blank" rel="noopener">{{ site.author }}</a>
+        </h2>
+        <p class="footer__author-role">{{ role }}</p>
+        <p class="footer__author-note">
+          Frontend architect and engineering lead. Creator of open-source npm libraries and
+          developer tools, and author of {{ newsletter.name }}.
+        </p>
+        <p class="footer__author-status">
+          <a class="chip" href="#about">
+            About the maker
+            <span aria-hidden="true">→</span>
+          </a>
+        </p>
+        <a class="footer__portfolio" [href]="site.authorUrl" target="_blank" rel="noopener">
+          Visit rajatmalik.dev <span aria-hidden="true">→</span>
+        </a>
+      </article>
+
+      <article class="card card--edge footer__newsletter">
+        <p class="eyebrow">Newsletter</p>
+        <h2 class="footer__newsletter-title">{{ newsletter.name }}</h2>
+        <p class="footer__about">{{ newsletter.blurb }}</p>
+        <a
+          class="btn btn--primary"
+          [href]="newsletter.url"
+          target="_blank"
+          rel="noopener"
+          [attr.aria-label]="'Subscribe to ' + newsletter.name"
+        >
+          Subscribe
+        </a>
+      </article>
+    </div>
+
     <div class="footer__grid">
       <div>
         <a class="nav__brand" [href]="'#top'">
@@ -8,7 +46,7 @@
         </a>
         <p class="footer__about" style="margin-top: 1rem">
           A free focus timer, task manager and habit tracker that keeps its data on your own
-          machine. Built by {{ site.author }}.
+          machine.
         </p>
 
         @if (!hasLicense) {
@@ -45,6 +83,10 @@
     <div class="footer__bottom">
       <span>© {{ year }} {{ site.name }} · v{{ site.version }} · {{ sourceLabel }}</span>
       <span>Free to use. No account, no tracking, no upsell.</span>
+      <span>
+        Built by
+        <a [href]="site.authorUrl" target="_blank" rel="noopener">{{ site.author }}</a>
+      </span>
     </div>
   </div>
 </footer>

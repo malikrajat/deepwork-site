@@ -71,6 +71,5 @@ export class GetStarted {
   readonly notes = [
     'Free. No account, no trial, no card, no upsell.',
     'Windows 10 or later, recent macOS, or most Linux distributions — or any modern browser.',
-    'The desktop installers are unsigned, so Windows SmartScreen and macOS Gatekeeper will ask you to confirm the first run.',
   ] as const;
 }

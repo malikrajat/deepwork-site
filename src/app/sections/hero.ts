@@ -35,7 +35,7 @@ export class Hero {
 
   readonly facts = [
     'Windows · macOS · Linux · any browser',
-    'No account, no cloud',
+    'Offline AI · no cloud',
     'Works offline',
   ] as const;
 }

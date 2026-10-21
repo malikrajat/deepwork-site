@@ -17,10 +17,14 @@ interface FooterColumn {
 /**
  * The footer.
  *
- * It carries the two facts that are easy to lose on a long page — that the app
- * is free and where the source is — plus the honest note about licensing, which
- * belongs here rather than buried in a FAQ because it is a fact about the
- * project rather than a question about the product.
+ * The product links are the ones a visitor uses to get back into the page. The
+ * author card sends people to the portfolio and the newsletter rather than to
+ * the source tree: the app is the thing being described, and the person behind
+ * it is the thing a visitor may want next.
+ *
+ * It carries no availability badge. The card points at the About section, where
+ * the work is described — which is the argument, and does not go stale the way a
+ * status does.
  */
 @Component({
   selector: 'dw-footer',
@@ -31,6 +35,14 @@ export class Footer {
   readonly sourceLabel = SOURCE_LABEL;
   readonly hasLicense = LICENSE_SPDX !== null;
   readonly year = new Date().getFullYear();
+
+  readonly role = 'Senior Lead Software Engineer at Siemens · Frontend architect';
+
+  readonly newsletter = {
+    name: 'The Angular Insider',
+    url: SITE.newsletterUrl,
+    blurb: 'Angular, performance and the craft of shipping — in your inbox.',
+  } as const;
 
   readonly columns: readonly FooterColumn[] = [
     {
@@ -55,19 +67,21 @@ export class Footer {
       links: [
         { label: 'Open the web app', href: SITE.webAppUrl, external: true },
         { label: 'Download for desktop', href: SITE.latestReleaseUrl, external: true },
-        { label: 'All releases', href: SITE.releasesUrl, external: true },
         { label: 'Common questions', href: '#faq' },
+        { label: 'Report an issue', href: SITE.issuesUrl, external: true },
         { label: 'Support', href: SUPPORT_URL },
+        { label: 'Contact', href: CONTACT_URL },
       ],
     },
     {
-      heading: 'Project',
+      heading: 'Elsewhere',
       links: [
-        { label: 'Source on GitHub', href: SITE.repoUrl, external: true },
-        { label: 'Report an issue', href: SITE.issuesUrl, external: true },
-        { label: 'Changelog', href: SITE.changelogUrl, external: true },
-        { label: 'Contact', href: CONTACT_URL },
-        { label: `Built by ${SITE.author}`, href: SITE.authorUrl, external: true },
+        { label: 'Portfolio — rajatmalik.dev', href: SITE.authorUrl, external: true },
+        { label: 'npm libraries', href: SITE.npmUrl, external: true },
+        { label: 'JsSandbox', href: SITE.jsSandboxUrl, external: true },
+        { label: 'Medium articles', href: SITE.mediumUrl, external: true },
+        { label: 'DEV articles', href: SITE.devToUrl, external: true },
+        { label: 'LinkedIn', href: SITE.linkedinUrl, external: true },
       ],
     },
   ];

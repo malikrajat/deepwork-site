@@ -790,18 +790,13 @@ html[data-theme='light'] .section--raised {
   gap: 0.5rem;
 }
 
-/* Eight links plus two calls to action stop fitting before the drawer
-   breakpoint; the repository link is the one that can wait, and the link
-   padding tightens in the last stretch before the drawer takes over. */
-@media (max-width: 1360px) {
-  .nav__actions .btn--ghost {
-    display: none;
-  }
-}
-
-@media (min-width: 1081px) and (max-width: 1180px) {
+/* Nine links, the brand and two controls do not fit the shell at the 0.8rem
+   padding a narrower row gets away with, so above the drawer breakpoint the
+   padding tightens by 2.4px a side. That is invisible at this size, and it buys
+   the About link its room without shortening anybody's label. */
+@media (min-width: 1181px) {
   .nav__link {
-    padding-inline: 0.55rem;
+    padding-inline: 0.65rem;
   }
 }
 
@@ -829,12 +824,14 @@ html[data-theme='light'] .section--raised {
   display: none;
 }
 
-/* Below this width the links become a panel rather than a squeezed row: eight
+/* Below this width the links become a panel rather than a squeezed row: nine
    section labels plus the brand, the theme toggle and two buttons cannot share
    a line on a tablet, and shrinking them is how a navigation becomes unreadable.
-   The breakpoint moved up from 900px when the eighth link arrived, rather than
-   letting the row get tighter. */
-@media (max-width: 1080px) {
+   The breakpoint has moved up twice — from 900px when the eighth link arrived,
+   and to 1180px when the About link did — rather than letting the row get
+   tighter. 1180px is also the shell's own maximum, so above this line the row
+   is being measured against a box that is no longer growing. */
+@media (max-width: 1180px) {
   .nav__links {
     position: fixed;
     inset: calc(68px + env(safe-area-inset-top)) 0 auto 0;
@@ -1577,6 +1574,71 @@ html[data-theme='light'] .footer {
   color: var(--text-3);
   max-width: 30rem;
 }
+
+.footer__feature {
+  display: grid;
+  gap: 1rem;
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+.footer__feature > * {
+  min-width: 0;
+}
+@media (min-width: 860px) {
+  .footer__feature {
+    grid-template-columns: 1.25fr 1fr;
+  }
+}
+
+.footer__author-name {
+  margin: 0.1rem 0 0.45rem;
+  font-size: var(--fs-h3);
+  line-height: 1.1;
+}
+.footer__author-name a {
+  color: var(--text);
+}
+.footer__author-name a:hover {
+  color: var(--accent);
+}
+.footer__author-role {
+  margin-bottom: 0.65rem;
+  font-size: var(--fs-sm);
+  color: var(--text-2);
+}
+.footer__author-note {
+  max-width: 34rem;
+  margin-bottom: 1rem;
+  font-size: var(--fs-sm);
+  color: var(--text-3);
+}
+.footer__author-status {
+  margin-bottom: 1.1rem;
+}
+.footer__portfolio {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+}
+
+.footer__newsletter {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.footer__newsletter-title {
+  margin: 0.1rem 0 0.6rem;
+  font-size: var(--fs-h3);
+  line-height: 1.1;
+}
+.footer__newsletter .footer__about {
+  margin-bottom: 1.25rem;
+}
+.footer__newsletter .btn {
+  margin-top: auto;
+}
+
 .footer__bottom {
   display: flex;
   flex-wrap: wrap;
@@ -2601,4 +2663,224 @@ html[data-theme='light'] .code {
   .new__release-head {
     gap: 0.75rem;
   }
+}
+
+/* ===== About the maker ==================================================
+   The one section about a person rather than a product, so it is allowed one
+   thing nothing else on the page has: a face. The portrait is a real
+   photograph, cropped square and shipped as a 20 KB WebP — not an
+   illustration, for the same reason every screenshot here is a real capture.
+
+   The two columns are the argument and the evidence: prose on the left, the
+   person on the right, and the facts in a definition list underneath because
+   that is what they are. A soft brand glow under the portrait is what stops a
+   photograph on a white background reading as pasted onto a dark page. */
+.about__head {
+  display: grid;
+  gap: clamp(1.75rem, 4vw, 3.5rem);
+  align-items: start;
+}
+@media (min-width: 960px) {
+  .about__head {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  }
+}
+
+.about__title {
+  margin-bottom: 1.1rem;
+}
+
+.about__lead {
+  max-width: 38rem;
+  margin-bottom: 1.25rem;
+}
+
+.about__para {
+  max-width: 38rem;
+  font-size: var(--fs-sm);
+  color: var(--text-2);
+}
+.about__para + .about__para {
+  margin-top: 0.9rem;
+}
+
+/* The facts run the full width under the two columns rather than sitting beside
+   the prose. Six short entries land as two even rows of three, which is what
+   fills the space the square portrait leaves below itself. */
+.about__facts {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.1rem 1.75rem;
+  margin-top: clamp(2rem, 4vw, 3rem);
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+  font-size: var(--fs-sm);
+}
+@media (min-width: 620px) {
+  .about__facts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (min-width: 960px) {
+  .about__facts {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.about__fact {
+  display: grid;
+  gap: 0.1rem;
+  min-width: 0;
+}
+.about__fact dt {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+.about__fact dd {
+  margin: 0;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+/* The stack and the two ways out, on one line where there is room for it. */
+.about__links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 1.5rem;
+  margin-top: 1.75rem;
+}
+.about__actions {
+  margin-left: auto;
+}
+
+/* The portrait is a card like everything else on this page, so the photograph
+   reads as part of the design system rather than pasted onto it. */
+.about__portrait {
+  position: relative;
+  margin: 0;
+  padding: 0.75rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  backdrop-filter: blur(var(--blur));
+  -webkit-backdrop-filter: blur(var(--blur));
+  box-shadow:
+    var(--shadow),
+    0 0 70px rgba(139, 92, 246, 0.16);
+}
+html[data-theme='light'] .about__portrait {
+  box-shadow:
+    var(--shadow),
+    0 0 70px rgba(124, 58, 237, 0.1);
+}
+/* The same hairline of brand colour the `.card--edge` cards carry, at this
+   card's own radius. */
+.about__portrait::after {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 2px;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  background: linear-gradient(90deg, transparent, var(--accent), var(--accent-2), transparent);
+  opacity: 0.7;
+}
+
+.about__photo {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: calc(var(--radius-lg) - 0.75rem);
+}
+
+/* A square photograph at full width is a lot of bright surface on a phone, so
+   below the two-column breakpoint the card is capped and centred instead of
+   running the whole measure. */
+@media (max-width: 959px) {
+  .about__portrait {
+    width: 100%;
+    max-width: 20rem;
+    margin-inline: auto;
+  }
+}
+
+.about__caption {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.25rem 1rem;
+  padding: 0.85rem 0.35rem 0.1rem;
+  font-size: var(--fs-xs);
+  color: var(--text-3);
+}
+.about__caption span:first-child {
+  color: var(--text-2);
+  font-weight: 600;
+}
+
+.about__practices {
+  margin-top: clamp(2rem, 4vw, 3.25rem);
+}
+.about__practice {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+/* The shelf: one panel with three columns, because three cards of three cards
+   would be six boxes for one idea. */
+.about__shelf {
+  margin-top: clamp(1rem, 1.8vw, 1.5rem);
+}
+.about__shelf-title {
+  margin-bottom: 1.25rem;
+}
+.about__shelf-grid {
+  gap: clamp(1.25rem, 2.5vw, 2.25rem);
+}
+.about__shelf-col {
+  min-width: 0;
+}
+.about__shelf-heading {
+  margin-bottom: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.about__shelf-body {
+  font-size: var(--fs-sm);
+  color: var(--text-2);
+}
+.about__shelf-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1rem;
+  margin-top: 0.8rem;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+}
+.about__shelf-links a {
+  white-space: nowrap;
+}
+
+.about__close {
+  max-width: 48rem;
+  margin-top: clamp(1.75rem, 3vw, 2.5rem);
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+  font-size: var(--fs-sm);
+  color: var(--text-2);
+}
+.about__close-sep {
+  padding-inline: 0.5rem;
+  color: var(--text-3);
 }

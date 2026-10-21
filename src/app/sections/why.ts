@@ -1,15 +1,14 @@
 import { Component } from '@angular/core';
 
 import { Reveal } from '../core/reveal';
-import { LIMITATIONS, STRENGTHS } from '../core/site';
+import { STRENGTHS } from '../core/site';
 
 /**
- * Why DeepWork — and what is wrong with it.
+ * Why DeepWork.
  *
- * The limitations panel is not a legal disclaimer and it is not false modesty:
- * a visitor who reads it and still starts using the app is a visitor who will
- * not be disappointed in a week. Both lists live in `core/site.ts` so the
- * wording is maintained in one place.
+ * A single panel of the things the app is genuinely good at, each traced back
+ * to the repository. The list lives in `core/site.ts` so the wording is
+ * maintained in one place.
  */
 @Component({
   selector: 'dw-why',
@@ -18,5 +17,4 @@ import { LIMITATIONS, STRENGTHS } from '../core/site';
 })
 export class Why {
   readonly strengths = STRENGTHS;
-  readonly limitations = LIMITATIONS;
 }

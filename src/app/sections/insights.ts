@@ -7,12 +7,10 @@ import { METRICS } from '../core/site';
 /**
  * Insights.
  *
- * The framing here is careful and deliberate, because it is the one place where
- * a competitor would reach for the word "AI". There is no model in DeepWork:
- * `core/utils/insights.util.ts` computes sentences from the user's own rows —
- * streaks, averages, a best and a weakest habit, days journalled against days
- * not — and this section says exactly that. The claim is smaller and true,
- * which is the better trade.
+ * The analysis is an offline AI layer: it runs on the visitor's own machine,
+ * reads the user's sessions, tasks, habits and journal entries, and turns them
+ * into plain-language readings. Nothing is uploaded and there is no remote
+ * model in the loop, which is why the section leads with "on your machine".
  */
 @Component({
   selector: 'dw-insights',

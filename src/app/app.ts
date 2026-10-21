@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 
+import { About } from './sections/about';
 import { Beyond } from './sections/beyond';
 import { Compare } from './sections/compare';
 import { Desktop } from './sections/desktop';
@@ -21,7 +22,6 @@ import { Privacy } from './sections/privacy';
 import { Quiet } from './sections/quiet';
 import { Reminders } from './sections/reminders';
 import { Showcase } from './sections/showcase';
-import { Source } from './sections/source';
 import { Tasks } from './sections/tasks';
 import { Time } from './sections/time';
 import { WhatsNew } from './sections/whats-new';
@@ -38,8 +38,9 @@ import { Why } from './sections/why';
  *
  * The order below is the argument the page makes, in order: what it is, what
  * the window looks like, why it is not just a timer, then each capability in
- * the order a working day uses it — plan, focus, track, review — and finally
- * what it costs, what it cannot do, and where to get it.
+ * the order a working day uses it — plan, focus, track, review — then the
+ * person who made it, then what it costs, what it cannot do, and where to get
+ * it.
  */
 @Component({
   selector: 'app-root',
@@ -64,9 +65,9 @@ import { Why } from './sections/why';
     Devices,
     HowItWorks,
     Learn,
+    About,
     Why,
     Compare,
-    Source,
     GetStarted,
     Faq,
     Footer,

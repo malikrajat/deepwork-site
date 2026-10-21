@@ -58,9 +58,9 @@ const SECTION_IDS = [
   'devices',
   'how',
   'learn',
+  'about',
   'why',
   'compare',
-  'source',
   'get-started',
   'faq',
 ];

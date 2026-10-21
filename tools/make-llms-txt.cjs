@@ -228,7 +228,6 @@ async function main() {
     'from the DeepWork application repository; nothing is invented, and there are',
     'no user counts, download figures, ratings or testimonials because the project publishes none.',
     '',
-    '- Source code: https://github.com/malikrajat/deepwork',
     '- Downloads: https://github.com/malikrajat/deepwork/releases/latest',
     '- Web app: https://malikrajat.github.io/deepwork/',
     '',

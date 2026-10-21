@@ -1,0 +1,118 @@
+<section class="section section--raised" id="about">
+  <div class="shell">
+    <div class="about__head">
+      <div class="about__intro" dwReveal>
+        <p class="eyebrow">About the maker</p>
+        <h2 class="h2 about__title">Rajat <span class="grad">Malik</span></h2>
+
+        <p class="lead about__lead">
+          Frontend architect and engineering lead — fifteen years of taking large web products
+          apart, putting them back together properly, and staying in the code until they are fast,
+          accessible and boring to release.
+        </p>
+
+        <p class="about__para">
+          I build for enterprise, energy, telecom and finance teams — Siemens since 2020, and
+          Siemens Energy and HCL before that. Most of that work is unglamorous and hard: modernising
+          a legacy Angular or React platform without stopping delivery, drawing module boundaries so
+          two teams can ship in the same week, agreeing the design system once, and moving a
+          Lighthouse score from the wrong side of the dial to the right one.
+        </p>
+
+        <p class="about__para">
+          DeepWork is what I build when nobody is paying me to, and it is the same argument in
+          miniature: local-first by construction, reminders that wait for an answer instead of
+          fading, and a page with no router, no animation library and no third-party script —
+          because a claim that survives being checked is worth more than a stronger one that does
+          not.
+        </p>
+      </div>
+
+      <figure class="about__portrait" dwReveal [dwRevealDelay]="120">
+        <img
+          class="about__photo"
+          [ngSrc]="portrait.src"
+          [width]="portrait.width"
+          [height]="portrait.height"
+          [alt]="portrait.alt"
+        />
+        <figcaption class="about__caption">
+          <span>Rajat Malik</span>
+          <span>Gurgaon, India</span>
+        </figcaption>
+      </figure>
+    </div>
+
+    <dl class="about__facts" dwReveal>
+      @for (fact of facts; track fact.label) {
+        <div class="about__fact">
+          <dt>{{ fact.label }}</dt>
+          <dd>{{ fact.value }}</dd>
+        </div>
+      }
+    </dl>
+
+    <div class="about__links" dwReveal [dwRevealDelay]="60">
+      <ul class="chip-row about__stack" aria-label="Daily stack">
+        @for (item of stack; track item) {
+          <li class="chip">{{ item }}</li>
+        }
+      </ul>
+
+      <div class="btn-row about__actions">
+        <a class="btn btn--ghost" [href]="site.authorUrl" target="_blank" rel="noopener">
+          Portfolio — rajatmalik.dev
+          <span aria-hidden="true">↗</span>
+        </a>
+        <a class="btn btn--ghost" [href]="site.githubUrl" target="_blank" rel="noopener">
+          GitHub
+          <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </div>
+
+    <ul class="grid grid--3 about__practices">
+      @for (practice of practices; track practice.title; let i = $index) {
+        <li class="card card--edge about__practice" dwReveal [dwRevealDelay]="i * 90">
+          <h3 class="card__title">{{ practice.title }}</h3>
+          <p class="card__body">{{ practice.body }}</p>
+        </li>
+      }
+    </ul>
+
+    <div class="card card--edge about__shelf" dwReveal>
+      <h3 class="card__title about__shelf-title">Outside the day job</h3>
+      <div class="grid grid--3 about__shelf-grid">
+        @for (column of shelf; track column.heading) {
+          <div class="about__shelf-col">
+            <p class="about__shelf-heading">{{ column.heading }}</p>
+            <p class="about__shelf-body">{{ column.body }}</p>
+            <ul class="about__shelf-links">
+              @for (link of column.links; track link.label) {
+                <li>
+                  <a
+                    [href]="link.href"
+                    [attr.target]="link.external ? '_blank' : null"
+                    [attr.rel]="link.external ? 'noopener' : null"
+                  >
+                    {{ link.label }}
+                    <span aria-hidden="true">↗</span>
+                  </a>
+                </li>
+              }
+            </ul>
+          </div>
+        }
+      </div>
+    </div>
+
+    <p class="about__close" dwReveal>
+      If you are working on something where the front end has to carry real weight — a platform that
+      needs untangling, a design system nobody has had the time to build, a product that feels
+      slower than it is — I am glad to talk about it.
+      <a [href]="contactUrl">contact@rajatmalik.dev</a>
+      <span class="about__close-sep" aria-hidden="true">·</span>
+      <a [href]="site.authorUrl" target="_blank" rel="noopener">rajatmalik.dev</a>
+    </p>
+  </div>
+</section>

@@ -11,7 +11,7 @@ import { Reveal } from '../core/reveal';
  * file, and the network requests it makes are enumerated rather than waved at.
  * The three that exist are the GitHub release check in `update.service.ts`
  * (which reads a public list and reports nothing back, cached for six hours),
- * the code-signed downloads that only happen when the visitor presses Update,
+ * the installer downloads that only happen when the visitor presses Update,
  * and nothing else.
  *
  * The light-theme screenshot sits here on purpose: it is also how the site
@@ -72,7 +72,7 @@ export class Privacy {
     'deepwork.log — everything, in order',
     'system.log — app, window, tray and OS events',
     'flow.log — pages, timer, imports and exports',
-    'crash.log — panics, unhandled errors and Angular errors',
+    'crash.log — panics, unhandled errors and app crashes',
     'network.log — failed requests, going offline and back',
   ] as const;
 

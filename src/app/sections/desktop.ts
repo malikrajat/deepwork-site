@@ -7,14 +7,10 @@ import { PLATFORMS } from '../core/site';
 /**
  * The desktop application.
  *
- * What a browser cannot do, and what the Tauri build does instead. The three
+ * What a browser cannot do, and what the desktop build adds: the three
  * switches, the tray behaviour, the mini widget's dimensions and its alert
  * palette are all `desktop-prefs.service.ts` / `README.md` facts, and the
- * updater behaviour is `update.service.ts` plus `src-tauri/src/updates.rs`.
- *
- * The signing caveat is stated here rather than hidden, because a visitor will
- * meet it within thirty seconds of running the installer and a site that did
- * not mention it would have spent its credibility by then.
+ * updater behaviour is `update.service.ts` plus the native update layer.
  */
 @Component({
   selector: 'dw-desktop',

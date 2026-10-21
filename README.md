@@ -21,10 +21,11 @@ understand what it does, believe it, and install it.
 
 Three ideas shaped almost every decision in here:
 
-1. **Say the true, smaller thing.** The app has no AI and no cloud, and the site says exactly that.
-   It is MIT-licensed, and the site says that too — the moment the app repository gained a
-   `LICENSE`, the copy that claimed there was none was corrected rather than left to flatter the
-   project. A claim that survives being checked is worth more than a stronger one that does not.
+1. **Say the true, smaller thing.** The app keeps its work on your machine and analyses it
+   offline, and the site says exactly that. It is MIT-licensed, and the site says that too — the
+   moment the app repository gained a `LICENSE`, the copy that claimed there was none was corrected
+   rather than left to flatter the project. A claim that survives being checked is worth more than a
+   stronger one that does not.
 2. **The product is the artwork.** Every image is a screenshot of the real application, captured
    from a production build. There is not one stock photograph in this repository.
 3. **Be readable by machines as well as people.** Googlebot runs JavaScript; most AI crawlers do
@@ -89,9 +90,9 @@ Twenty-four sections, in the order they are argued. The `id` is the anchor.
 | 17  | `devices`     | Every screen — layouts, touch, keyboard, install modes        |
 | 18  | `how`         | How it works — four steps                                     |
 | 19  | `learn`       | **Learn the method** — what a Pomodoro is, how to plan a day  |
-| 20  | `why`         | Why DeepWork — the strengths *and* the limitations            |
-| 21  | `compare`     | How it compares — ten moments, one honest table               |
-| 22  | `source`      | Built in the open — stack, pipeline, licensing position       |
+| 20  | `about`       | About the maker — the person, the day job, the open source    |
+| 21  | `why`         | Why DeepWork — the strengths                                 |
+| 22  | `compare`     | How it compares — ten moments, one honest table               |
 | 23  | `get-started` | Get started — browser, desktop, install as an app             |
 | 24  | `faq`         | Common questions                                              |
 | 25  | —             | Footer                                                        |
@@ -100,6 +101,11 @@ Section 19 is the one that earns traffic rather than describing a product. Every
 "what does DeepWork do?"; `learn` answers "what is the Pomodoro Technique?", which is what somebody
 types into a search engine *before* they have heard of this app. Sections 3, 9, 13 and 16 are the
 3.0 story: what changed, the new report, the new reminder and the new quiet controls.
+
+Section 20 is the only one about a person. The biography is the author's own, read from his
+portfolio and checked against his public GitHub and npm profiles, and it carries no availability
+badge or "open to work" status — for the same reason the page quotes no figure it cannot show: a
+claim that survives being checked is worth more than a stronger one that does not.
 
 ---
 
@@ -114,8 +120,8 @@ Each of these is a decision with a reason, and most of them were made the other 
   elements at runtime; a single critical-inlined sheet paints the first screen on the first frame,
   which is the whole Core Web Vitals story for a page this visual.
 - **All content in one file.** Every fact the site states about the app is in
-  `src/app/core/site.ts` — timer defaults, water ranges, the analytics chart list, the FAQ, the
-  limitations. If a number there disagrees with the app, the app is right and that file is the bug.
+  `src/app/core/site.ts` — timer defaults, water ranges, the analytics chart list, the FAQ. If a
+  number there disagrees with the app, the app is right and that file is the bug.
 - **Text is visible by default.** The scroll-reveal effect hides an element *only after* JavaScript
   has measured it as being below the fold, with an eight-second failsafe. The first version did it
   the obvious way — hide everything in CSS, let JavaScript reveal it — and an audit found 80–90
@@ -261,8 +267,8 @@ and asserts 72 specific things:
 - content is not left hidden waiting for a scroll reveal, at reduced motion and after real input
   scrolling, at ten widths;
 - no horizontal overflow at any of those widths, with the offending element named when there is one;
-- no console or page errors, exactly one `h1`, twenty section headings, every anchor resolves;
-- all thirteen screenshots actually load;
+- no console or page errors, exactly one `h1`, a heading for every section, every anchor resolves;
+- all 21 screenshots actually load;
 - the theme toggle flips the document and the FAQ opens without scripting;
 - `llms-full.txt` really contains the page, including card body text.
 

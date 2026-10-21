@@ -32,7 +32,7 @@ export class Beyond {
     { name: 'Habits', note: 'Check in, keep a streak' },
     { name: 'Journal', note: 'A dated entry per day' },
     { name: 'Water reminder', note: 'Asks, counts, and stays quiet outside your hours' },
-    { name: 'Insights', note: 'Your own numbers, read back to you' },
+    { name: 'Insights', note: 'Offline AI reads your own numbers' },
     { name: 'Import & export', note: 'Excel and CSV in, CSV and JSON out' },
     { name: 'Quiet controls', note: 'Pause, mute and focus on every surface' },
     { name: 'Desktop behaviour', note: 'Tray, mini widget, always on top' },
