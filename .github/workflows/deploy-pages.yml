@@ -1,0 +1,91 @@
+name: Deploy to GitHub Pages
+
+# The site is a client-rendered Angular application. GitHub Pages cannot publish
+# the repository itself: the branch contains TypeScript and an empty
+# `<app-root>`, not a page. This workflow runs the production build, audits it,
+# and publishes `dist/deepwork-site/browser` as the Pages site.
+#
+# One-time setup that a workflow cannot perform for itself: Settings -> Pages ->
+# Build and deployment -> Source must be set to **GitHub Actions**. With the
+# source left on a branch, Pages runs Jekyll over the repository and serves
+# `README.md` (which is exactly what the domain showed before this workflow
+# existed), and a deployment from here is rejected.
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  # Deployments are not cancelled by the next commit. Pages publishes one commit
+  # at a time; cancelling a run half-way through can leave a failed deployment
+  # in its wake for no benefit, since the newer run publishes anyway.
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build and audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      # No `--base-href`: the site is served from the root of a custom domain,
+      # which is what `<base href="/">` in `src/index.html` already says. A base
+      # href for a Pages project subpath (`/deepwork-site/`) would rewrite every
+      # asset URL and 404 the whole bundle.
+      - name: Build
+        run: npm run build
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      # The audit runs here as well as in CI, on purpose. The two workflows start
+      # from the same push and finish independently, so a successful build here
+      # says nothing about CI's audit: trusting it would let this workflow
+      # publish a page CI is about to reject. What ships is what this run built
+      # and checked.
+      - name: Audit the built site
+        run: npm run audit
+
+      - name: Upload the site
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: dist/deepwork-site/browser
+          # `.well-known/security.txt` begins with a dot, and the upload action
+          # skips hidden paths by default. Without this the RFC 9116 file exists
+          # in `public/` and never reaches the deployed site, which no audit of
+          # the source tree would notice.
+          include-hidden-files: true
+
+  deploy:
+    name: Publish
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5

@@ -1,6 +1,6 @@
 # DeepWork — full page
 
-> Source: https://deepwork-pomodoro.netlify.app/
+> Source: https://deepwork.rajatmalik.dev/
 > This is the complete content of the DeepWork product site, converted to Markdown from the
 > rendered page. A shorter, curated index is at /llms.txt.
 
@@ -882,4 +882,4 @@ from the DeepWork application repository; nothing is invented, and there are
 no user counts, download figures, ratings or testimonials because the project publishes none.
 
 - Downloads: https://github.com/malikrajat/deepwork/releases/latest
-- Web app: https://malikrajat.github.io/deepwork/
+- Web app: https://app.deepwork.rajatmalik.dev/

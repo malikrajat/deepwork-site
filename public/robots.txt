@@ -1,4 +1,4 @@
-# robots.txt for DeepWork — https://deepwork-pomodoro.netlify.app/
+# robots.txt for DeepWork — https://deepwork.rajatmalik.dev/
 #
 # This site is a single public page describing a free desktop and web app. There
 # is no admin area, no user-generated content, no login and nothing private, so
@@ -15,7 +15,6 @@
 #   /llms.txt       — a short, curated index with links to each section
 #   /llms-full.txt  — the entire page, converted to Markdown
 #
-# Sitemap: https://deepwork-pomodoro.netlify.app/sitemap.xml
 
 # ── Everything, by default ────────────────────────────────────────────────
 User-agent: *
@@ -125,3 +124,9 @@ Allow: /
 # ── Archives ─────────────────────────────────────────────────────────────
 User-agent: ia_archiver
 Allow: /
+
+# ── Sitemap ──────────────────────────────────────────────────────────────
+# A directive, not a comment: the first version of this file had it inside the
+# comment block above, where no crawler reads it, while the audit happily found
+# the string "Sitemap:" anyway.
+Sitemap: https://deepwork.rajatmalik.dev/sitemap.xml

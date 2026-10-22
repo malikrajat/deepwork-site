@@ -7,8 +7,8 @@ its data on your own machine.
 [malikrajat/deepwork](https://github.com/malikrajat/deepwork), and nothing here modifies it: this
 project reads that repository, screenshots it and describes it.
 
-- **Site:** https://deepwork-pomodoro.netlify.app/
-- **Web app:** https://malikrajat.github.io/deepwork/
+- **Site:** https://deepwork.rajatmalik.dev/
+- **Web app:** https://app.deepwork.rajatmalik.dev/
 - **Downloads:** https://github.com/malikrajat/deepwork/releases/latest
 
 ---
@@ -51,7 +51,7 @@ Everything else:
 npm run format            # Biome over TS/JSON/scripts, then Prettier over HTML/CSS
 npm run format:check      # what CI runs
 npm run lint              # Biome lint
-npm run audit             # drive the BUILT site in a browser and assert 72 things
+npm run audit             # drive the BUILT site in a browser and assert 78 things
 npm run llms              # regenerate public/llms-full.txt from the rendered page
 npm run shots             # re-capture the app screenshots
 npm run og                # regenerate the social preview card
@@ -114,8 +114,8 @@ claim that survives being checked is worth more than a stronger one that does no
 Each of these is a decision with a reason, and most of them were made the other way first.
 
 - **One page, no router.** One page needs no routing. Leaving the router out keeps the bundle
-  smaller and removes the SPA-fallback problem that GitHub Pages otherwise solves with a
-  hand-written `404.html` redirect.
+  smaller, and there is no SPA fallback to configure: GitHub Pages serves the branded `404.html` for
+  a path that does not exist, which is a page that says so rather than the app pretending to load.
 - **One stylesheet, no component `styles`.** Component styles are injected as separate `<style>`
   elements at runtime; a single critical-inlined sheet paints the first screen on the first frame,
   which is the whole Core Web Vitals story for a page this visual.
@@ -261,7 +261,7 @@ because its close button also dismisses a completion toast.
 ## Checks
 
 `npm run audit` does not test anything in the abstract — it drives the **built site** in Chromium
-and asserts 72 specific things:
+and asserts 78 specific things:
 
 - crawler files exist and say the right things, and no invented rating is claimed;
 - content is not left hidden waiting for a scroll reveal, at reduced motion and after real input
@@ -305,16 +305,28 @@ deliberate and documented in `biome.json`.
 
 ## Deployment
 
-Netlify is the only host, and it needs no dashboard configuration: `netlify.toml` is committed and
-describes the build (`npm run build`), the publish directory (`dist/deepwork-site/browser`), an SPA
-redirect, caching and security headers.
+GitHub Pages is the only host, on the custom domain `https://deepwork.rajatmalik.dev/`; `public/CNAME`
+ships the domain with the build so the address survives a change of deployment source. Pages cannot
+publish this repository as it stands — the branch is TypeScript and an empty `<app-root>`, not a
+page — so `.github/workflows/deploy-pages.yml` runs the production build, audits the result in
+Chromium, and publishes `dist/deepwork-site/browser` as the Pages artefact. It runs on every push to
+`main` and on demand.
 
-The base href stays `/`, which matches `src/index.html` and the canonical URLs. There is deliberately
-no second deployment: a GitHub Pages copy was removed once the site moved to Netlify, because
-publishing the same page at two URLs while declaring only one canonical is a duplicate-content
-signal, and the page's canonical tags, `sitemap.xml`, `robots.txt` and `llms.txt` all name exactly
-one home. If the site ever moves, those five places change together — and `npm run audit` asserts the
-canonical URL, so a missed one fails the build rather than shipping.
+**One setting cannot be committed.** In the repository, Settings → Pages → Build and deployment →
+Source must be **GitHub Actions**. Left on “Deploy from a branch”, Pages runs Jekyll over the
+repository and serves this README at the domain — which is exactly what it did before the workflow
+existed — and a deployment from the workflow is rejected.
+
+The base href stays `/`, matching `src/index.html` and the canonical URLs. There is deliberately no
+second deployment: Netlify hosted this page until it moved to the custom domain, and `netlify.toml`
+was removed with the move, because publishing the same page at two URLs while declaring one
+canonical splits the ranking between them. The address is repeated in `src/index.html`,
+`public/sitemap.xml`, `public/robots.txt`, `public/llms.txt` and `public/llms-full.txt`; the audit
+reads it from `site.ts` and fails if any of them disagrees.
+
+Pages does not accept custom response headers, so the security and cache headers `netlify.toml` used
+to set are gone. Nothing on the page depends on them, and Pages' own ten-minute cache is consistent
+with the shell: it names the hashed files, so a new build is picked up together.
 
 ---
 

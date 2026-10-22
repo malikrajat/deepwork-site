@@ -136,10 +136,24 @@ async function main() {
      why they are asserted here rather than trusted. */
   console.log('== crawler and SEO assets ==');
 
+  /* The canonical address is published in five files, so it is read once from
+     `site.ts` and then asserted against each of them. A literal string here
+     would be a sixth copy that can silently disagree with the other five — and
+     the failure is invisible: the site builds, deploys, and names two homes. */
+  const siteSource = fs.readFileSync('src/app/core/site.ts', 'utf8');
+  const siteUrl = /siteUrl:\s*'([^']+)'/.exec(siteSource)?.[1] ?? '';
+  check(!!siteUrl, 'site.ts names the canonical site address');
+
   const robots = fs.existsSync('public/robots.txt')
     ? fs.readFileSync('public/robots.txt', 'utf8')
     : '';
-  check(robots.includes('Sitemap:'), 'robots.txt points at the sitemap');
+  // A `#`-prefixed line is a comment, and the previous version of this file had
+  // the sitemap inside one — the string was present, so the old assertion passed
+  // while no crawler ever saw the directive. Match a whole, uncommented line.
+  check(
+    robots.split(/\r?\n/).some((line) => line.trim() === `Sitemap: ${siteUrl}sitemap.xml`),
+    'robots.txt declares the sitemap on the canonical host',
+  );
   check(
     ['GPTBot', 'ClaudeBot', 'PerplexityBot', 'Google-Extended', 'OAI-SearchBot'].every((agent) =>
       robots.includes(agent),
@@ -151,7 +165,7 @@ async function main() {
   const sitemap = fs.existsSync('public/sitemap.xml')
     ? fs.readFileSync('public/sitemap.xml', 'utf8')
     : '';
-  check(sitemap.includes('deepwork-pomodoro.netlify.app/'), 'sitemap has the canonical URL');
+  check(!!siteUrl && sitemap.includes(`<loc>${siteUrl}</loc>`), 'sitemap loc is that address');
   check(sitemap.includes('image:image'), 'sitemap carries image entries');
   check(/<lastmod>\d{4}-\d{2}-\d{2}<\/lastmod>/.test(sitemap), 'sitemap has a real lastmod');
 
@@ -220,6 +234,11 @@ async function main() {
   const hasType = (type) => new RegExp(`"@type"\\s*:\\s*"${type}"`).test(head);
 
   check(head.includes('rel="canonical"'), 'a canonical URL is declared');
+  const canonical = /rel="canonical" href="([^"]+)"/.exec(head)?.[1] ?? '';
+  check(canonical === siteUrl, `index.html canonical is ${siteUrl}`);
+  check(head.includes(`content="${siteUrl}"`), 'og:url names the canonical address');
+  check(llms.includes(`Canonical page: ${siteUrl}`), 'llms.txt names the canonical address');
+  check(llmsFull.includes(`> Source: ${siteUrl}`), 'llms-full.txt names the canonical address');
   check(head.includes('max-image-preview:large'), 'large image previews are allowed');
   check(
     head.includes('og:image') && head.includes('summary_large_image'),

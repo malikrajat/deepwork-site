@@ -25,7 +25,7 @@ const { startServer } = require('./static-server.cjs');
 const DIST = path.join(__dirname, '..', 'dist', 'deepwork-site', 'browser');
 const PORT = Number(process.env['PORT'] || 5200);
 const OUT = path.join(__dirname, '..', 'public', 'llms-full.txt');
-const SITE_URL = 'https://deepwork-pomodoro.netlify.app/';
+const SITE_URL = 'https://deepwork.rajatmalik.dev/';
 
 /** Set when an already-running server should be used instead of starting one. */
 const EXTERNAL_URL = process.env['SITE_URL'];
@@ -229,7 +229,7 @@ async function main() {
     'no user counts, download figures, ratings or testimonials because the project publishes none.',
     '',
     '- Downloads: https://github.com/malikrajat/deepwork/releases/latest',
-    '- Web app: https://malikrajat.github.io/deepwork/',
+    '- Web app: https://app.deepwork.rajatmalik.dev/',
     '',
   ].join('\n');
 

@@ -73,8 +73,8 @@ product's promise and links to the app and the releases.
 
 ## Architecture decisions, and why
 
-- **No router.** One page, no deep links, so there is no SPA `404.html` problem to solve. The
-  Netlify redirect exists only so a future second page behaves.
+- **No router.** One page, no deep links, so there is no SPA fallback to configure: GitHub Pages
+  serves `public/404.html` for an unknown path, which is a branded page rather than the app.
 - **No lazy loading, no `@defer`.** A visitor scrolls the whole page; a section that pops in late
   is worse than one in the first paint.
 - **One global stylesheet, no component `styles`.** Component styles are injected at runtime;
@@ -135,7 +135,7 @@ product's promise and links to the app and the releases.
 
 ## Checks before you call something done
 
-`npm run audit` drives the **built** site in a browser and asserts 60 things — visibility, overflow
+`npm run audit` drives the **built** site in a browser and asserts 78 things — visibility, overflow
 at ten widths, console errors, loaded images, crawler files, structured data. It has caught three
 bugs that `ng build` could not see. It needs `npm run build` first, and Chromium once
 (`npx playwright install chromium`). `npm run llms` after any copy change, or CI will fail on a
@@ -147,6 +147,13 @@ stale `llms-full.txt`.
 up-to-date check on `llms-full.txt`. It does **not** run `npm audit` — the owner asked for a
 pipeline that does not gate on vulnerability reports, and `.npmrc` records that. Do not quietly add
 a security gate back; if you think it should be there, say so rather than sneaking it in.
+
+`.github/workflows/deploy-pages.yml` publishes the site to GitHub Pages on a push to `main`. It
+builds and audits on its own rather than trusting the separate CI run — the two start together, so
+CI's verdict does not exist yet when the deploy would ship. It requires Settings → Pages → Source to
+be “GitHub Actions”; with a branch source, Pages serves the repository's README through Jekyll
+instead, and the deployment is rejected. The custom domain lives in `public/CNAME` and in the
+repository's Pages settings.
 
 ## Skills in this workspace
 
@@ -171,7 +178,7 @@ npm run lint           # Biome lint
 npm run format         # Biome (TS/JSON/tools) + Prettier (HTML/CSS)
 npm run verify         # format:check + build
 npm run serve:dist     # serve the build at http://127.0.0.1:5200
-npm run audit          # 60 assertions against the built site (needs Chromium)
+npm run audit          # 78 assertions against the built site (needs Chromium)
 npm run llms           # regenerate public/llms-full.txt from the rendered page
 ```
 

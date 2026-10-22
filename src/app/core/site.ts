@@ -25,7 +25,7 @@ export const SITE = {
    */
   version: '3.0.0',
   /** The browser build — the same app, with nothing to install. */
-  webAppUrl: 'https://malikrajat.github.io/deepwork/',
+  webAppUrl: 'https://app.deepwork.rajatmalik.dev/',
   repoUrl: 'https://github.com/malikrajat/deepwork',
   releasesUrl: 'https://github.com/malikrajat/deepwork/releases',
   /** Always resolves to the newest release, so no link on this site can go stale. */
@@ -57,15 +57,17 @@ export const SITE = {
   /**
    * The public address of this site, used for canonical and Open Graph tags.
    *
-   * This is the Netlify deployment at the domain root, not the GitHub Pages
-   * subpath. Both host the site, so exactly one has to be named here: a canonical
-   * tag pointing at a second copy tells a crawler the two URLs are duplicates and
-   * splits the ranking between them. `netlify.toml` is the deployment that is
-   * actually promoted, and `index.html`, `sitemap.xml`, `robots.txt`, `llms.txt`
-   * and `llms-full.txt` all repeat this value deliberately — changing it here
-   * alone leaves the catalogues advertising a different home page.
+   * This is the GitHub Pages deployment on the custom domain, built and
+   * published by `.github/workflows/deploy-pages.yml`. It is the only copy that
+   * is published: a second live copy at another address would split the ranking
+   * between them, which is why the Netlify deployment was retired rather than
+   * left running beside this one. `src/index.html`, `public/sitemap.xml`,
+   * `public/robots.txt`, `public/llms.txt` and the generated
+   * `public/llms-full.txt` all repeat this value deliberately — changing it here
+   * alone leaves the catalogues advertising a different home page, and
+   * `npm run audit` fails rather than shipping that.
    */
-  siteUrl: 'https://deepwork-pomodoro.netlify.app/',
+  siteUrl: 'https://deepwork.rajatmalik.dev/',
   author: 'Rajat Malik',
 } as const;
 

@@ -52,8 +52,8 @@ jobs:
       - name: Lint
         run: npm run lint
 
-      # The root-base build, which is the one Netlify publishes — this is the
-      # artefact that actually ships, not an approximation of it.
+      # The root-base build, which is the one GitHub Pages publishes — this is
+      # the artefact that actually ships, not an approximation of it.
       #
       # A base href other than `/` must not be introduced here. `--base-href=/x/`
       # rewrites every asset URL to `/x/main-<hash>.js`, while the audit serves
