@@ -82,11 +82,146 @@
 
     <div class="footer__bottom">
       <span>© {{ year }} {{ site.name }} · v{{ site.version }} · {{ sourceLabel }}</span>
-      <span>Free to use. No account, no tracking, no upsell.</span>
+      <span>Free to use. No account, no ads, no upsell.</span>
       <span>
         Built by
         <a [href]="site.authorUrl" target="_blank" rel="noopener">{{ site.author }}</a>
       </span>
     </div>
+
+    <div class="footer__stats">
+      <button
+        #statsToggle
+        class="stats__toggle"
+        type="button"
+        (click)="openStats()"
+        aria-haspopup="dialog"
+        aria-controls="site-stats"
+        [attr.aria-expanded]="stats.isOpen()"
+      >
+        <svg
+          width="15"
+          height="15"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          aria-hidden="true"
+        >
+          <path d="M3 20h18" />
+          <path d="M7 20v-6M12 20V8M17 20v-9" />
+        </svg>
+        Site stats
+      </button>
+    </div>
   </div>
+
+  @if (stats.isOpen()) {
+    <div class="stats" id="site-stats" (keydown.escape)="closeStats()">
+      <div class="stats__scrim" aria-hidden="true" (click)="closeStats()"></div>
+
+      <div class="stats__dialog" role="dialog" aria-modal="true" aria-labelledby="site-stats-title">
+        <div class="stats__head">
+          <div>
+            <p class="eyebrow">Behind the page</p>
+            <h2 class="stats__title" id="site-stats-title">Who is visiting DeepWork</h2>
+            <p class="stats__sub" aria-live="polite">{{ stats.note() }}</p>
+          </div>
+          <button
+            #statsClose
+            class="stats__close"
+            type="button"
+            (click)="closeStats()"
+            aria-label="Close site stats"
+          >
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              aria-hidden="true"
+            >
+              <path d="M6 6l12 12M18 6 6 18" />
+            </svg>
+          </button>
+        </div>
+
+        <div class="stats__cards">
+          <div class="stats__card">
+            <span class="stats__card-label">Pageviews</span>
+            <strong>{{ formatCount(stats.totals()?.pageviews) }}</strong>
+            <span class="stats__card-meta">all time</span>
+          </div>
+          <div class="stats__card">
+            <span class="stats__card-label">Visitors</span>
+            <strong>{{ formatCount(stats.totals()?.visitors) }}</strong>
+            <span class="stats__card-meta">all time, one per session</span>
+          </div>
+          <div class="stats__card">
+            <span class="stats__card-label">Today</span>
+            <strong>{{ formatCount(stats.totals()?.today) }}</strong>
+            <span class="stats__card-meta">the UTC day</span>
+          </div>
+          <div class="stats__card">
+            <span class="stats__card-label">This month</span>
+            <strong>{{ formatCount(stats.totals()?.month) }}</strong>
+            <span class="stats__card-meta">month to date</span>
+          </div>
+        </div>
+
+        <div class="stats__columns">
+          @for (block of blocks(); track block.title) {
+            <section class="stats__block">
+              <h3>{{ block.title }}</h3>
+              <ul class="stats__list">
+                @if (block.rows; as rows) {
+                  @for (row of rows; track $index) {
+                    <li class="stats__row">
+                      <span class="stats__row-body">
+                        <span class="stats__row-label">{{ row.label }}</span>
+                        @if (row.sub) {
+                          <span class="stats__row-sub">{{ row.sub }}</span>
+                        }
+                      </span>
+                      <span class="stats__row-count">{{ formatCount(row.count) }}</span>
+                      <span
+                        class="stats__bar"
+                        [style.width.%]="row.percent"
+                        aria-hidden="true"
+                      ></span>
+                    </li>
+                  } @empty {
+                    <li class="stats__empty">
+                      {{ stats.breakdownsFailed() ? 'Could not be read.' : block.empty }}
+                    </li>
+                  }
+                } @else {
+                  <li class="stats__empty">Loading…</li>
+                }
+              </ul>
+              @if (block.note) {
+                <p class="stats__block-note">{{ block.note }}</p>
+              }
+            </section>
+          }
+        </div>
+
+        <div class="stats__foot">
+          <p>
+            Read through GoatCounter’s read-only API. It asks for this site’s totals; nothing about
+            this page or this visit is reported.
+          </p>
+          <p>
+            <a [href]="stats.dashboardUrl" target="_blank" rel="noopener">
+              Open the GoatCounter dashboard <span aria-hidden="true">→</span>
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  }
 </footer>

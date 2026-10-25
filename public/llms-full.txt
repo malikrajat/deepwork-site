@@ -456,7 +456,7 @@ Your data
 
 ### It stays on your machine, and that is the feature
 
-Most productivity apps ask you to hand over your working life before they will show you a timer. DeepWork asks for nothing: no account, no cloud, no analytics on your work. The hosted web app has one visit count, it says so here, and you can switch it off.
+Most productivity apps ask you to hand over your working life before they will show you a timer. DeepWork asks for nothing: no account, no cloud, no analytics on your work. The hosted web app counts visits and this page counts its own, both are described here, and the app’s can be switched off.
 - One SQLite file, copied before it is touched Tasks, sessions, habits, journal entries, water and settings live in a local database. Every launch copies it and its write-ahead log into a backups folder before migrations run, and a database that is there but unreadable stops startup with its path instead of being replaced by an empty one.
 - No account, ever Nothing to sign up for, nothing to sign in to, and no email address collected — there is no mechanism to collect one.
 - A short list of calls you can name The update check reads the public GitHub release list for the app you are running. An installer is downloaded only when you press Update. Links open in your own browser. That is the complete list for the desktop app — and the hosted web app has one more, below.
@@ -464,16 +464,18 @@ Most productivity apps ask you to hand over your working life before they will s
 
 The same app, the same data, in the light theme. Both themes are designed rather than inverted.
 
-The one exception
+The visit count
 
-#### The hosted web app counts visits
+#### The web app and this page count visits
 
 The app has no server of its own, so the web build uses GoatCounter — the same counter that runs on the author’s site. It exists so “is anybody using this?” has an answer without DeepWork running a backend.
-- It is GoatCounter, on the hosted web app only.
+- It is GoatCounter, on the hosted web app — never the desktop build.
 - It sends the page — path, title, referrer, screen width, language and time zone — never a task, a journal entry or an identifier.
 - GoatCounter stores no IP address and sets no cookie of its own for this.
 - Count my visits is a switch in Settings → Visitor Counter → Details. With it off the script is never fetched at all.
 - The desktop build is never counted: it has no web address to report, and its Settings row says so.
+
+This page counts its own visits the same way, on its own GoatCounter site, deepwork.goatcounter.com, so the two never mix in a dashboard. It sends the address, the title, the referring site and the screen width; it sets no cookie, GoatCounter stores no IP address, and no third-party script is loaded to make the request — the page sends the beacon itself. A browser that asks not to be tracked is not counted, and the Site stats button in the footer only asks GoatCounter for the totals back.
 
 Backups
 

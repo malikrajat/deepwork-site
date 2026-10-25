@@ -6,7 +6,8 @@
       <p class="lead section__lead">
         Most productivity apps ask you to hand over your working life before they will show you a
         timer. DeepWork asks for nothing: no account, no cloud, no analytics on your work. The
-        hosted web app has one visit count, it says so here, and you can switch it off.
+        hosted web app counts visits and this page counts its own, both are described here, and the
+        app’s can be switched off.
       </p>
     </div>
 
@@ -52,8 +53,8 @@
 
     <div class="grid grid--2" style="margin-top: clamp(2rem, 4vw, 3rem)">
       <article class="card card--edge" dwReveal>
-        <p class="eyebrow">The one exception</p>
-        <h3 class="card__title">The hosted web app counts visits</h3>
+        <p class="eyebrow">The visit count</p>
+        <h3 class="card__title">The web app and this page count visits</h3>
         <p class="card__body" style="margin-bottom: 1rem">
           The app has no server of its own, so the web build uses GoatCounter — the same counter
           that runs on the author’s site. It exists so “is anybody using this?” has an answer
@@ -67,6 +68,14 @@
             </li>
           }
         </ul>
+        <p class="card__body" style="margin-top: 1rem">
+          This page counts its own visits the same way, on its own GoatCounter site,
+          <code>deepwork.goatcounter.com</code>, so the two never mix in a dashboard. It sends the
+          address, the title, the referring site and the screen width; it sets no cookie,
+          GoatCounter stores no IP address, and no third-party script is loaded to make the request
+          — the page sends the beacon itself. A browser that asks not to be tracked is not counted,
+          and the Site stats button in the footer only asks GoatCounter for the totals back.
+        </p>
       </article>
 
       <article class="card" dwReveal [dwRevealDelay]="90">

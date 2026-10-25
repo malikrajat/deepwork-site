@@ -281,6 +281,23 @@ async function main() {
     });
     page.on('pageerror', (error) => errors.push(String(error)));
 
+    /* Every origin the page talks to. There should be none but the site's own:
+       fonts and screenshots ship with the build, and the visitor count is a
+       beacon this page sends itself. A third-party script or tracker arriving
+       here is a privacy regression, and it would also mean a local audit was
+       capable of writing to a real analytics account. */
+    const external = [];
+    const ownOrigin = new URL(base).origin;
+    page.on('request', (request) => {
+      let origin = '';
+      try {
+        origin = new URL(request.url()).origin;
+      } catch {
+        return;
+      }
+      if (origin !== ownOrigin) external.push(request.url());
+    });
+
     await page.goto(base, { waitUntil: 'networkidle', timeout: 30000 });
     await page.waitForTimeout(900);
 
@@ -296,6 +313,10 @@ async function main() {
     );
     check(result.brokenImages.length === 0, `all ${result.images} images loaded`);
     check(errors.length === 0, `no console or page errors`);
+    check(
+      external.length === 0,
+      `no third-party requests (${external.length}${external.length ? `: ${external[0]}` : ''})`,
+    );
     check(
       result.bodyFont.toLowerCase().includes('inter'),
       `Inter is the body typeface (${result.bodyFont.split(',')[0]})`,

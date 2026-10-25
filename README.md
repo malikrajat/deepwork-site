@@ -51,7 +51,7 @@ Everything else:
 npm run format            # Biome over TS/JSON/scripts, then Prettier over HTML/CSS
 npm run format:check      # what CI runs
 npm run lint              # Biome lint
-npm run audit             # drive the BUILT site in a browser and assert 78 things
+npm run audit             # drive the BUILT site in a browser and assert 79 things
 npm run llms              # regenerate public/llms-full.txt from the rendered page
 npm run shots             # re-capture the app screenshots
 npm run og                # regenerate the social preview card
@@ -130,7 +130,13 @@ Each of these is a decision with a reason, and most of them were made the other 
   shared geometry queue rather than `IntersectionObserver` (which silently loses elements on a fast
   scroll). See `src/app/core/reveal.ts`.
 - **No fabricated social proof.** No user counts, downloads, star counts, ratings or testimonials,
-  because the project publishes none. This is a rule, not an oversight.
+  because the project publishes none. This is a rule, not an oversight. The Site stats panel is
+  the one deliberate exception: it is a dashboard a visitor has to open, not a badge on the page.
+- **The stats panel's token is public, and must stay read-only.** A static site cannot keep a
+  secret, so the token in `core/analytics.ts` is visible in the bundle — as it already is on the
+  portfolio and in the app. It should be made with **Read statistics** only (the committed one
+  predates the panel and also carries "Read sites"), and it can be withdrawn at
+  <https://deepwork.goatcounter.com/user/api>; the panel then falls back to the public totals.
 - **Zoneless.** No `zone.js` is loaded; all state is signals.
 
 ### Prerendering: attempted, documented, not enabled
@@ -194,6 +200,13 @@ split by effort.
 - Plain-text versions for crawlers and language models, kept honest by a CI check.
 - An "informational" section that targets the question people ask *before* they want a product.
 - An automated audit, so the page cannot silently rot.
+- A first-party visitor count. One cookie-less pageview per load, sent by the page itself to
+  GoatCounter — no third-party script is executed, no IP address is stored, and Do Not Track or
+  Global Privacy Control is honoured. Only the published host is counted, so local builds,
+  previews and the audit send nothing. See `src/app/core/analytics.ts`.
+- A footer **Site stats** panel. It reads the totals and the month's referrers, locations, browsers
+  and pages back through GoatCounter's JSON API, one request at a time to stay under its rate
+  limit. Nothing is fetched until the panel is opened, and the numbers are cached for a minute.
 
 ### Good to have — small, high leverage
 
@@ -216,10 +229,6 @@ split by effort.
   is the one item here that cannot be automated.
 - **Directory listings.** AlternativeTo, awesome-lists, Product Hunt, Hacker News, the relevant
   subreddits. Unglamorous, effective, and it needs a person to do it honestly.
-- **Privacy-friendly analytics.** Nothing here measures anything. A cookie-less, self-hosted counter
-  would show which section people actually read — but adding a third-party tracker to a
-  privacy-first product's own website would be a contradiction, so it is a decision to make on
-  purpose or not at all.
 - **A `LICENSE` file for the app repository — done.** The application is MIT-licensed, and the
   whole site follows one constant: `LICENSE_SPDX` in `src/app/core/site.ts`. Set it to `null` and
   every mention of "open source" downgrades itself to "public source" rather than going stale.
@@ -261,7 +270,7 @@ because its close button also dismisses a completion toast.
 ## Checks
 
 `npm run audit` does not test anything in the abstract — it drives the **built site** in Chromium
-and asserts 78 specific things:
+and asserts 79 specific things:
 
 - crawler files exist and say the right things, and no invented rating is claimed;
 - content is not left hidden waiting for a scroll reveal, at reduced motion and after real input

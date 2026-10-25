@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { afterNextRender, Component } from '@angular/core';
 
+import { countPageview } from './core/analytics';
 import { About } from './sections/about';
 import { Beyond } from './sections/beyond';
 import { Compare } from './sections/compare';
@@ -74,4 +75,15 @@ import { Why } from './sections/why';
   ],
   templateUrl: './app.html',
 })
-export class App {}
+export class App {
+  constructor() {
+    /*
+     * One pageview, once the page has actually rendered. `afterNextRender`
+     * never runs during a server render, which is the rule the whole file is
+     * built on: turning prerendering on later must not send a pageview from the
+     * build machine. `countPageview` checks the host as well, so a local build
+     * or a preview deploy counts nothing.
+     */
+    afterNextRender(countPageview);
+  }
+}

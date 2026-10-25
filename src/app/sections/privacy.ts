@@ -54,7 +54,7 @@ export class Privacy {
   ] as const;
 
   readonly counter = [
-    'It is GoatCounter, on the hosted web app only.',
+    'It is GoatCounter, on the hosted web app — never the desktop build.',
     'It sends the page — path, title, referrer, screen width, language and time zone — never a task, a journal entry or an identifier.',
     'GoatCounter stores no IP address and sets no cookie of its own for this.',
     'Count my visits is a switch in Settings → Visitor Counter → Details. With it off the script is never fetched at all.',

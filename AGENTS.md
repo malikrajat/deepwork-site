@@ -95,6 +95,13 @@ product's promise and links to the app and the releases.
   but because the moment someone turns prerendering on, an unguarded `window` or `document` becomes
   a build failure. Guard access, and use `afterNextRender` for anything that must not run during a
   server render.
+- **The visitor count is first-party.** A pageview is a beacon this page sends to GoatCounter
+  (`src/app/core/analytics.ts`), not `count.js` and not anybody else's script. It counts only
+  `https://deepwork.rajatmalik.dev`: local builds, previews and the audit send nothing, and the audit
+  asserts that no request leaves the site's origin. Do not turn this back into a third-party loader.
+  The footer's Site stats panel reads the numbers back with a token that is public by construction
+  (`src/app/core/visitor-stats.ts`); it must stay a read-only "Read statistics" token, because
+  anybody can read it out of the bundle. Nothing is fetched unless the panel is opened.
 - **The crawler files are part of the deliverable.** `robots.txt` names each AI crawler explicitly,
   `sitemap.xml` lists the images, `llms.txt` is a curated index, and `llms-full.txt` is generated
   from the **rendered** page by `npm run llms` (which needs the site served — see the README) —
@@ -135,7 +142,7 @@ product's promise and links to the app and the releases.
 
 ## Checks before you call something done
 
-`npm run audit` drives the **built** site in a browser and asserts 78 things — visibility, overflow
+`npm run audit` drives the **built** site in a browser and asserts 79 things — visibility, overflow
 at ten widths, console errors, loaded images, crawler files, structured data. It has caught three
 bugs that `ng build` could not see. It needs `npm run build` first, and Chromium once
 (`npx playwright install chromium`). `npm run llms` after any copy change, or CI will fail on a
@@ -178,7 +185,7 @@ npm run lint           # Biome lint
 npm run format         # Biome (TS/JSON/tools) + Prettier (HTML/CSS)
 npm run verify         # format:check + build
 npm run serve:dist     # serve the build at http://127.0.0.1:5200
-npm run audit          # 78 assertions against the built site (needs Chromium)
+npm run audit          # 79 assertions against the built site (needs Chromium)
 npm run llms           # regenerate public/llms-full.txt from the rendered page
 ```
 

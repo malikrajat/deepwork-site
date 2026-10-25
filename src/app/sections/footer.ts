@@ -1,6 +1,15 @@
-import { Component } from '@angular/core';
+import {
+  Component,
+  computed,
+  DOCUMENT,
+  type ElementRef,
+  effect,
+  inject,
+  viewChild,
+} from '@angular/core';
 
 import { CONTACT_URL, LICENSE_SPDX, SITE, SOURCE_LABEL, SUPPORT_URL } from '../core/site';
+import { VisitorStats } from '../core/visitor-stats';
 
 interface FooterLink {
   label: string;
@@ -31,10 +40,85 @@ interface FooterColumn {
   templateUrl: './footer.html',
 })
 export class Footer {
+  private readonly document = inject(DOCUMENT);
+  private readonly statsToggle = viewChild<ElementRef<HTMLButtonElement>>('statsToggle');
+  private readonly statsClose = viewChild<ElementRef<HTMLButtonElement>>('statsClose');
+  private readonly counts = new Intl.NumberFormat();
+
+  /** The panel's data, and whether it is open. Shared with the trigger below. */
+  readonly stats = inject(VisitorStats);
+
   readonly site = SITE;
   readonly sourceLabel = SOURCE_LABEL;
   readonly hasLicense = LICENSE_SPDX !== null;
   readonly year = new Date().getFullYear();
+
+  /**
+   * The four breakdown lists, in the order the panel draws them.
+   *
+   * Built as one list rather than four copies of the same markup: the blocks
+   * differ only in title, source signal and the sentence shown when empty.
+   */
+  readonly blocks = computed(() => [
+    {
+      title: 'Where visitors come from',
+      rows: this.stats.referrers(),
+      empty: 'No referrers this month.',
+      note: 'Search engines, other sites, campaigns and links typed in — as GoatCounter records them.',
+    },
+    {
+      title: 'Visitor locations',
+      rows: this.stats.locations(),
+      empty: 'No locations this month.',
+      note: '',
+    },
+    {
+      title: 'Browsers',
+      rows: this.stats.browsers(),
+      empty: 'No browsers this month.',
+      note: '',
+    },
+    {
+      title: 'Top pages',
+      rows: this.stats.pages(),
+      empty: 'No page views this month.',
+      note: '',
+    },
+  ]);
+
+  private lastFocused: HTMLElement | null = null;
+
+  constructor() {
+    /*
+     * The dialog owns the viewport while it is open: the page behind it does not
+     * scroll and the close button takes focus, so a keyboard visitor is inside
+     * the thing that just appeared. Focus goes back to the trigger on close.
+     */
+    effect((onCleanup) => {
+      const open = this.stats.isOpen();
+      this.document.body.classList.toggle('stats-open', open);
+      onCleanup(() => this.document.body.classList.remove('stats-open'));
+
+      if (open) this.statsClose()?.nativeElement.focus();
+    });
+  }
+
+  openStats(): void {
+    this.lastFocused = this.document.activeElement as HTMLElement | null;
+    this.stats.open();
+  }
+
+  closeStats(): void {
+    if (!this.stats.isOpen()) return;
+
+    this.stats.close();
+    (this.lastFocused ?? this.statsToggle()?.nativeElement)?.focus();
+  }
+
+  /** Numbers in the visitor's own grouping, or an em dash before they arrive. */
+  formatCount(value: number | null | undefined): string {
+    return value == null ? '—' : this.counts.format(value);
+  }
 
   readonly role = 'Senior Lead Software Engineer at Siemens · Frontend architect';
 
