@@ -81,6 +81,17 @@ Downloads: https://github.com/malikrajat/deepwork/releases/latest
 
 ## Optional
 
+- [Privacy policy](https://deepwork.rajatmalik.dev/privacy/): what is and is not collected. No
+  account, no cookie, no advertising. One pageview is counted on the home page and in the web app
+  (path, title, referrer, screen width, query string; no cookie, no stored IP) and Do Not Track or
+  Global Privacy Control is honoured. The app's data stays on the user's machine. The privacy, terms
+  and contact documents are not counted at all.
+- [Terms of use](https://deepwork.rajatmalik.dev/terms/): the app is MIT-licensed; this site's text
+  and design are © Rajat Malik. Free with no account and no service level, provided as it is, your
+  backups are your responsibility, no medical advice, Indian law and the courts at Gurgaon.
+- [Contact](https://deepwork.rajatmalik.dev/contact/): reach Rajat Malik — contact@rajatmalik.dev
+  for anything, support@rajatmalik.dev for help with the app, and the public issue tracker for
+  bugs. No phone number is published.
 - [Full page as Markdown](https://deepwork.rajatmalik.dev/llms-full.txt): the entire site in one plain-text file.
 - [Licence text](https://github.com/malikrajat/deepwork/blob/main/LICENSE): MIT.
 - [Changelog](https://github.com/malikrajat/deepwork/blob/main/CHANGELOG.md): the written history of every release.

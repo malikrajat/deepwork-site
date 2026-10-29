@@ -93,6 +93,30 @@ export const CONTACT_URL = `mailto:${SITE.contactEmail}`;
 /** Help with installing or using the app. */
 export const SUPPORT_URL = `mailto:${SITE.supportEmail}`;
 
+/**
+ * The three documents that sit beside the page, and where they live.
+ *
+ * They are static files in `public/`, not routes, and that is a consequence of
+ * this site's two constraints rather than a preference: there is no router, and
+ * GitHub Pages answers an unknown path with the 404 page *and a 404 status*, so
+ * a privacy policy reached as a client route would be served as "not found".
+ * The files also have to be readable with JavaScript disabled — a legal notice
+ * behind a bundle is not a notice. `tools/verify-site.cjs` loads all three and
+ * follows every link on them.
+ */
+export const PRIVACY_URL = '/privacy/';
+export const TERMS_URL = '/terms/';
+export const CONTACT_PAGE_URL = '/contact/';
+
+/**
+ * The day the three documents were last edited.
+ *
+ * Each one prints this date, and the audit asserts that the printed dates agree
+ * with this constant — a privacy policy whose "last updated" line changes
+ * without the policy changing is worse than no date at all.
+ */
+export const LEGAL_UPDATED = '2026-10-28';
+
 export interface NavLink {
   /** The `id` of the section this link scrolls to. */
   id: string;

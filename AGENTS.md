@@ -75,6 +75,13 @@ product's promise and links to the app and the releases.
 
 - **No router.** One page, no deep links, so there is no SPA fallback to configure: GitHub Pages
   serves `public/404.html` for an unknown path, which is a branded page rather than the app.
+- **Three documents, and they are static files.** `/privacy/`, `/terms/` and `/contact/` live in
+  `public/` as self-contained HTML sharing `public/legal/legal.css` and `legal.js`, with real URLs
+  and a 200 status. They are not routes because GitHub Pages would answer one with a 404, because
+  prerendering does not work here, and because a legal notice has to read with JavaScript off. The
+  theme toggle uses the same `deepwork-site-theme` key as the page; the documents send no pageview.
+  The contact form is wired to `data-endpoint` on the form and falls back to `mailto:` — never
+  invent an endpoint, and if one is set, name the processor in the privacy policy.
 - **No lazy loading, no `@defer`.** A visitor scrolls the whole page; a section that pops in late
   is worse than one in the first paint.
 - **One global stylesheet, no component `styles`.** Component styles are injected at runtime;
@@ -142,11 +149,11 @@ product's promise and links to the app and the releases.
 
 ## Checks before you call something done
 
-`npm run audit` drives the **built** site in a browser and asserts 79 things — visibility, overflow
-at ten widths, console errors, loaded images, crawler files, structured data. It has caught three
-bugs that `ng build` could not see. It needs `npm run build` first, and Chromium once
-(`npx playwright install chromium`). `npm run llms` after any copy change, or CI will fail on a
-stale `llms-full.txt`.
+`npm run audit` drives the **built** site in a browser and asserts 132 things — visibility, overflow
+at ten widths, console errors, loaded images, crawler files, structured data, and the three
+documents. It has caught three bugs that `ng build` could not see. It needs `npm run build` first,
+and Chromium once (`npx playwright install chromium`). `npm run llms` after any copy change, or CI
+will fail on a stale `llms-full.txt`.
 
 ## What CI does, and what it deliberately does not
 
@@ -185,7 +192,7 @@ npm run lint           # Biome lint
 npm run format         # Biome (TS/JSON/tools) + Prettier (HTML/CSS)
 npm run verify         # format:check + build
 npm run serve:dist     # serve the build at http://127.0.0.1:5200
-npm run audit          # 79 assertions against the built site (needs Chromium)
+npm run audit          # 132 assertions against the built site (needs Chromium)
 npm run llms           # regenerate public/llms-full.txt from the rendered page
 ```
 

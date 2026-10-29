@@ -8,7 +8,15 @@ import {
   viewChild,
 } from '@angular/core';
 
-import { CONTACT_URL, LICENSE_SPDX, SITE, SOURCE_LABEL, SUPPORT_URL } from '../core/site';
+import {
+  CONTACT_PAGE_URL,
+  LICENSE_SPDX,
+  PRIVACY_URL,
+  SITE,
+  SOURCE_LABEL,
+  SUPPORT_URL,
+  TERMS_URL,
+} from '../core/site';
 import { VisitorStats } from '../core/visitor-stats';
 
 interface FooterLink {
@@ -122,6 +130,21 @@ export class Footer {
 
   readonly role = 'Senior Lead Software Engineer at Siemens · Frontend architect';
 
+  /**
+   * The three documents.
+   *
+   * They are static files beside the page rather than sections inside it — the
+   * reasoning is in `core/site.ts` — so these are real URLs and every link is a
+   * page load, not an anchor jump. The footer is the one place that lists them:
+   * the navigation already runs to nine section links and adding three more
+   * would shorten the labels it has.
+   */
+  readonly legal: readonly FooterLink[] = [
+    { label: 'Privacy', href: PRIVACY_URL },
+    { label: 'Terms', href: TERMS_URL },
+    { label: 'Contact', href: CONTACT_PAGE_URL },
+  ];
+
   readonly newsletter = {
     name: 'The Angular Insider',
     url: SITE.newsletterUrl,
@@ -154,7 +177,7 @@ export class Footer {
         { label: 'Common questions', href: '#faq' },
         { label: 'Report an issue', href: SITE.issuesUrl, external: true },
         { label: 'Support', href: SUPPORT_URL },
-        { label: 'Contact', href: CONTACT_URL },
+        { label: 'Contact', href: CONTACT_PAGE_URL },
       ],
     },
     {

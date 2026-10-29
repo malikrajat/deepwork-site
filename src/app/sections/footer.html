@@ -89,6 +89,12 @@
       </span>
     </div>
 
+    <nav class="footer__legal" aria-label="Legal">
+      @for (link of legal; track link.href) {
+        <a [href]="link.href">{{ link.label }}</a>
+      }
+    </nav>
+
     <div class="footer__stats">
       <button
         #statsToggle

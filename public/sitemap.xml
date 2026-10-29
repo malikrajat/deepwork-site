@@ -96,4 +96,28 @@
       <image:caption>The DeepWork social preview card: the dashboard in a browser frame beside the product statement.</image:caption>
     </image:image>
   </url>
+  <!--
+    The three documents. Real URLs, not fragments of the page: they are static
+    files, and each one is served with a 200 so a crawler can index it without
+    running any JavaScript. `lastmod` is the day their text last changed, printed
+    on each of them as well.
+  -->
+  <url>
+    <loc>https://deepwork.rajatmalik.dev/privacy/</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://deepwork.rajatmalik.dev/terms/</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://deepwork.rajatmalik.dev/contact/</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
 </urlset>

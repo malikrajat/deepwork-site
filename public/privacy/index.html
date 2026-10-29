@@ -1,0 +1,477 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+
+    <title>Privacy policy — DeepWork</title>
+    <meta
+      name="description"
+      content="What DeepWork does and does not collect: no account, no cookie, no advertising. A visit count on the front page, your work kept on your own machine, and the messages you choose to send."
+    />
+    <link rel="canonical" href="https://deepwork.rajatmalik.dev/privacy/" />
+
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+    <meta name="author" content="Rajat Malik" />
+    <meta name="theme-color" content="#080613" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#f4f6fb" media="(prefers-color-scheme: light)" />
+    <meta name="color-scheme" content="dark light" />
+
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="DeepWork" />
+    <meta property="og:locale" content="en" />
+    <meta property="og:title" content="Privacy policy — DeepWork" />
+    <meta
+      property="og:description"
+      content="No account, no cookie, no advertising. What the visit count sends, where your work is kept, and what happens to a message you send."
+    />
+    <meta property="og:url" content="https://deepwork.rajatmalik.dev/privacy/" />
+    <meta property="og:image" content="https://deepwork.rajatmalik.dev/og-image.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/icons/128x128.png" />
+    <link rel="stylesheet" href="/legal/legal.css" />
+
+    <!--
+      The same boot script the front page runs, reading the same key, so a theme
+      chosen on either page applies to the other before the first paint.
+    -->
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem('deepwork-site-theme');
+          var theme =
+            stored === 'light' || stored === 'dark'
+              ? stored
+              : window.matchMedia('(prefers-color-scheme: light)').matches
+                ? 'light'
+                : 'dark';
+          document.documentElement.dataset['theme'] = theme;
+        } catch (_) {
+          /* Private mode or blocked storage: the dark default in the markup stands. */
+        }
+      })();
+    </script>
+    <script src="/legal/legal.js" defer></script>
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="masthead">
+      <div class="shell masthead__inner">
+        <a class="brand" href="/">
+          <span class="brand__mark" aria-hidden="true">DW</span>
+          <span class="brand__text">DeepWork</span>
+        </a>
+
+        <nav class="docnav" aria-label="Documents">
+          <a href="/privacy/" aria-current="page">Privacy</a>
+          <a href="/terms/">Terms</a>
+          <a href="/contact/">Contact</a>
+        </nav>
+
+        <div class="masthead__actions">
+          <a class="back" href="/">Back to the site</a>
+          <button class="icon-btn" type="button" data-theme-toggle hidden aria-label="Switch theme">
+            <svg
+              class="icon-sun"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              aria-hidden="true"
+            >
+              <circle cx="12" cy="12" r="4" />
+              <path
+                d="M12 2v2m0 16v2M2 12h2m16 0h2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"
+              />
+            </svg>
+            <svg
+              class="icon-moon"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              aria-hidden="true"
+            >
+              <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main id="main" class="doc">
+      <header class="doc__head">
+        <p class="eyebrow">Legal</p>
+        <h1 class="doc__title">Privacy policy</h1>
+        <p class="doc__lead">
+          DeepWork is a timer, a task list and a habit tracker that keeps its data on your own
+          machine. This policy describes the little that happens outside it.
+        </p>
+        <p class="doc__meta">
+          <span><time datetime="2026-10-28">Last updated 28 October 2026</time></span>
+          <span>Covers this website and the DeepWork app</span>
+        </p>
+      </header>
+
+      <nav class="toc" aria-labelledby="toc-title">
+        <h2 class="toc__title" id="toc-title">On this page</h2>
+        <ol>
+          <li><a href="#who">Who is responsible</a></li>
+          <li><a href="#website">This website</a></li>
+          <li><a href="#device">What is stored on your device</a></li>
+          <li><a href="#web-app">The web app</a></li>
+          <li><a href="#desktop">The desktop app</a></li>
+          <li><a href="#messages">Messages you send</a></li>
+          <li><a href="#processors">Who else is involved</a></li>
+          <li><a href="#rights">Your rights</a></li>
+          <li><a href="#children">Children</a></li>
+          <li><a href="#changes">Changes to this policy</a></li>
+          <li><a href="#contact">Questions</a></li>
+        </ol>
+      </nav>
+
+      <div class="prose">
+        <div class="callout">
+          <span class="callout__title">The short version</span>
+          <p>
+            <strong>Nothing about you is collected.</strong> No account, no profile, no identifier,
+            no cookie, no advertising and nothing sold. Whatever you write in DeepWork is yours, and
+            it stays on your own machine. Nothing is charged, and nothing is taken from you.
+          </p>
+          <p>
+            Two things exist outside it, and neither says who you are: an anonymous count of visits
+            to the front page and the web app, and a message you deliberately send me. Both are
+            described below.
+          </p>
+        </div>
+
+        <section id="who">
+          <h2>Who is responsible</h2>
+          <p>
+            DeepWork is a personal open-source project, not a company. I am
+            <strong>Rajat Malik</strong>, based in Gurgaon, India, and I am the person responsible
+            for the processing described on this page. There is no data protection officer, no
+            registered company and no business partner with access to anything described here.
+          </p>
+          <p>
+            Write to <a href="mailto:contact@rajatmalik.dev">contact@rajatmalik.dev</a> about this
+            policy, or about anything that concerns your data.
+          </p>
+        </section>
+
+        <section id="website">
+          <h2>This website</h2>
+          <p>
+            The site at <code>deepwork.rajatmalik.dev</code> is a set of static files. It has no
+            server of its own, no database, no login and no comment form.
+          </p>
+
+          <h3>Hosting</h3>
+          <p>
+            The files are published through GitHub Pages, so GitHub processes the request the way
+            any web host does: your IP address, the time, the file you asked for and your browser's
+            description appear in its server logs. I do not receive those logs and cannot read them.
+            GitHub's handling is described in
+            <a href="https://github.com/privacy" rel="noopener">GitHub's privacy statement</a>.
+          </p>
+
+          <h3>The visit count</h3>
+          <p>
+            The front page and the web app each send one pageview to
+            <strong>GoatCounter</strong> (<code>deepwork.goatcounter.com</code>), so that "is
+            anybody using this?" has an answer without DeepWork running a backend. The page sends
+            the request itself — no third-party script is loaded to make it — and it contains:
+          </p>
+          <ul>
+            <li>the address of the page and its title;</li>
+            <li>the referring page, if your browser sends one, and any query string;</li>
+            <li>the width of your screen;</li>
+            <li>
+              a flag saying whether the browser is automated, and a random value that stops the
+              request being cached.
+            </li>
+          </ul>
+          <p>
+            It writes <strong>no cookie</strong>, reads no identifier, and GoatCounter stores no IP
+            address for it. What I can see is totals and grouped counts — pages, referrers,
+            locations, browsers — never an individual visitor. A browser sending
+            <strong>Do Not Track</strong> or <strong>Global Privacy Control</strong> is not counted,
+            and neither is a local build, a preview deployment or the automated audit.
+          </p>
+          <p>
+            <strong>These three documents are not counted.</strong> The privacy policy, the terms
+            and this contact page send no pageview at all.
+          </p>
+
+          <h3>The Site stats panel</h3>
+          <p>
+            The footer of the front page has a <em>Site stats</em> button. It reads the totals and
+            the month's breakdowns back through GoatCounter's read-only API, with a token that can
+            only read. Nothing is fetched until the panel is opened, and opening it reports nothing
+            about your visit.
+          </p>
+
+          <h3>No cookies, no third-party scripts</h3>
+          <p>
+            This site sets no cookie, so there is nothing to consent to and no banner. The typefaces
+            and screenshots are shipped with the site rather than fetched from a font service or an
+            image host. There is no advertising script, no social widget, no session recorder and no
+            fingerprinting.
+          </p>
+        </section>
+
+        <section id="device">
+          <h2>What is stored on your device</h2>
+          <p>
+            One preference is stored on this site. It lives in <code>localStorage</code>, which is
+            not a cookie: it is a file in your browser's own storage, it is never sent with a
+            request, and clearing site data removes it.
+          </p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">Name</th>
+                  <th scope="col">What it holds</th>
+                  <th scope="col">Why</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row"><code>deepwork-site-theme</code></th>
+                  <td data-label="Holds"><code>dark</code> or <code>light</code></td>
+                  <td data-label="Why">
+                    So the theme you chose is the theme you get on the next page, without a flash of
+                    the other one. It is read on this site only and never transmitted.
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">Your DeepWork data</th>
+                  <td data-label="Holds">
+                    Tasks, sessions, habits, journal entries and settings — only in the web app
+                  </td>
+                  <td data-label="Why">
+                    The app works. It is written by the app into your browser's storage or into a
+                    local database, and it never leaves the device. See below.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p>
+            Nothing else is stored: no analytics identifier, no fingerprint and no preference beyond
+            the theme you chose.
+          </p>
+        </section>
+
+        <section id="web-app">
+          <h2>The web app</h2>
+          <p>
+            The browser build at <code>app.deepwork.rajatmalik.dev</code> has no account and no
+            sign-in. Everything you enter is kept in your own browser storage, on your own device,
+            and is not sent anywhere. The web app can also be installed, and then it keeps working
+            offline.
+          </p>
+          <p>
+            It counts visits with the same counter and the same promises — one pageview per load, no
+            cookie, no stored IP address, and the page never sending a task or a journal entry.
+            <strong>Settings → Count my visits</strong> turns that off; with the switch off, the
+            counter is never loaded. The desktop build is never counted, and there is no collection
+            of your tasks, your journal or anything else you write — not in aggregate, not
+            anonymously, not at all.
+          </p>
+          <p>
+            Clearing your browser's site data deletes that data as well. To move it or to keep it,
+            use the app's own JSON backup.
+          </p>
+        </section>
+
+        <section id="desktop">
+          <h2>The desktop app</h2>
+          <p>
+            The Windows, macOS and Linux builds keep everything in a local
+            <strong>SQLite database</strong> on your computer. There is no DeepWork server, no
+            account and no sync: nothing you record is uploaded, and there is no telemetry about
+            your work.
+          </p>
+          <p>The desktop app makes three kinds of network request, and no others:</p>
+          <ul>
+            <li>
+              <strong>a release check</strong> — it asks the public GitHub API whether a newer
+              version exists. GitHub sees the request and your IP address; the app sends no
+              identifier of its own;
+            </li>
+            <li>
+              <strong>a download you press</strong> — an installer or update comes from GitHub's
+              release page;
+            </li>
+            <li>
+              <strong>a link you open</strong> — the app opens it in your browser, where the
+              destination's own policy applies.
+            </li>
+          </ul>
+          <p>
+            The app's logs are local files on your machine, written so that a fault can be
+            understood without anyone connecting to your computer.
+          </p>
+        </section>
+
+        <section id="messages">
+          <h2>Messages you send</h2>
+          <p>
+            You can write to <a href="mailto:contact@rajatmalik.dev">contact@rajatmalik.dev</a> for
+            anything, or to <a href="mailto:support@rajatmalik.dev">support@rajatmalik.dev</a> for
+            help installing or using the app. A message sent by email passes through your mail
+            provider and mine, and arrives in my mailbox.
+          </p>
+          <p>
+            I keep it for as long as it takes to answer, and afterwards for as long as ordinary
+            correspondence is kept. It is not added to a mailing list, not sold, not shared, not
+            used for advertising, and not used to train a model. Ask me to delete a thread and I
+            will delete it.
+          </p>
+          <p>
+            The <a href="/contact/">contact page</a> has a form. At the time of writing it has no
+            form-handling service behind it: pressing Send composes the message in your own email
+            app, so it travels through your own provider and nothing is submitted to this site or to
+            anyone else. If a form service is added later, the form will name it and this section
+            will be updated to name it too, before it is used.
+          </p>
+          <p>
+            There is no phone number for DeepWork and none is requested. Nothing on this site asks
+            for a date of birth, an address, a payment detail or an identity document.
+          </p>
+        </section>
+
+        <section id="processors">
+          <h2>Who else is involved</h2>
+          <p>
+            These are the only third parties in the picture. Each one handles its own part under its
+            own policy; none of them receives your DeepWork data.
+          </p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">Who</th>
+                  <th scope="col">What they do</th>
+                  <th scope="col">What they see</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">GitHub</th>
+                  <td data-label="Does">Hosts this site, the downloads and the issue tracker</td>
+                  <td data-label="Sees">Ordinary web-server request logs, under its own policy</td>
+                </tr>
+                <tr>
+                  <th scope="row">GoatCounter</th>
+                  <td data-label="Does">Counts visits to the front page and the web app</td>
+                  <td data-label="Sees">
+                    The page and the fields listed above — no cookie, no stored IP address
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">Mail providers</th>
+                  <td data-label="Does">Carry an email you choose to send</td>
+                  <td data-label="Sees">The message, as any mail provider does</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p>
+            There is no analytics account beyond that counter, no advertising network, no data
+            broker and no processor with a commercial interest in your data. Nothing is sold.
+          </p>
+        </section>
+
+        <section id="rights">
+          <h2>Your rights</h2>
+          <p>
+            Because there is no account and no profile, there is very little to hold: the only
+            personal data I have is what you choose to send me. Where laws such as the GDPR or
+            India's Digital Personal Data Protection Act, 2023 apply, you may ask to:
+          </p>
+          <ul>
+            <li>be told what is held about you, and receive a copy;</li>
+            <li>have it corrected or erased;</li>
+            <li>object to being contacted, or withdraw a consent you gave;</li>
+            <li>complain to your local data protection authority.</li>
+          </ul>
+          <p>
+            Write to <a href="mailto:contact@rajatmalik.dev">contact@rajatmalik.dev</a> and I will
+            act on the request. There is no automated decision-making and no profiling anywhere in
+            this project.
+          </p>
+        </section>
+
+        <section id="children">
+          <h2>Children</h2>
+          <p>
+            This site and the app are not directed at children. There is no account, no profile and
+            no advertising, so there is nothing to collect. If a child writes to me, the message is
+            treated like any other correspondence and deleted on request.
+          </p>
+        </section>
+
+        <section id="changes">
+          <h2>Changes to this policy</h2>
+          <p>
+            When this policy changes, the date at the top changes with it, and the change is
+            described here. There is no mailing list to notify, so the date is the notice.
+          </p>
+          <ul>
+            <li>
+              <strong>28 October 2026</strong> — first published, with the privacy, terms and
+              contact pages.
+            </li>
+          </ul>
+        </section>
+
+        <section id="contact">
+          <h2>Questions</h2>
+          <p>
+            If something here is unclear, or you think it does not match what the site actually
+            does, tell me. That is a bug in this document, and I would rather fix it than have it
+            stand:
+            <a href="mailto:contact@rajatmalik.dev">contact@rajatmalik.dev</a>.
+          </p>
+        </section>
+      </div>
+
+      <footer class="doc__foot">
+        <h2 class="doc__foot-title">Also here</h2>
+        <div class="doc__links">
+          <a class="chip" href="/terms/">Terms of use</a>
+          <a class="chip" href="/contact/">Contact</a>
+          <a class="chip chip--accent" href="/"
+            >Back to the site <span aria-hidden="true">→</span></a
+          >
+        </div>
+      </footer>
+    </main>
+
+    <footer class="footer">
+      <div class="shell footer__inner">
+        <span>© 2026 DeepWork · maintained by Rajat Malik</span>
+        <nav class="footer__links" aria-label="Footer">
+          <a href="/">Home</a>
+          <a href="/privacy/">Privacy</a>
+          <a href="/terms/">Terms</a>
+          <a href="/contact/">Contact</a>
+        </nav>
+      </div>
+    </footer>
+  </body>
+</html>

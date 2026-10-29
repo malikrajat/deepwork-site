@@ -51,7 +51,7 @@ Everything else:
 npm run format            # Biome over TS/JSON/scripts, then Prettier over HTML/CSS
 npm run format:check      # what CI runs
 npm run lint              # Biome lint
-npm run audit             # drive the BUILT site in a browser and assert 79 things
+npm run audit             # drive the BUILT site in a browser and assert 132 things
 npm run llms              # regenerate public/llms-full.txt from the rendered page
 npm run shots             # re-capture the app screenshots
 npm run og                # regenerate the social preview card
@@ -107,6 +107,32 @@ portfolio and checked against his public GitHub and npm profiles, and it carries
 badge or "open to work" status — for the same reason the page quotes no figure it cannot show: a
 claim that survives being checked is worth more than a stronger one that does not.
 
+## The three documents beside the page
+
+`/privacy/`, `/terms/` and `/contact/` are listed in the footer and reachable by anyone — there is
+no account to have. They are **static HTML files in `public/`**, not Angular routes, and that is a
+consequence of two constraints rather than a preference:
+
+- GitHub Pages answers a path it does not know with `public/404.html` **and a 404 status**, so a
+  legal notice reached through the client router would be served as "not found";
+- a privacy policy has to be readable with JavaScript disabled, and this application is
+  client-rendered.
+
+Each is a self-contained document sharing `public/legal/legal.css` and `public/legal/legal.js` —
+the theme toggle, the copy-address button and the contact form. They read the same
+`deepwork-site-theme` key as the page, so a theme chosen on one applies to the other, and they send
+**no** pageview: the visit counter is on the front page and the web app only. `tools/verify-site.cjs`
+loads all three, follows every link on them, and asserts that the date printed on each matches
+`LEGAL_UPDATED` in `core/site.ts`.
+
+The contact form has no backend. `data-endpoint` on the form is empty, so pressing Send composes the
+message in the visitor's own mail client (`action="mailto:…"`) and the page says exactly that. Set
+that attribute to a form service's endpoint — Formspree, Web3Forms or Basin — and `legal.js` posts
+the fields as JSON instead, and rewrites the sentence from the endpoint's own host so the page
+cannot claim a mail app it is not using. Web3Forms additionally needs its `access_key` in the
+payload. Whichever is set, the privacy policy has to name the processor; that paragraph is in
+`public/privacy/index.html`.
+
 ---
 
 ## Architecture decisions, and why
@@ -116,6 +142,8 @@ Each of these is a decision with a reason, and most of them were made the other 
 - **One page, no router.** One page needs no routing. Leaving the router out keeps the bundle
   smaller, and there is no SPA fallback to configure: GitHub Pages serves the branded `404.html` for
   a path that does not exist, which is a page that says so rather than the app pretending to load.
+  The three documents beside the page — `/privacy/`, `/terms/` and `/contact/` — are static files
+  for the same reason, and are described above.
 - **One stylesheet, no component `styles`.** Component styles are injected as separate `<style>`
   elements at runtime; a single critical-inlined sheet paints the first screen on the first frame,
   which is the whole Core Web Vitals story for a page this visual.
@@ -270,7 +298,7 @@ because its close button also dismisses a completion toast.
 ## Checks
 
 `npm run audit` does not test anything in the abstract — it drives the **built site** in Chromium
-and asserts 79 specific things:
+and asserts 132 specific things:
 
 - crawler files exist and say the right things, and no invented rating is claimed;
 - content is not left hidden waiting for a scroll reveal, at reduced motion and after real input
@@ -279,6 +307,11 @@ and asserts 79 specific things:
 - no console or page errors, exactly one `h1`, a heading for every section, every anchor resolves;
 - all 21 screenshots actually load;
 - the theme toggle flips the document and the FAQ opens without scripting;
+- the three documents are served with a 200 rather than the 404 page, render without the
+  application bundle, keep the theme choice, make no third-party request, and every link and
+  in-page anchor on them resolves;
+- the contact form asks for the fields it says it does, and its delivery sentence matches whether
+  an endpoint is configured;
 - `llms-full.txt` really contains the page, including card body text.
 
 It found three real bugs before release, all invisible to `ng build`: a reveal implementation that

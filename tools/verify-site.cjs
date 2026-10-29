@@ -19,7 +19,10 @@
  *
  * Plus the ordinary checks: no console errors, one `h1`, every section anchor
  * resolves, every screenshot actually loaded, and the theme toggle flips the
- * document.
+ * document. The same is then done to the three documents beside the page —
+ * `/privacy/`, `/terms/` and `/contact/` — which are static files and have to be
+ * served with a 200, render without the application bundle, and keep the theme
+ * choice in the same place the page does.
  *
  *   python tools/serve-app.py dist/deepwork-site/browser 5200
  *   NODE_PATH=<deepwork-repo>/node_modules node tools/verify-site.cjs
@@ -389,6 +392,210 @@ async function main() {
       );
     } else {
       notes.push(`  ok   ${width}px — no overflow, nothing armed, content visible`);
+    }
+
+    await context.close();
+  }
+
+  /* ---------- 3. The three documents ----------
+     /privacy/, /terms/ and /contact/ are static files, not routes: they must be
+     served with a 200, render with JavaScript disabled, and carry the same theme
+     preference as the page. A broken "back to the site" link or a toggle that
+     stopped writing the shared key is invisible in a build log, which is why
+     these are checked here rather than trusted. */
+  console.log('\n== documents: privacy, terms, contact ==');
+
+  const documents = [
+    { path: '/privacy/', file: 'public/privacy/index.html', name: 'privacy' },
+    { path: '/terms/', file: 'public/terms/index.html', name: 'terms' },
+    { path: '/contact/', file: 'public/contact/index.html', name: 'contact' },
+  ];
+
+  const siteConfig = fs.readFileSync('src/app/core/site.ts', 'utf8');
+  const legalUpdated = /LEGAL_UPDATED\s*=\s*'([^']+)'/.exec(siteConfig)?.[1] ?? '';
+  check(
+    /^\d{4}-\d{2}-\d{2}$/.test(legalUpdated),
+    `site.ts dates the documents (${legalUpdated || 'nothing'})`,
+  );
+
+  for (const doc of documents) {
+    check(fs.existsSync(doc.file), `${doc.file} is shipped`);
+
+    const html = fs.existsSync(doc.file) ? fs.readFileSync(doc.file, 'utf8') : '';
+    check(html.includes(`datetime="${legalUpdated}"`), `${doc.name} prints the date in site.ts`);
+    check(
+      html.includes(`<link rel="canonical" href="${siteUrl}${doc.path.slice(1)}"`),
+      `${doc.name} declares its canonical URL`,
+    );
+  }
+
+  const documentsContext = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+  const ownOrigin = new URL(base).origin;
+
+  for (const doc of documents) {
+    const page = await documentsContext.newPage();
+    const docErrors = [];
+    const docExternal = [];
+
+    page.on('console', (message) => {
+      if (message.type() === 'error') docErrors.push(message.text());
+    });
+    page.on('pageerror', (error) => docErrors.push(String(error)));
+    page.on('request', (request) => {
+      try {
+        if (new URL(request.url()).origin !== ownOrigin) docExternal.push(request.url());
+      } catch {
+        /* A request with no parseable URL is not one this check can judge. */
+      }
+    });
+
+    const response = await page.goto(base + doc.path, { waitUntil: 'networkidle', timeout: 30000 });
+    const h1Count = await page.locator('h1').count();
+    const h1Text = ((await page.locator('h1').first().textContent()) ?? '').trim();
+
+    check(
+      response !== null && response.status() === 200,
+      `${doc.path} is served with 200, not the 404 page (${response?.status()})`,
+    );
+    check(h1Count === 1, `${doc.path} has exactly one h1 (found ${h1Count})`);
+    check(h1Text.length > 5, `${doc.path} h1 has real text: "${h1Text.slice(0, 40)}"`);
+    check(docErrors.length === 0, `${doc.path} has no console or page errors`);
+    check(
+      docExternal.length === 0,
+      `${doc.path} makes no third-party request${docExternal.length ? `: ${docExternal[0]}` : ''}`,
+    );
+
+    /* Theme: the same key and the same attribute the home page uses, so the two
+       can never disagree about which theme the visitor chose. */
+    const before = await page.evaluate(() => document.documentElement.dataset['theme']);
+    await page.locator('[data-theme-toggle]').click();
+    await page.waitForTimeout(150);
+    const after = await page.evaluate(() => ({
+      theme: document.documentElement.dataset['theme'],
+      stored: localStorage.getItem('deepwork-site-theme'),
+    }));
+    check(
+      after.theme !== before && after.stored === after.theme,
+      `${doc.path} theme toggle switches and persists (${before} -> ${after.theme})`,
+    );
+
+    /* Every link the document promises, followed for real. A 404 behind a
+       "Back to the site" button is the kind of thing only a browser finds. */
+    const hrefs = await page.$$eval('a[href]', (links) =>
+      Array.from(
+        new Set(
+          links
+            .map((link) => link.getAttribute('href') ?? '')
+            .filter((href) => href.startsWith('/') && !href.startsWith('//')),
+        ),
+      ),
+    );
+
+    const broken = [];
+    for (const href of hrefs) {
+      const linkResponse = await documentsContext.request.get(base + href);
+      if (!linkResponse.ok()) broken.push(`${href} (${linkResponse.status()})`);
+    }
+    check(
+      broken.length === 0,
+      `${doc.path} links all resolve (${hrefs.length} links${broken.length ? `: ${broken.join(', ')}` : ''})`,
+    );
+
+    /* The table of contents is the one navigation a legal document has, and a
+       link to a heading that was renamed or removed scrolls nowhere — silently. */
+    const missingAnchors = await page.$$eval('a[href^="#"]', (links) =>
+      Array.from(
+        new Set(
+          links
+            .map((link) => (link.getAttribute('href') ?? '').slice(1))
+            .filter((id) => id !== '' && document.getElementById(id) === null),
+        ),
+      ),
+    );
+    check(
+      missingAnchors.length === 0,
+      `${doc.path} in-page anchors resolve${missingAnchors.length ? `: #${missingAnchors[0]}` : ''}`,
+    );
+
+    /* A list item that collapses to one character per line overflows nothing and
+       errors nowhere — the page built, deployed and passed every other check
+       while two sections were unreadable. Height is the tell: a real item in this
+       measure is a few lines, and a collapsed one is thousands of pixels. */
+    const tallItems = await page.$$eval('.prose li', (items) =>
+      items
+        .map((item) => ({
+          text: (item.textContent ?? '').trim().slice(0, 48),
+          height: Math.round(item.getBoundingClientRect().height),
+        }))
+        .filter((item) => item.height > 400),
+    );
+    check(
+      tallItems.length === 0,
+      `${doc.path} list items keep their width${tallItems.length ? `: "${tallItems[0].text}" is ${tallItems[0].height}px tall` : ''}`,
+    );
+
+    if (doc.path === '/contact/') {
+      const form = await page.$eval('[data-contact-form]', (element) => ({
+        action: element.getAttribute('action') ?? '',
+        endpoint: (element.getAttribute('data-endpoint') ?? '').trim(),
+        note: element.querySelector('.form__note')?.textContent ?? '',
+        canRewriteNote: element.querySelector('[data-note-delivery]') !== null,
+        fields: Array.from(element.querySelectorAll('[name]')).map((field) => field.name),
+      }));
+
+      check(
+        ['name', 'email', 'subject', 'message'].every((field) => form.fields.includes(field)),
+        'the contact form asks for a name, an email, a topic and a message',
+      );
+      check(
+        form.endpoint === '' ? form.action.startsWith('mailto:') : form.action === form.endpoint,
+        `the contact form's delivery path matches its endpoint (${form.endpoint || 'none set'})`,
+      );
+      /* With no endpoint the page must say so: a form that claims to send and
+         silently open a mail client is the failure this sentence prevents. When
+         an endpoint is wired in, `legal.js` rewrites this sentence from the
+         endpoint's own host — so the note has to be the one it can find. */
+      check(
+        form.endpoint !== '' || /opens your email app/i.test(form.note),
+        'the contact form says how it currently sends a message',
+      );
+      check(form.canRewriteNote, 'the delivery note is marked so an endpoint can rewrite it');
+    }
+
+    await page.close();
+  }
+
+  /* The lobby is the only place that lists the three documents. */
+  {
+    const page = await documentsContext.newPage();
+    await page.goto(base, { waitUntil: 'networkidle', timeout: 30000 });
+    await page.waitForSelector('.footer__legal', { timeout: 10000 });
+
+    for (const doc of documents) {
+      const count = await page.locator(`.footer__legal a[href="${doc.path}"]`).count();
+      check(count === 1, `the footer lists ${doc.path}`);
+    }
+
+    await page.close();
+  }
+
+  await documentsContext.close();
+
+  /* ---------- 4. The documents at three widths ---------- */
+  console.log('\n== documents: horizontal overflow ==');
+
+  const DOCUMENT_WIDTHS = [360, 768, 1440];
+  for (const width of DOCUMENT_WIDTHS) {
+    const context = await browser.newContext({ viewport: { width, height: 900 } });
+    const page = await context.newPage();
+
+    for (const doc of documents) {
+      await page.goto(base + doc.path, { waitUntil: 'domcontentloaded', timeout: 30000 });
+      await page.waitForTimeout(250);
+
+      const result = await page.evaluate(measure);
+      const overflow = result.scrollWidth - result.innerWidth;
+      check(overflow <= 1, `${doc.path} has no horizontal overflow at ${width}px (${overflow}px)`);
     }
 
     await context.close();

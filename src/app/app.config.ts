@@ -12,6 +12,11 @@ import {
  * SPA-fallback problem that a host like GitHub Pages otherwise has to solve with
  * a hand-written `404.html`.
  *
+ * The three documents beside it — `/privacy/`, `/terms/` and `/contact/` — are
+ * static HTML in `public/`, not routes, for the same reason: GitHub Pages answers
+ * an unknown path with a 404 status, so a client route would serve a legal notice
+ * as "not found", and a policy has to be readable with JavaScript disabled.
+ *
  * Change detection is zoneless — no `zone.js` is loaded at all — which is the
  * Angular 22 default for a new application and is what keeps the bundle this
  * small. Every piece of state on the page is a signal.

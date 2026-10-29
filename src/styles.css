@@ -1651,6 +1651,27 @@ html[data-theme='light'] .footer {
   color: var(--text-3);
 }
 
+/* The three documents. They get a row of their own rather than a fourth column:
+   the grid is sized for the product, get-started and elsewhere links, and a
+   legal link is found at the bottom of a page rather than browsed. */
+.footer__legal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 1.25rem;
+  margin-top: 0.85rem;
+  font-size: var(--fs-xs);
+}
+.footer__legal a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--text-3);
+  font-weight: 500;
+}
+.footer__legal a:hover {
+  color: var(--text);
+}
+
 /* ===== Footer: site stats ==============================================
    The trigger and the panel it opens. The panel is a dialog rather than a
    section: it is read once, on purpose, and the page behind it is not part of
