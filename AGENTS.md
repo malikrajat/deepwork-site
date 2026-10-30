@@ -66,8 +66,9 @@ Two features are used progressively, which means the fallback is "less pretty", 
 Everything else is Baseline widely available today: custom properties, `clamp()`, grid,
 `text-wrap: balance`, `requestAnimationFrame`, `svh` units, `env(safe-area-inset-*)`.
 
-The site must work with **JavaScript disabled**: the `<noscript>` block in `index.html` states the
-product's promise and links to the app and the releases.
+The site must work with **JavaScript disabled**: the build prerenders the whole page into
+`index.html`, so there is no `<noscript>` summary to maintain and nothing to fall back to. The one
+thing that still needs scripting is the theme — without it the page stays dark.
 
 ---
 
@@ -77,9 +78,9 @@ product's promise and links to the app and the releases.
   serves `public/404.html` for an unknown path, which is a branded page rather than the app.
 - **Three documents, and they are static files.** `/privacy/`, `/terms/` and `/contact/` live in
   `public/` as self-contained HTML sharing `public/legal/legal.css` and `legal.js`, with real URLs
-  and a 200 status. They are not routes because GitHub Pages would answer one with a 404, because
-  prerendering does not work here, and because a legal notice has to read with JavaScript off. The
-  theme toggle uses the same `deepwork-site-theme` key as the page; the documents send no pageview.
+  and a 200 status. They are not routes because GitHub Pages would answer one with a 404, and
+  because a legal notice has to read with JavaScript off. The theme toggle uses the same
+  `deepwork-site-theme` key as the page; the documents send no pageview.
   The contact form is wired to `data-endpoint` on the form and falls back to `mailto:` — never
   invent an endpoint, and if one is set, name the processor in the privacy policy.
 - **No lazy loading, no `@defer`.** A visitor scrolls the whole page; a section that pops in late
@@ -93,15 +94,18 @@ product's promise and links to the app and the releases.
   `src/app/core/reveal.ts`.
 - **Nineteen section components, no shared UI kit.** A component library for a single page would be
   abstraction without a second caller.
-- **Client-rendered, with the content published as plain text beside it.** Prerendering was
-  implemented and attempted; it fails in this project with `NG0401` in Angular's route extractor,
-  and the `outputMode: "server"` route out of that demands an `ssr.entry` — a real server for a site
-  deployed as static files. See the README before trying again. In the meantime the answer is
-  `llms.txt` / `llms-full.txt`, which is what the convention is for.
-- **Keep every component safe to run without a browser.** Not because the build prerenders today,
-  but because the moment someone turns prerendering on, an unguarded `window` or `document` becomes
-  a build failure. Guard access, and use `afterNextRender` for anything that must not run during a
-  server render.
+- **Prerendered, and it is a build step, not a server.** `outputMode: "static"` plus
+  `src/main.server.ts` writes the whole page into `index.html`, so a crawler that executes no
+  JavaScript — GPTBot, ClaudeBot, PerplexityBot — reads every word. `src/app/app.config.server.ts`
+  provides `provideServerRendering()` and, crucially, `provideRouter([])`: the prerenderer asks the
+  `Router` for its URLs and throws `NG0401` when there is none, and the router is imported by the
+  server entry alone so the browser bundle never carries it. Nothing is served from `dist` but
+  static files. `llms.txt` / `llms-full.txt` still ship for agents that prefer Markdown.
+- **Keep every component safe to run without a browser.** This is now load-bearing: the build runs
+  the whole app in a DOM that has no `window`, no `localStorage` and no `dataset`, so an unguarded
+  access fails the build rather than a future experiment. Use `DOCUMENT` and `getAttribute`, guard
+  with `typeof window`, and put anything that must not run during a server render in
+  `afterNextRender`.
 - **The visitor count is first-party.** A pageview is a beacon this page sends to GoatCounter
   (`src/app/core/analytics.ts`), not `count.js` and not anybody else's script. It counts only
   `https://deepwork.rajatmalik.dev`: local builds, previews and the audit send nothing, and the audit
@@ -149,11 +153,11 @@ product's promise and links to the app and the releases.
 
 ## Checks before you call something done
 
-`npm run audit` drives the **built** site in a browser and asserts 132 things — visibility, overflow
-at ten widths, console errors, loaded images, crawler files, structured data, and the three
-documents. It has caught three bugs that `ng build` could not see. It needs `npm run build` first,
-and Chromium once (`npx playwright install chromium`). `npm run llms` after any copy change, or CI
-will fail on a stale `llms-full.txt`.
+`npm run audit` drives the **built** site in a browser and asserts 145 things — the page with
+JavaScript disabled, visibility, overflow at ten widths, console errors, loaded images, crawler files,
+structured data, and the three documents. It has caught four bugs that `ng build` could not see. It
+needs `npm run build` first, and Chromium once (`npx playwright install chromium`). `npm run llms`
+after any copy change, or CI will fail on a stale `llms-full.txt`.
 
 ## What CI does, and what it deliberately does not
 

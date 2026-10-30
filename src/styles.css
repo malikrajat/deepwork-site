@@ -1973,23 +1973,6 @@ html[data-theme='light'] .stats__scrim {
   transform: none;
 }
 
-/* ===== Noscript ========================================================
-   The page is prerendered, so a visitor without JavaScript already has the
-   whole site and this is only the one action left for them. It is a footnote,
-   not a summary — a second copy of the page inside a `<noscript>` would be
-   duplicate content as far as a crawler is concerned. */
-.noscript {
-  max-width: 46rem;
-  margin: 2rem auto;
-  padding: 1rem 1.5rem;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border);
-  background: var(--surface);
-  color: var(--text-2);
-  text-align: center;
-  font-size: var(--fs-sm);
-}
-
 /* ===== Scrollbar ======================================================= */
 ::-webkit-scrollbar {
   width: 10px;

@@ -134,9 +134,10 @@ function measure() {
 async function main() {
   /* ---------- 0. What a crawler that runs no JavaScript receives ----------
      The most important checks in this file, and the ones a browser test cannot
-     make. The page is client-rendered, so a crawler that executes nothing sees
-     a shell — which is exactly why `llms.txt` and `llms-full.txt` exist, and
-     why they are asserted here rather than trusted. */
+     make. The build prerenders the page into `index.html`, so a crawler that
+     executes nothing reads the whole page; `/llms.txt` and `/llms-full.txt`
+     exist beside it for agents that prefer Markdown, and are asserted here
+     rather than trusted. */
   console.log('== crawler and SEO assets ==');
 
   /* The canonical address is published in five files, so it is read once from
@@ -259,6 +260,11 @@ async function main() {
     !/<noscript>[\s\S]*?<h1/i.test(head),
     'the noscript block holds no second h1 (heading hierarchy)',
   );
+  check(
+    /rel="alternate"[\s\S]{0,200}?href="llms\.txt"/.test(head) &&
+      /rel="alternate"[\s\S]{0,200}?href="llms-full\.txt"/.test(head),
+    'the head points at both machine-readable editions, not just robots.txt',
+  );
 
   // Start the build's own server unless one was pointed at explicitly, so that
   // `npm run audit` is one command with nothing to remember first.
@@ -271,7 +277,72 @@ async function main() {
 
   const browser = await chromium.launch();
 
-  /* ---------- 1. Reduced motion: nothing may be hidden ---------- */
+  /* ---------- 1. The page with JavaScript switched off ----------
+     What GPTBot, ClaudeBot, PerplexityBot and every other crawler that executes
+     nothing actually receives. Two independent questions are asked of it: does
+     the built file contain the words, and does a browser with scripting disabled
+     lay them out as a page. The first catches a build that silently went back to
+     shipping an empty `<app-root>`; the second catches a prerendered page that is
+     present in the HTML but hidden by CSS. */
+  {
+    const built = fs.readFileSync(path.join(DIST, 'index.html'), 'utf8');
+    check(
+      !/<app-root[^>]*>\s*<\/app-root>/.test(built),
+      'the built index.html is not an empty <app-root> shell',
+    );
+    check((built.match(/<h1[\s>]/g) || []).length === 1, 'the built index.html has exactly one h1');
+    check(
+      ['Focus better', 'Eisenhower', 'standing reminder', 'SQLite'].every((phrase) =>
+        built.includes(phrase),
+      ),
+      'the built index.html carries the page text, not just the shell',
+    );
+    check(
+      built.indexOf('Focus better') > built.indexOf('<app-root'),
+      'the page text is inside <app-root>, where a reader looks for it',
+    );
+    check(
+      !fs.existsSync(path.join(DIST, 'index.csr.html')),
+      'no second, empty copy of the page is shipped (index.csr.html)',
+    );
+
+    const context = await browser.newContext({
+      javaScriptEnabled: false,
+      viewport: { width: 1280, height: 900 },
+    });
+    const page = await context.newPage();
+    await page.goto(base, { waitUntil: 'load', timeout: 30000 });
+
+    const noJs = {
+      h1: await page.locator('h1').count(),
+      h1Text: ((await page.locator('h1').first().textContent()) ?? '').trim(),
+      h2: await page.locator('h2').count(),
+      sections: await page.locator('main section').count(),
+      images: await page.locator('main img').count(),
+      text: ((await page.locator('body').innerText()) ?? '').replace(/\s+/g, ' '),
+    };
+
+    console.log('== without JavaScript ==');
+    check(noJs.h1 === 1, `no-JS: exactly one h1 (found ${noJs.h1})`);
+    check(
+      noJs.h1Text.replace(/\s+/g, ' ').trim() === 'Focus better. Work deeper.',
+      `no-JS: the h1 reads the page title ("${noJs.h1Text.replace(/\s+/g, ' ').trim()}")`,
+    );
+    check(noJs.h2 >= 12, `no-JS: at least 12 section headings (found ${noJs.h2})`);
+    check(noJs.sections >= 20, `no-JS: every section is in the document (found ${noJs.sections})`);
+    check(noJs.images >= 10, `no-JS: the screenshots are in the document (found ${noJs.images})`);
+    check(noJs.text.length > 12000, `no-JS: the page reads as prose (${noJs.text.length} chars)`);
+    check(
+      ['Pomodoro', 'Eisenhower', 'Time by Task', 'SQLite'].every((phrase) =>
+        noJs.text.includes(phrase),
+      ),
+      'no-JS: the product claims are in the text, not in a script',
+    );
+
+    await context.close();
+  }
+
+  /* ---------- 2. Reduced motion: nothing may be hidden ---------- */
   {
     const context = await browser.newContext({
       viewport: { width: 1280, height: 900 },
@@ -353,7 +424,7 @@ async function main() {
     await context.close();
   }
 
-  /* ---------- 2. Every width, for overflow ---------- */
+  /* ---------- 3. Every width, for overflow ---------- */
   console.log('\n== horizontal overflow by width ==');
   for (const width of WIDTHS) {
     const context = await browser.newContext({
@@ -397,7 +468,7 @@ async function main() {
     await context.close();
   }
 
-  /* ---------- 3. The three documents ----------
+  /* ---------- 4. The three documents ----------
      /privacy/, /terms/ and /contact/ are static files, not routes: they must be
      served with a 200, render with JavaScript disabled, and carry the same theme
      preference as the page. A broken "back to the site" link or a toggle that
@@ -581,7 +652,7 @@ async function main() {
 
   await documentsContext.close();
 
-  /* ---------- 4. The documents at three widths ---------- */
+  /* ---------- 5. The documents at three widths ---------- */
   console.log('\n== documents: horizontal overflow ==');
 
   const DOCUMENT_WIDTHS = [360, 768, 1440];

@@ -1,9 +1,10 @@
 name: Deploy to GitHub Pages
 
-# The site is a client-rendered Angular application. GitHub Pages cannot publish
-# the repository itself: the branch contains TypeScript and an empty
-# `<app-root>`, not a page. This workflow runs the production build, audits it,
-# and publishes `dist/deepwork-site/browser` as the Pages site.
+# GitHub Pages cannot publish the repository itself: the branch contains
+# TypeScript and an index.html whose `<app-root>` is empty, not a page. This
+# workflow runs the production build — which prerenders the page into
+# `index.html` — audits it, and publishes `dist/deepwork-site/browser` as the
+# Pages site.
 #
 # One-time setup that a workflow cannot perform for itself: Settings -> Pages ->
 # Build and deployment -> Source must be set to **GitHub Actions**. With the

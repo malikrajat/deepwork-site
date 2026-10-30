@@ -78,15 +78,23 @@
     <link rel="manifest" href="site.webmanifest" />
 
     <!--
-      A plain-text version of this page for language models, discoverable from
-      the markup as well as from `robots.txt`. It is not a standard link
-      relation, so agents that do not know it ignore it harmlessly.
+      Plain-text versions of this page for language models, discoverable from
+      the markup as well as from `robots.txt`. `llms.txt` is the curated index;
+      `llms-full.txt` is the whole page as Markdown, for an agent that would
+      rather read than parse HTML. Neither is a standard link relation, so
+      agents that do not know them ignore them harmlessly.
     -->
     <link
       rel="alternate"
       type="text/plain"
       href="llms.txt"
       title="DeepWork — summary for language models"
+    />
+    <link
+      rel="alternate"
+      type="text/markdown"
+      href="llms-full.txt"
+      title="DeepWork — the whole page as Markdown"
     />
 
     <!--
@@ -340,18 +348,12 @@
     <app-root></app-root>
 
     <!--
-      There is no summary of the page here, and that is the point: the build
-      prerenders the whole site into `index.html`, so a visitor without
+      No `<noscript>` summary, because there is nothing left to summarise: the
+      build prerenders the whole page into this file, so a visitor without
       JavaScript — and a crawler that never runs any — already has every word of
-      it. The heading that used to live here was also a second `h1` in the
-      document, which is a heading-hierarchy bug as well as duplicate content.
-      What remains is the one action a script-less visitor might still want.
+      it inside `<app-root>`. A second copy in a `<noscript>` would be duplicate
+      content, and it used to carry a second `h1`, which is a heading-hierarchy
+      bug as well.
     -->
-    <noscript>
-      <p class="noscript">
-        DeepWork is a free focus timer, task manager and habit tracker.
-        <a href="https://app.deepwork.rajatmalik.dev/">Open the web app</a>.
-      </p>
-    </noscript>
   </body>
 </html>

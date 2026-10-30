@@ -3,9 +3,9 @@
  * dependencies.
  *
  * It exists so that `npm run audit` and `npm run llms` are single commands. Both
- * need the site *served* — the page is client-rendered, so the words only exist
- * once a browser has run the application — and needing a second terminal, or a
- * Python interpreter, to run the checks was a reason not to run the checks.
+ * need the site *served* rather than read off disk — the audit drives it in a
+ * browser, and the Markdown generator renders it — and needing a second terminal,
+ * or a Python interpreter, to run the checks was a reason not to run the checks.
  *
  * What it does beyond `http.createServer`:
  *

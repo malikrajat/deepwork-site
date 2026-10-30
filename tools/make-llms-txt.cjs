@@ -6,11 +6,11 @@
  * agent that wants to read rather than to be pointed. This writes the second
  * one.
  *
- * It reads the **rendered** page from a served build, which is the whole reason
- * the file exists: this site is client-rendered, so the HTML on disk is a shell
- * and the words only exist once a browser has run the application. Whatever
- * executes that JavaScript — a person, Googlebot, or this script — gets the same
- * text, and an agent that executes none of it gets `llms-full.txt` instead.
+ * It reads the **rendered** page from a served build rather than parsing the
+ * built HTML, so a reveal, a `@for` loop or a component's computed text cannot be
+ * missed. The build prerenders the page, so the served HTML and the rendered DOM
+ * now say the same thing — but rendering is the path that stays right if that
+ * ever changes, and it is the same sentence a reader would see.
  *
  *   python tools/serve-app.py dist/deepwork-site/browser 5200
  *   npm run llms

@@ -29,9 +29,10 @@ Three ideas shaped almost every decision in here:
 2. **The product is the artwork.** Every image is a screenshot of the real application, captured
    from a production build. There is not one stock photograph in this repository.
 3. **Be readable by machines as well as people.** Googlebot runs JavaScript; most AI crawlers do
-   not. This site is client-rendered, so the page is *also* published as plain text — see
-   [Crawler and SEO](#crawler-and-seo) — and an audit checks that the plain-text version really
-   contains the page rather than a stub.
+   not. The build prerenders the whole page into `index.html`, so the text is in the document a
+   crawler downloads rather than in a script it has to run — and the page is *also* published as
+   Markdown for agents. See [Crawler and SEO](#crawler-and-seo); the audit opens the built page with
+   JavaScript disabled and asserts the words are there.
 
 ---
 
@@ -51,7 +52,7 @@ Everything else:
 npm run format            # Biome over TS/JSON/scripts, then Prettier over HTML/CSS
 npm run format:check      # what CI runs
 npm run lint              # Biome lint
-npm run audit             # drive the BUILT site in a browser and assert 132 things
+npm run audit             # drive the BUILT site in a browser and assert 145 things
 npm run llms              # regenerate public/llms-full.txt from the rendered page
 npm run shots             # re-capture the app screenshots
 npm run og                # regenerate the social preview card
@@ -115,8 +116,8 @@ consequence of two constraints rather than a preference:
 
 - GitHub Pages answers a path it does not know with `public/404.html` **and a 404 status**, so a
   legal notice reached through the client router would be served as "not found";
-- a privacy policy has to be readable with JavaScript disabled, and this application is
-  client-rendered.
+- a privacy policy has to be readable with JavaScript disabled — true of a static file by
+  construction, and now true of the front page as well, because the build prerenders it.
 
 Each is a self-contained document sharing `public/legal/legal.css` and `public/legal/legal.js` —
 the theme toggle, the copy-address button and the contact form. They read the same
@@ -167,31 +168,50 @@ Each of these is a decision with a reason, and most of them were made the other 
   <https://deepwork.goatcounter.com/user/api>; the panel then falls back to the public totals.
 - **Zoneless.** No `zone.js` is loaded; all state is signals.
 
-### Prerendering: attempted, documented, not enabled
+### Prerendering
 
-Angular's prerenderer does not work for this project, and the exact blocker is worth recording so
-nobody re-runs the investigation:
+The build prerenders the page, so a crawler that executes no JavaScript receives the finished
+document instead of an empty `<app-root>`. It costs two small files and one configuration block:
 
-1. `outputMode: "static"` with a server entry fails with `NG0401` — the prerenderer boots the
-   server bundle and asks its route extractor for the URL list, which an application with no router
-   cannot answer.
-2. Adding `@angular/router` **on the server only** (so the browser pays nothing) still fails at the
-   same place.
-3. `outputMode: "server"`, which supplies the `index.server.html` asset the extractor reads, then
-   demands `ssr.entry` — a real server file. That is a server process for a site deployed as static
-   files, and it was not a trade worth making silently.
+- **`src/main.server.ts`** is the entry the builder runs the application through once, at build
+  time. `outputMode: "static"` keeps the server bundle out of `dist` — nothing serves it, and there
+  is still no server anywhere — and the output is `dist/deepwork-site/browser/index.html` with the
+  whole page already inside it.
+- **`src/app/app.config.server.ts`** adds `provideServerRendering()` and `provideRouter([])`. The
+  router is not decoration: the prerenderer boots the app and asks the `Router` which URLs exist,
+  and with no `Router` provided at all that query throws `NG0401`. An empty configuration answers
+  "just `/`", which is the only page this site has. It is imported by the server entry alone, so the
+  browser bundle does not carry the router and does not grow by a byte.
 
-`ng add @angular/ssr` plus `outputMode: "server"` and `prerender` is the remaining step, and it is
-left for a human to run on purpose. In the meantime the content reaches non-JavaScript crawlers
-through `llms-full.txt`, which is what that convention exists for.
+The three packages that make this possible — `@angular/ssr`, `@angular/platform-server` and
+`@angular/router` — are **devDependencies**: they exist for the build, and none of them reaches the
+browser bundle.
+
+The earlier attempts failed for a reason worth recording: `outputMode: "static"` with a server entry
+threw `NG0401`, and installing `@angular/router` for the server alone changed nothing — the extractor
+asks the injector for a `Router`, and the package being installed is not the same as `provideRouter`
+being called. `outputMode: "server"` would supply one, but it demands an `ssr.entry`: a real server
+file for a site deployed as static files. `provideRouter([])` in the server config is the whole fix,
+and it is why the browser bundle stays router-free.
+
+**Not hydrated, on purpose.** `provideClientHydration()` was tried and removed: it adds ~41 kB to the
+initial bundle, and Angular's first render is synchronous, so adopting the prerendered DOM saves a
+repaint no visitor sees. The page re-renders once on load and arrives at the same result; the audit
+checks the page both with JavaScript and without it.
+
+`npm run build` also deletes `index.csr.html`, the empty client-side fallback the builder writes
+beside the prerendered page. It has no route to serve here, and publishing it would put a second,
+thinner copy of the same page at a guessable URL.
 
 ---
 
 ## Crawler and SEO
 
-**The honest situation.** The page is client-rendered. Googlebot renders JavaScript and will index
-it fully. An AI crawler that executes nothing sees the document head and an empty `<app-root>` —
-which is why the whole page is also published as plain text.
+**The honest situation.** The build writes the whole page into `index.html`, so a crawler that
+executes no JavaScript reads every word — that is the difference between this site and the usual
+client-rendered Angular page. The Markdown files are still shipped, because an agent that prefers
+plain text should not have to parse HTML, because `/llms.txt` is where an agent looks first, and
+because `llms-full.txt` is what a reader quotes.
 
 | File                       | Purpose                                                                                                                                                                                                                                    |
 | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -223,7 +243,8 @@ split by effort.
 
 ### Done
 
-- A page that ships 62 kB and renders at ten viewport widths from 320px to 2560px.
+- A prerendered page that renders at ten viewport widths from 320px to 2560px, whose first load is
+  about 130 kB of transfer: a 43 kB HTML document and 85 kB of JavaScript and CSS.
 - Structured data, a canonical URL, a generated social card and image-sitemap entries.
 - Plain-text versions for crawlers and language models, kept honest by a CI check.
 - An "informational" section that targets the question people ask *before* they want a product.
@@ -252,7 +273,6 @@ split by effort.
 
 ### Better to have — bigger bets
 
-- **Prerendering.** See above. It is the largest remaining technical SEO gain.
 - **A blog or notes feed.** Recurring content is the only reliable long-term organic engine, and it
   is the one item here that cannot be automated.
 - **Directory listings.** AlternativeTo, awesome-lists, Product Hunt, Hacker News, the relevant
@@ -298,9 +318,12 @@ because its close button also dismisses a completion toast.
 ## Checks
 
 `npm run audit` does not test anything in the abstract — it drives the **built site** in Chromium
-and asserts 132 specific things:
+and asserts 145 specific things:
 
 - crawler files exist and say the right things, and no invented rating is claimed;
+- the built `index.html` is not an empty shell, and a browser with **JavaScript disabled** renders
+  the one `h1`, the 24 sections, the 22 screenshots and the product claims — the check that a
+  prerendered page is present in the HTML but hidden by CSS would fail;
 - content is not left hidden waiting for a scroll reveal, at reduced motion and after real input
   scrolling, at ten widths;
 - no horizontal overflow at any of those widths, with the offending element named when there is one;
@@ -389,9 +412,11 @@ Two features degrade rather than being assumed: `color-mix()` (where unsupported
 dropped and a solid background shows through) and `backdrop-filter` (decoration over an
 already-readable surface, `-webkit-` prefixed for Safari).
 
-The page must also be usable with JavaScript disabled. The `<noscript>` block is one sentence and
-one link; it used to be a full duplicate of the page including a second `h1`, which was both
-duplicate content and a broken heading hierarchy.
+The page must also be usable with JavaScript disabled — and now it is: the build prerenders it, so
+the whole document is in the HTML. There is no `<noscript>` fallback because there is nothing left
+for it to say; the one that used to exist carried a second `h1`, which was both duplicate content
+and a broken heading hierarchy. The theme is the one thing that still needs scripting: without it the
+page stays dark, because the stored-or-system preference is resolved by the inline boot script.
 
 ## Licence
 

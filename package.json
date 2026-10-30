@@ -10,7 +10,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --port 5000",
-    "build": "ng build",
+    "build": "ng build && node tools/clean-dist.cjs",
     "watch": "ng build --watch --configuration development",
     "lint": "biome lint .",
     "format": "biome check --write . && prettier --write \"**/*.{html,css}\"",
@@ -35,6 +35,9 @@
     "@angular/build": "^22.2.1",
     "@angular/cli": "^22.2.1",
     "@angular/compiler-cli": "^22.2.1",
+    "@angular/platform-server": "^22.2.1",
+    "@angular/router": "^22.2.1",
+    "@angular/ssr": "^22.2.1",
     "@biomejs/biome": "^2.5.15",
     "@playwright/test": "^1.63.0",
     "prettier": "^3.9.9",

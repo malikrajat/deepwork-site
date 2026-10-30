@@ -33,7 +33,7 @@ export class ThemeStore {
 
   apply(theme: Theme, persist: boolean): void {
     this.theme.set(theme);
-    this.document.documentElement.dataset['theme'] = theme;
+    this.document.documentElement?.setAttribute('data-theme', theme);
 
     if (!persist) return;
 
@@ -47,7 +47,9 @@ export class ThemeStore {
   }
 
   private readAppliedTheme(): Theme {
-    return this.document.documentElement.dataset['theme'] === 'light' ? 'light' : 'dark';
+    // `getAttribute`, not `dataset`: the DOM the prerenderer provides has no
+    // `dataset`, and reading it there would fail the build.
+    return this.document.documentElement?.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
   }
 
   private hasStoredChoice(): boolean {
