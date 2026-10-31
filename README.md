@@ -126,13 +126,31 @@ the theme toggle, the copy-address button and the contact form. They read the sa
 loads all three, follows every link on them, and asserts that the date printed on each matches
 `LEGAL_UPDATED` in `core/site.ts`.
 
-The contact form has no backend. `data-endpoint` on the form is empty, so pressing Send composes the
-message in the visitor's own mail client (`action="mailto:…"`) and the page says exactly that. Set
-that attribute to a form service's endpoint — Formspree, Web3Forms or Basin — and `legal.js` posts
-the fields as JSON instead, and rewrites the sentence from the endpoint's own host so the page
-cannot claim a mail app it is not using. Web3Forms additionally needs its `access_key` in the
-payload. Whichever is set, the privacy policy has to name the processor; that paragraph is in
-`public/privacy/index.html`.
+The contact form posts to **Web3Forms**, which forwards the message to
+`contact@rajatmalik.dev`. `WEB3FORMS_ACCESS_KEY` lives in the tracked **`.env`**, and
+`tools/contact-config.cjs` reads it before every `npm start` and `npm run build` and writes
+`public/contact/config.js` — the generated file is gitignored, so the key is assembled at build
+time rather than written into the page by hand.
+
+Precedence, highest first: `WEB3FORMS_ACCESS_KEY` in the process environment (CI), then `.env.local`
+(a developer's gitignored override), then `.env`. The deploy workflow still passes the repository
+secret when one is set, but a plain `npm ci && npm run build` produces a working form without it,
+because `.env` is part of the checkout.
+
+With no key configured at all, `config.js` is still written with an empty one, `legal.js` leaves the
+form alone, and the markup's own `action="mailto:…"` takes over — so the page still works, it just
+opens the visitor's mail app. Note that a static site cannot keep this key secret from a visitor:
+the browser receives it. A Web3Forms access key is designed for that — it can only deliver to the
+inbox that owns it — but it should not be treated as a credential, and the privacy policy names
+Web3Forms as a processor (that paragraph is in `public/privacy/index.html`).
+
+The form also carries **hCaptcha**, because this Web3Forms form requires a token with every
+submission. It is mounted by `legal.js` through Web3Forms' zero-config client script, so a visitor
+with JavaScript off loads no third-party script at all — they post through `mailto:`. It is the
+site's only third-party dependency; the audit allows its hosts on `/contact/` and nowhere else.
+Turning the check off in the Web3Forms dashboard means setting `captcha: false` in
+`tools/contact-config.cjs`, or leaving it on: a token sent to a form that no longer checks it is
+harmless.
 
 ---
 
@@ -331,10 +349,10 @@ and asserts 145 specific things:
 - all 21 screenshots actually load;
 - the theme toggle flips the document and the FAQ opens without scripting;
 - the three documents are served with a 200 rather than the 404 page, render without the
-  application bundle, keep the theme choice, make no third-party request, and every link and
-  in-page anchor on them resolves;
-- the contact form asks for the fields it says it does, and its delivery sentence matches whether
-  an endpoint is configured;
+  application bundle, keep the theme choice, and every link and in-page anchor on them resolves;
+  none of them requests a third-party origin except the contact page's hCaptcha;
+- the contact form asks for the fields it says it does, mounts the captcha the service requires,
+  and its delivery sentence matches whether a key is configured;
 - `llms-full.txt` really contains the page, including card body text.
 
 It found three real bugs before release, all invisible to `ng build`: a reveal implementation that

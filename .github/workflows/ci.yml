@@ -64,6 +64,11 @@ jobs:
       # anything it was written to test. That is exactly how this pipeline broke
       # once, when it built with a Pages base href that no longer exists.
       - name: Build
+        env:
+          # Injects the contact form's Web3Forms key into the built page via
+          # `tools/contact-config.cjs`. Absent, the form falls back to `mailto:`
+          # and the audit still passes — it checks whichever path is active.
+          WEB3FORMS_ACCESS_KEY: ${{ secrets.WEB3FORMS_ACCESS_KEY }}
         run: npm run build
 
       # The audit drives the real page in a real browser. It needs Chromium, and

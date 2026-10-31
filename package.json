@@ -9,7 +9,9 @@
   },
   "scripts": {
     "ng": "ng",
+    "prestart": "node tools/contact-config.cjs",
     "start": "ng serve --port 5000",
+    "prebuild": "node tools/contact-config.cjs",
     "build": "ng build && node tools/clean-dist.cjs",
     "watch": "ng build --watch --configuration development",
     "lint": "biome lint .",

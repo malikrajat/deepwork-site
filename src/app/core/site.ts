@@ -115,7 +115,7 @@ export const CONTACT_PAGE_URL = '/contact/';
  * with this constant — a privacy policy whose "last updated" line changes
  * without the policy changing is worse than no date at all.
  */
-export const LEGAL_UPDATED = '2026-10-28';
+export const LEGAL_UPDATED = '2026-10-30';
 
 export interface NavLink {
   /** The `id` of the section this link scrolls to. */

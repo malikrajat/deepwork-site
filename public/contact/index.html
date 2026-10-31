@@ -50,6 +50,16 @@
         }
       })();
     </script>
+    <!--
+      Written by tools/contact-config.cjs before every start and build, from the
+      WEB3FORMS_ACCESS_KEY environment variable or a gitignored `.env.local`.
+      It is generated rather than committed so the key has no reason to enter git
+      history. With no key, it is still written — with an empty one — and the form
+      falls back to `mailto:` instead of posting a request that would be rejected.
+      Loaded before legal.js: both are deferred, and deferred scripts run in
+      document order.
+    -->
+    <script src="/contact/config.js" defer></script>
     <script src="/legal/legal.js" defer></script>
   </head>
 
@@ -115,7 +125,7 @@
           to sign in to — just the three routes below, and a form that reaches the same inbox.
         </p>
         <p class="doc__meta">
-          <span><time datetime="2026-10-28">Last updated 28 October 2026</time></span>
+          <span><time datetime="2026-10-30">Last updated 30 October 2026</time></span>
           <span>No account needed</span>
           <span>Read by a person</span>
           <span>No phone line</span>
@@ -188,15 +198,16 @@
           <!--
             Contact form.
 
-            No form-handling service is configured yet, which is why `data-endpoint` is empty and
-            the form posts to `mailto:`: the browser hands the message to the visitor's own mail
-            app, so nothing is submitted to this site or to a third party. That is what the privacy
-            policy states, and what the note under the button says.
+            Delivery is Web3Forms: `legal.js` posts the fields as JSON to the
+            endpoint and access key in `/contact/config.js`, and Web3Forms forwards
+            the message to contact@rajatmalik.dev. The endpoint is not repeated here
+            and the key is never in this file — `tools/contact-config.cjs` writes
+            the generated config from the environment before every start and build.
 
-            To enable a service, put its endpoint in `data-endpoint` and update the note under the
-            button to say who now receives the message. Nothing else changes — `legal.js` posts the
-            fields as JSON and reports the result — but the privacy policy must name the provider
-            too, because it then handles the message.
+            With no key configured, `legal.js` leaves the form alone and the
+            `action="mailto:"` below takes over, so the page still works without a
+            secret. The privacy policy names Web3Forms in the processors table,
+            because it then handles the message.
           -->
           <form
             class="form"
@@ -243,19 +254,32 @@
               </p>
             </div>
 
-            <!-- The honeypot: hidden from people and from screen readers, but a bot fills it. -->
+            <!--
+              The honeypot: hidden from people and from screen readers, but a bot fills it.
+              `botcheck` is the name Web3Forms itself recognises as its spam trap.
+            -->
             <div class="visually-hidden" aria-hidden="true">
               <label for="company">Company</label>
-              <input id="company" name="_gotcha" type="text" tabindex="-1" autocomplete="off" />
+              <input id="company" name="botcheck" type="text" tabindex="-1" autocomplete="off" />
             </div>
+
+            <!--
+              The hCaptcha widget is mounted here by legal.js, not written into
+              the markup: it needs a third-party script, and a visitor with
+              JavaScript off sends through `mailto:` instead, where the check does
+              not apply. Hidden until the widget is in place.
+            -->
+            <div class="form__captcha" data-captcha-host hidden></div>
 
             <button class="form__submit" type="submit">Send message</button>
 
             <p class="form__status" data-form-status role="status" aria-live="polite"></p>
 
             <p class="form__note" data-note-delivery>
-              Pressing Send opens your email app with the message ready, so it travels through your
-              own provider and is not stored on this site. If no mail app opens, use
+              Send delivers this message to contact@rajatmalik.dev through Web3Forms, which forwards
+              it as email — nothing is posted publicly. With JavaScript turned off, the button opens
+              your own email app instead, and the message reaches the same inbox. If neither works,
+              write to
               <a href="mailto:contact@rajatmalik.dev">contact@rajatmalik.dev</a> directly.
             </p>
 

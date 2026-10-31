@@ -812,6 +812,13 @@ td strong {
   margin-top: clamp(1.75rem, 3vw, 2.5rem);
 }
 
+/* A grid item's default minimum is its widest child, which let the captcha's
+   fixed-size iframe widen the column past the phone screen. Let the column be
+   the width available instead. */
+.contact > * {
+  min-width: 0;
+}
+
 /* These two headings sit outside `.prose`, so they need the size rule the prose
    h2s get. Everything else about them comes from the shared heading rule. */
 .contact h2 {
@@ -977,6 +984,23 @@ td strong {
 @media (min-width: 560px) {
   .field--split {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* The hCaptcha widget is mounted into this box by legal.js. It stays hidden
+   until then, so a visitor without JavaScript is never shown an empty frame. */
+.form__captcha[hidden] {
+  display: none;
+}
+.form__captcha {
+  display: flex;
+  align-items: center;
+}
+/* Reserve the normal widget's height while its script loads, but only where
+   the normal size is used — compact defines its own height on small screens. */
+@media (min-width: 420px) {
+  .form__captcha {
+    min-height: 78px;
   }
 }
 

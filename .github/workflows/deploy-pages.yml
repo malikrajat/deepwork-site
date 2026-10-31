@@ -52,6 +52,11 @@ jobs:
       # href for a Pages project subpath (`/deepwork-site/`) would rewrite every
       # asset URL and 404 the whole bundle.
       - name: Build
+        env:
+          # The contact form's Web3Forms key, read by `tools/contact-config.cjs`.
+          # Without it the form falls back to `mailto:` rather than posting a
+          # request the service would refuse; the audit accepts either path.
+          WEB3FORMS_ACCESS_KEY: ${{ secrets.WEB3FORMS_ACCESS_KEY }}
         run: npm run build
 
       - name: Install Chromium

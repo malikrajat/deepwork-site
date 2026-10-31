@@ -7,7 +7,7 @@
     <title>Privacy policy — DeepWork</title>
     <meta
       name="description"
-      content="What DeepWork does and does not collect: no account, no cookie, no advertising. A visit count on the front page, your work kept on your own machine, and the messages you choose to send."
+      content="What DeepWork does and does not collect: no account, no advertising. A visit count on the front page, your work kept on your own machine, and the messages you choose to send."
     />
     <link rel="canonical" href="https://deepwork.rajatmalik.dev/privacy/" />
 
@@ -23,7 +23,7 @@
     <meta property="og:title" content="Privacy policy — DeepWork" />
     <meta
       property="og:description"
-      content="No account, no cookie, no advertising. What the visit count sends, where your work is kept, and what happens to a message you send."
+      content="No account, no advertising. What the visit count sends, where your work is kept, and what happens to a message you send."
     />
     <meta property="og:url" content="https://deepwork.rajatmalik.dev/privacy/" />
     <meta property="og:image" content="https://deepwork.rajatmalik.dev/og-image.png" />
@@ -119,7 +119,7 @@
           machine. This policy describes the little that happens outside it.
         </p>
         <p class="doc__meta">
-          <span><time datetime="2026-10-28">Last updated 28 October 2026</time></span>
+          <span><time datetime="2026-10-30">Last updated 30 October 2026</time></span>
           <span>Covers this website and the DeepWork app</span>
         </p>
       </header>
@@ -146,13 +146,13 @@
           <span class="callout__title">The short version</span>
           <p>
             <strong>Nothing about you is collected.</strong> No account, no profile, no identifier,
-            no cookie, no advertising and nothing sold. Whatever you write in DeepWork is yours, and
-            it stays on your own machine. Nothing is charged, and nothing is taken from you.
+            no advertising and nothing sold. Whatever you write in DeepWork is yours, and it stays
+            on your own machine. Nothing is charged, and nothing is taken from you.
           </p>
           <p>
-            Two things exist outside it, and neither says who you are: an anonymous count of visits
-            to the front page and the web app, and a message you deliberately send me. Both are
-            described below.
+            Three things exist outside it, and none of them says who you are: an anonymous count of
+            visits to the front page and the web app, a captcha that checks the contact form is
+            filled in by a person, and a message you deliberately send me. All are described below.
           </p>
         </div>
 
@@ -222,12 +222,21 @@
             about your visit.
           </p>
 
-          <h3>No cookies, no third-party scripts</h3>
+          <h3>No cookies, and one third-party script</h3>
           <p>
-            This site sets no cookie, so there is nothing to consent to and no banner. The typefaces
-            and screenshots are shipped with the site rather than fetched from a font service or an
-            image host. There is no advertising script, no social widget, no session recorder and no
-            fingerprinting.
+            The front page, the web app and these documents set no cookie, so there is nothing to
+            consent to and no banner. The typefaces and screenshots are shipped with the site rather
+            than fetched from a font service or an image host. There is no advertising script, no
+            social widget, no session recorder and no fingerprinting by the site itself.
+          </p>
+          <p>
+            The one exception is the check on the contact form. <strong>hCaptcha</strong> (Intuition
+            Machines, Inc.) decides whether the form was filled in by a person, and it works by
+            loading its own script and setting its own cookies and device signals when the contact
+            page is opened. It is the only third-party script on this site, it is loaded by the
+            contact page alone, and it exists only because an unguarded public form is unusable. Its
+            handling is described in
+            <a href="https://www.hcaptcha.com/privacy" rel="noopener">hCaptcha's privacy policy</a>.
           </p>
         </section>
 
@@ -270,8 +279,9 @@
             </table>
           </div>
           <p>
-            Nothing else is stored: no analytics identifier, no fingerprint and no preference beyond
-            the theme you chose.
+            Nothing else is stored by this site: no analytics identifier, no fingerprint and no
+            preference beyond the theme you chose. The captcha on the contact page keeps its own
+            cookies, which are hCaptcha's and are described above, not this site's.
           </p>
         </section>
 
@@ -342,11 +352,21 @@
             will delete it.
           </p>
           <p>
-            The <a href="/contact/">contact page</a> has a form. At the time of writing it has no
-            form-handling service behind it: pressing Send composes the message in your own email
-            app, so it travels through your own provider and nothing is submitted to this site or to
-            anyone else. If a form service is added later, the form will name it and this section
-            will be updated to name it too, before it is used.
+            The <a href="/contact/">contact page</a> has a form. Pressing Send posts the fields you
+            filled in — your name, your email address, the topic and the message — to
+            <strong>Web3Forms</strong>, which forwards them to contact@rajatmalik.dev as an email.
+            The browser also sends its usual request headers, including your IP address, to that
+            service. Nothing is stored on this site: it is a set of static files with no server and
+            no database. With JavaScript turned off, the button composes the message in your own
+            email app instead, so it travels through your provider and mine.
+          </p>
+          <p>
+            A form submission is kept no longer than the email it becomes. Web3Forms processes it
+            only to deliver it and keeps its own logs under
+            <a href="https://web3forms.com/privacy" rel="noopener">its privacy policy</a>. Once it
+            arrives, the message is treated exactly like one you send by email, as described above.
+            The captcha on the form is hCaptcha, described under
+            <a href="#website">This website</a>.
           </p>
           <p>
             There is no phone number for DeepWork and none is requested. Nothing on this site asks
@@ -386,6 +406,26 @@
                   <th scope="row">Mail providers</th>
                   <td data-label="Does">Carry an email you choose to send</td>
                   <td data-label="Sees">The message, as any mail provider does</td>
+                </tr>
+                <tr>
+                  <th scope="row">Web3Forms</th>
+                  <td data-label="Does">
+                    Delivers a message sent through the contact form to the inbox
+                  </td>
+                  <td data-label="Sees">
+                    The name, email address, topic and message you submit, and the IP address the
+                    request came from
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">hCaptcha</th>
+                  <td data-label="Does">
+                    Checks that the contact form was filled in by a person, not a script
+                  </td>
+                  <td data-label="Sees">
+                    Your IP address, the page it is loaded on and device signals, under its own
+                    policy; it sets its own cookies
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -432,6 +472,10 @@
             described here. There is no mailing list to notify, so the date is the notice.
           </p>
           <ul>
+            <li>
+              <strong>30 October 2026</strong> — the contact form gained a form-handling service,
+              Web3Forms, and this policy names it and what it receives.
+            </li>
             <li>
               <strong>28 October 2026</strong> — first published, with the privacy, terms and
               contact pages.

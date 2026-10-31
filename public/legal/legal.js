@@ -76,41 +76,78 @@
   }
 
   /* ---------- Contact form ----------
-     With no endpoint set on the form, nothing here runs: the markup's own
-     `action="mailto:..."` takes over and the visitor's mail client composes the
-     message. When an endpoint is present the form is posted as JSON instead, so
-     the message arrives without a mail client being configured.
+     The form posts to Web3Forms, which forwards the message to the inbox named
+     in the privacy policy. Its access key is never committed: `tools/contact-config.cjs`
+     reads it from the environment (or a gitignored `.env.local`) and writes it to
+     `public/contact/config.js` before every start and build.
 
-     To enable it, put the address on the form in public/contact/index.html:
+     With no key or no endpoint configured, nothing here runs and the markup's
+     own `action="mailto:..."` takes over, so the page still works — it just
+     opens the visitor's mail app instead of sending.
 
-       data-endpoint="https://formspree.io/f/XXXXXXXX"
-
-     A Formspree endpoint works as it is. Web3Forms also needs its access key in
-     the body — add `access_key` to `payload` below. Either way, the provider must
-     then be named in the privacy policy, because it handles the message. */
+     The provider is named in the note under the button and in the privacy
+     policy, because it handles the message. */
   var form = document.querySelector('[data-contact-form]');
-  var endpoint = form ? (form.getAttribute('data-endpoint') || '').trim() : '';
+  var config = window.DEEPWORK_CONTACT || {};
+  var endpoint = (config.endpoint || (form ? form.getAttribute('data-endpoint') : '') || '').trim();
+  var accessKey = (config.accessKey || '').trim();
+  var provider = config.provider || 'the form service';
 
-  if (!form || !endpoint) return;
+  if (!form || !endpoint || !accessKey) return;
 
   var status = document.querySelector('[data-form-status]');
   var submit = form.querySelector('[type="submit"]');
   var submitLabel = submit ? submit.textContent : '';
 
+  /* The service enforces hCaptcha on this form, so a token is required with
+     every submission. The widget is mounted here rather than in the markup: it
+     needs a third-party script, and a visitor with JavaScript off never gets one
+     — they post through `mailto:` instead, where no captcha is involved. */
+  var captchaHost = form.querySelector('[data-captcha-host]');
+
+  if (config.captcha && captchaHost) {
+    var widget = document.createElement('div');
+    widget.className = 'h-captcha';
+    widget.setAttribute('data-captcha', 'true');
+    /* The normal widget is a fixed 303px wide, which does not fit a 320px phone
+       once the form's padding is taken out. Compact is 164px and fits anywhere;
+       the size is chosen at render time because hCaptcha cannot change it later. */
+    widget.setAttribute(
+      'data-size',
+      window.matchMedia('(min-width: 420px)').matches ? 'normal' : 'compact',
+    );
+    widget.setAttribute(
+      'data-theme',
+      document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark',
+    );
+    captchaHost.appendChild(widget);
+    captchaHost.hidden = false;
+
+    var captchaScript = document.createElement('script');
+    captchaScript.src = 'https://web3forms.com/client/script.js';
+    captchaScript.async = true;
+    captchaScript.defer = true;
+    document.body.appendChild(captchaScript);
+  }
+
+  function captchaToken() {
+    var field = form.querySelector('[name="h-captcha-response"]');
+    return field ? field.value : '';
+  }
+
+  function captchaReset() {
+    if (window.hcaptcha && typeof window.hcaptcha.reset === 'function') {
+      window.hcaptcha.reset();
+    }
+  }
+
   /* The note under the button describes what actually happens. Without an
      endpoint it says the message opens in the visitor's mail app — true. With
      one, that sentence would be a lie, so it is replaced with the service that
-     receives the message, named from the endpoint itself. */
+     receives the message. */
   var deliveryNote = document.querySelector('[data-note-delivery]');
 
   if (deliveryNote) {
-    var provider = endpoint;
-    try {
-      provider = new URL(endpoint).hostname;
-    } catch (error) {
-      /* Not a URL: keep the endpoint as written rather than claim a host. */
-    }
-
     deliveryNote.textContent =
       'Delivered to contact@rajatmalik.dev through ' + provider + '. Nothing is posted publicly.';
   }
@@ -129,7 +166,7 @@
 
     /* The honeypot: a field no person fills in and no screen reader announces.
        A message with it filled is dropped without sending anything. */
-    var trap = form.querySelector('[name="_gotcha"]');
+    var trap = form.querySelector('[name="botcheck"]');
     if (trap && trap.value) {
       say('Thank you — your message was sent.', 'ok');
       form.reset();
@@ -145,16 +182,31 @@
     }
 
     var fields = new FormData(form);
+    var topic = fields.get('subject') || 'Contact';
+    var token = captchaToken();
+
+    if (config.captcha && !token) {
+      say('Please complete the check below, then press Send again.', 'error');
+      return;
+    }
+
     var payload = {
+      /* Web3Forms routes the message by this key. It is public by design — it can
+         only deliver to the inbox that owns it — and is injected at build time. */
+      access_key: accessKey,
       name: fields.get('name') || '',
+      /* Web3Forms replies to `email` by default, so a reply goes to the visitor. */
       email: fields.get('email') || '',
-      subject: fields.get('subject') || 'Contact',
+      subject: 'DeepWork — ' + topic,
+      topic: topic,
       message: fields.get('message') || '',
-      /* Formspree reads `_subject` for the email subject; `subject` above is the
-         visitor's own choice of topic and is kept as a field of the message. */
-      _subject: 'DeepWork — ' + (fields.get('subject') || 'Contact'),
-      _gotcha: '',
+      from_name: 'DeepWork contact form',
+      /* The provider's own honeypot. Empty is the only truthful value: a person
+         cannot fill a field the page never renders. */
+      botcheck: '',
     };
+
+    if (config.captcha) payload['h-captcha-response'] = token;
 
     if (submit) submit.disabled = true;
     if (submit) submit.textContent = 'Sending…';
@@ -166,11 +218,27 @@
       body: JSON.stringify(payload),
     })
       .then(function (response) {
-        if (!response.ok) throw new Error('HTTP ' + response.status);
+        /* Web3Forms answers JSON on both paths: `{ success: boolean, message }`.
+           A 200 with `success: false` is still a refusal, so both are checked. */
+        return response.json().then(
+          function (body) {
+            return { ok: response.ok && body.success !== false, body: body };
+          },
+          function () {
+            return { ok: response.ok, body: {} };
+          },
+        );
+      })
+      .then(function (result) {
+        if (!result.ok) throw new Error(result.body.message || 'Submission refused');
         form.reset();
+        /* A captcha token is single-use: clear it whether or not the message
+           sent, or the next attempt would post a token the service has seen. */
+        captchaReset();
         say('Thank you — your message was sent. I will read it.', 'ok');
       })
       .catch(function () {
+        captchaReset();
         say(
           'The message could not be sent. Please write to contact@rajatmalik.dev instead.',
           'error',

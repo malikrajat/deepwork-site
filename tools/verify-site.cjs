@@ -514,7 +514,18 @@ async function main() {
     page.on('pageerror', (error) => docErrors.push(String(error)));
     page.on('request', (request) => {
       try {
-        if (new URL(request.url()).origin !== ownOrigin) docExternal.push(request.url());
+        const url = new URL(request.url());
+        if (url.origin === ownOrigin) return;
+        /* hCaptcha is this site's single third-party dependency, and it exists
+           only on the contact page: the form service refuses any submission
+           without its token. Everywhere else — and every other origin — a request
+           leaving the site is still a failure. */
+        const captchaHost =
+          url.hostname === 'web3forms.com' ||
+          url.hostname.endsWith('.hcaptcha.com') ||
+          url.hostname.endsWith('.hcaptcha.net');
+        if (doc.path === '/contact/' && captchaHost) return;
+        docExternal.push(request.url());
       } catch {
         /* A request with no parseable URL is not one this check can judge. */
       }
@@ -608,29 +619,58 @@ async function main() {
     if (doc.path === '/contact/') {
       const form = await page.$eval('[data-contact-form]', (element) => ({
         action: element.getAttribute('action') ?? '',
-        endpoint: (element.getAttribute('data-endpoint') ?? '').trim(),
-        note: element.querySelector('.form__note')?.textContent ?? '',
-        canRewriteNote: element.querySelector('[data-note-delivery]') !== null,
         fields: Array.from(element.querySelectorAll('[name]')).map((field) => field.name),
+        note: (element.querySelector('[data-note-delivery]')?.textContent ?? '')
+          .replace(/\s+/g, ' ')
+          .trim(),
+        canRewriteNote: element.querySelector('[data-note-delivery]') !== null,
+      }));
+
+      /* The delivery configuration is generated at build time from a repository
+         secret, so the audit asks the page which path it actually took rather
+         than assuming one. Both are legitimate: wired, the form POSTs to the
+         service; unwired (no secret in a local build), it opens the mail app. */
+      const delivery = await page.evaluate(() => {
+        const config = window.DEEPWORK_CONTACT || {};
+        return {
+          endpoint: (config.endpoint || '').trim(),
+          accessKey: (config.accessKey || '').trim(),
+          provider: config.provider || '',
+        };
+      });
+
+      const wired = Boolean(delivery.endpoint && delivery.accessKey);
+
+      const captcha = await page.$eval('[data-captcha-host]', (element) => ({
+        hidden: element.hasAttribute('hidden'),
+        widget: element.querySelector('.h-captcha') !== null,
       }));
 
       check(
         ['name', 'email', 'subject', 'message'].every((field) => form.fields.includes(field)),
         'the contact form asks for a name, an email, a topic and a message',
       );
+      check(form.fields.includes('botcheck'), 'the contact form keeps a spam trap');
       check(
-        form.endpoint === '' ? form.action.startsWith('mailto:') : form.action === form.endpoint,
-        `the contact form's delivery path matches its endpoint (${form.endpoint || 'none set'})`,
+        !wired || (!captcha.hidden && captcha.widget),
+        'the contact form mounts the captcha the service requires',
       );
-      /* With no endpoint the page must say so: a form that claims to send and
-         silently open a mail client is the failure this sentence prevents. When
-         an endpoint is wired in, `legal.js` rewrites this sentence from the
-         endpoint's own host — so the note has to be the one it can find. */
       check(
-        form.endpoint !== '' || /opens your email app/i.test(form.note),
-        'the contact form says how it currently sends a message',
+        wired ? form.action === delivery.endpoint : form.action.startsWith('mailto:'),
+        `the contact form delivers the way its configuration says (${wired ? delivery.provider : 'mail app'})`,
       );
-      check(form.canRewriteNote, 'the delivery note is marked so an endpoint can rewrite it');
+      /* The page must never claim a delivery that is not happening: wired, the
+         note names the service; unwired, it says the message opens in a mail
+         app. A form that says one thing and does another is the failure this
+         sentence prevents. */
+      check(
+        wired ? form.note.includes(delivery.provider) : /email app/i.test(form.note),
+        `the contact form says how it currently sends a message ("${form.note.slice(0, 60)}…")`,
+      );
+      check(
+        form.canRewriteNote,
+        'the delivery note is marked so the configured service can rewrite it',
+      );
     }
 
     await page.close();
