@@ -7,7 +7,7 @@
     <title>Privacy policy — DeepWork</title>
     <meta
       name="description"
-      content="What DeepWork does and does not collect: no account, no advertising. A visit count on the front page, your work kept on your own machine, and the messages you choose to send."
+      content="What DeepWork does and does not collect: no account, no advertising. The GoatCounter count and Google Analytics on the front page, your work kept on your own machine, and the messages you choose to send."
     />
     <link rel="canonical" href="https://deepwork.rajatmalik.dev/privacy/" />
 
@@ -23,7 +23,7 @@
     <meta property="og:title" content="Privacy policy — DeepWork" />
     <meta
       property="og:description"
-      content="No account, no advertising. What the visit count sends, where your work is kept, and what happens to a message you send."
+      content="No account, no advertising. What the visit count and the Google tag send, where your work is kept, and what happens to a message you send."
     />
     <meta property="og:url" content="https://deepwork.rajatmalik.dev/privacy/" />
     <meta property="og:image" content="https://deepwork.rajatmalik.dev/og-image.png" />
@@ -119,7 +119,7 @@
           machine. This policy describes the little that happens outside it.
         </p>
         <p class="doc__meta">
-          <span><time datetime="2026-10-30">Last updated 30 October 2026</time></span>
+          <span><time datetime="2026-11-08">Last updated 8 November 2026</time></span>
           <span>Covers this website and the DeepWork app</span>
         </p>
       </header>
@@ -145,14 +145,15 @@
         <div class="callout">
           <span class="callout__title">The short version</span>
           <p>
-            <strong>Nothing about you is collected.</strong> No account, no profile, no identifier,
-            no advertising and nothing sold. Whatever you write in DeepWork is yours, and it stays
-            on your own machine. Nothing is charged, and nothing is taken from you.
+            <strong>Your DeepWork data is not collected.</strong> No account, no profile, no
+            advertising and nothing sold. Whatever you write in DeepWork is yours, and it stays on
+            your own machine. Nothing is charged, and nothing is taken from you.
           </p>
           <p>
-            Three things exist outside it, and none of them says who you are: an anonymous count of
-            visits to the front page and the web app, a captcha that checks the contact form is
-            filled in by a person, and a message you deliberately send me. All are described below.
+            Four things exist outside it. The GoatCounter count of visits to the front page and the
+            web app, the captcha on the contact form and a message you deliberately send me do not
+            say who you are. The fourth, Google Analytics, is loaded by the front page and uses
+            Google's own cookies; it is described below with the others.
           </p>
         </div>
 
@@ -214,6 +215,22 @@
             and this contact page send no pageview at all.
           </p>
 
+          <h3>The Google tag</h3>
+          <p>
+            The front page also loads <strong>Google Tag Manager</strong>, which in turn loads
+            <strong>Google Analytics</strong>. That is the one third-party script on the main page.
+            Google receives the page address, the referring page, your IP address, a description of
+            your browser and device, and an approximate location derived from the request, and it
+            sets its own analytics cookies to recognise a returning browser.
+          </p>
+          <p>
+            Google processes that under
+            <a href="https://policies.google.com/privacy" rel="noopener">its own privacy policy</a>.
+            The tag is loaded by the front page only — not by this policy, the terms or the contact
+            page. A content blocker that stops Google is enough to opt out, and the page still works
+            without it.
+          </p>
+
           <h3>The Site stats panel</h3>
           <p>
             The footer of the front page has a <em>Site stats</em> button. It reads the totals and
@@ -222,19 +239,25 @@
             about your visit.
           </p>
 
-          <h3>No cookies, and one third-party script</h3>
+          <h3>Cookies and third-party scripts</h3>
           <p>
-            The front page, the web app and these documents set no cookie, so there is nothing to
-            consent to and no banner. The typefaces and screenshots are shipped with the site rather
-            than fetched from a font service or an image host. There is no advertising script, no
-            social widget, no session recorder and no fingerprinting by the site itself.
+            This site's own code sets no cookie and writes nothing to identify you beyond the theme
+            preference described below. The typefaces and screenshots are shipped with the site
+            rather than fetched from a font service or an image host. There is no advertising
+            network, no social widget, no session recorder and no fingerprinting by the site itself.
           </p>
           <p>
-            The one exception is the check on the contact form. <strong>hCaptcha</strong> (Intuition
-            Machines, Inc.) decides whether the form was filled in by a person, and it works by
-            loading its own script and setting its own cookies and device signals when the contact
-            page is opened. It is the only third-party script on this site, it is loaded by the
-            contact page alone, and it exists only because an unguarded public form is unusable. Its
+            Two third-party scripts are loaded by this site, and each is confined to one page. The
+            front page loads <strong>Google Tag Manager</strong>, which loads Google Analytics and
+            sets Google's analytics cookies. The contact page loads
+            <strong>hCaptcha</strong> (Intuition Machines, Inc.), which decides whether the form was
+            filled in by a person and works by setting its own cookies and device signals. Each
+            exists for a stated purpose — measurement on the front page, an unguarded public form on
+            the contact page — and neither is loaded by the other's page.
+          </p>
+          <p>
+            This policy, the terms and the contact page do not load the Google tag. With JavaScript
+            turned off, the page still reads and the contact form falls back to email. hCaptcha's
             handling is described in
             <a href="https://www.hcaptcha.com/privacy" rel="noopener">hCaptcha's privacy policy</a>.
           </p>
@@ -243,9 +266,9 @@
         <section id="device">
           <h2>What is stored on your device</h2>
           <p>
-            One preference is stored on this site. It lives in <code>localStorage</code>, which is
-            not a cookie: it is a file in your browser's own storage, it is never sent with a
-            request, and clearing site data removes it.
+            One preference of this site's own is stored. It lives in <code>localStorage</code>,
+            which is not a cookie: it is a file in your browser's own storage, it is never sent with
+            a request, and clearing site data removes it.
           </p>
           <div class="table-wrap">
             <table>
@@ -279,9 +302,13 @@
             </table>
           </div>
           <p>
-            Nothing else is stored by this site: no analytics identifier, no fingerprint and no
-            preference beyond the theme you chose. The captcha on the contact page keeps its own
-            cookies, which are hCaptcha's and are described above, not this site's.
+            The Google Analytics cookies described under
+            <a href="#website">This website</a> are also stored in your browser when the front
+            page's tag runs. They are Google's cookies, not this site's, and the documents do not
+            set them. Apart from the theme preference and those cookies, this site stores nothing in
+            your browser: no fingerprint, no advertising identifier and no preference beyond the
+            theme you chose. The captcha on the contact page keeps its own cookies, which are
+            hCaptcha's and are described above, not this site's.
           </p>
         </section>
 
@@ -403,6 +430,20 @@
                   </td>
                 </tr>
                 <tr>
+                  <th scope="row">Google</th>
+                  <td data-label="Does">
+                    Provides Tag Manager and Google Analytics, which measure visits to the front
+                    page
+                  </td>
+                  <td data-label="Sees">
+                    The page address, referrer, IP address, browser and device details, and its own
+                    analytics cookies, under
+                    <a href="https://policies.google.com/privacy" rel="noopener"
+                      >Google's privacy policy</a
+                    >
+                  </td>
+                </tr>
+                <tr>
                   <th scope="row">Mail providers</th>
                   <td data-label="Does">Carry an email you choose to send</td>
                   <td data-label="Sees">The message, as any mail provider does</td>
@@ -431,17 +472,19 @@
             </table>
           </div>
           <p>
-            There is no analytics account beyond that counter, no advertising network, no data
-            broker and no processor with a commercial interest in your data. Nothing is sold.
+            The Google tag currently loads Google Analytics; there is no advertising network and no
+            data broker configured by this site, and nothing is sold. The only measurement is the
+            GoatCounter count and Google Analytics, both described above.
           </p>
         </section>
 
         <section id="rights">
           <h2>Your rights</h2>
           <p>
-            Because there is no account and no profile, there is very little to hold: the only
-            personal data I have is what you choose to send me. Where laws such as the GDPR or
-            India's Digital Personal Data Protection Act, 2023 apply, you may ask to:
+            Because there is no account and no profile, there is very little to hold. I hold only
+            what you choose to send me; Google holds the analytics data described above under its
+            own policy. Where laws such as the GDPR or India's Digital Personal Data Protection Act,
+            2023 apply, you may ask to:
           </p>
           <ul>
             <li>be told what is held about you, and receive a copy;</li>
@@ -451,8 +494,8 @@
           </ul>
           <p>
             Write to <a href="mailto:contact@rajatmalik.dev">contact@rajatmalik.dev</a> and I will
-            act on the request. There is no automated decision-making and no profiling anywhere in
-            this project.
+            act on the request. There is no automated decision-making about you anywhere in this
+            project.
           </p>
         </section>
 
@@ -460,8 +503,9 @@
           <h2>Children</h2>
           <p>
             This site and the app are not directed at children. There is no account, no profile and
-            no advertising, so there is nothing to collect. If a child writes to me, the message is
-            treated like any other correspondence and deleted on request.
+            no advertising network, and the Google tag described above is not directed at children.
+            If a child writes to me, the message is treated like any other correspondence and
+            deleted on request.
           </p>
         </section>
 
@@ -472,6 +516,10 @@
             described here. There is no mailing list to notify, so the date is the notice.
           </p>
           <ul>
+            <li>
+              <strong>8 November 2026</strong> — the front page gained Google Tag Manager and Google
+              Analytics, and this policy names Google and what it receives.
+            </li>
             <li>
               <strong>30 October 2026</strong> — the contact form gained a form-handling service,
               Web3Forms, and this policy names it and what it receives.

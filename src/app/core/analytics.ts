@@ -1,14 +1,15 @@
 import { SITE } from './site';
 
 /**
- * The one measurement this site makes: a pageview in GoatCounter.
+ * This site's first-party pageview: a beacon sent to GoatCounter.
  *
- * It is deliberately **not** `count.js`. The README left analytics out because a
- * third-party tracker on a privacy-first product's own website is a
- * contradiction, and loading somebody else's script into the page is most of
- * that contradiction. This sends the request `count.js` would have sent, from
- * our own bundle instead: one beacon to the count endpoint, with the pageview in
- * the query string, and an opaque cross-origin response that nobody reads.
+ * The front page also loads the disclosed Google tag in `src/index.html`; this
+ * module is the other measurement, and the one that needs nobody else's script.
+ * It is deliberately **not** `count.js`. Loading a tracker into a privacy-first
+ * product's own website is a contradiction, and this sends the request
+ * `count.js` would have sent, from our own bundle instead: one beacon to the
+ * count endpoint, with the pageview in the query string, and an opaque
+ * cross-origin response that nobody reads.
  *
  * The protocol is documented at <https://www.goatcounter.com/help/js>, and the
  * fields below are the subset `count.js` fills in.
@@ -43,8 +44,8 @@ export const GOATCOUNTER = {
    * with **Read statistics** ticked and nothing else, and it can be withdrawn
    * from the same screen; the panel then falls back to the public totals.
    *
-   * This is a deliberate exception to "no third-party requests" rather than an
-   * oversight: see the README before making it broader.
+   * This read is a deliberate cross-origin exception rather than an oversight:
+   * see the README before making it broader.
    *
    * The value committed here predates the panel and also carries "Read sites",
    * which is more than the panel needs. Replace it with a token that has only

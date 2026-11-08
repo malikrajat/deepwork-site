@@ -147,7 +147,8 @@ Web3Forms as a processor (that paragraph is in `public/privacy/index.html`).
 The form also carries **hCaptcha**, because this Web3Forms form requires a token with every
 submission. It is mounted by `legal.js` through Web3Forms' zero-config client script, so a visitor
 with JavaScript off loads no third-party script at all — they post through `mailto:`. It is the
-site's only third-party dependency; the audit allows its hosts on `/contact/` and nowhere else.
+contact page's only third-party dependency; the audit allows its hosts on `/contact/` and nowhere
+else. The home page separately loads the disclosed Google tag (see Analytics below).
 Turning the check off in the Web3Forms dashboard means setting `captcha: false` in
 `tools/contact-config.cjs`, or leaving it on: a token sent to a form that no longer checks it is
 harmless.
@@ -268,9 +269,15 @@ split by effort.
 - An "informational" section that targets the question people ask *before* they want a product.
 - An automated audit, so the page cannot silently rot.
 - A first-party visitor count. One cookie-less pageview per load, sent by the page itself to
-  GoatCounter — no third-party script is executed, no IP address is stored, and Do Not Track or
-  Global Privacy Control is honoured. Only the published host is counted, so local builds,
-  previews and the audit send nothing. See `src/app/core/analytics.ts`.
+  GoatCounter — no tracker script for that count, no IP address is stored, and Do Not Track or
+  Global Privacy Control is honoured. Only the published host is counted, so local builds and
+  previews send no GoatCounter pageview. See `src/app/core/analytics.ts`.
+- A disclosed Google tag. The home page loads Google Tag Manager, which loads Google Analytics.
+  It is the site's one third-party script on that page, and `public/privacy/index.html` names
+  Google, what it receives and the cookies it sets. The audit allows only the Google tag hosts,
+  and only on the home page, so a second tracker fails rather than shipping quietly. The tag runs
+  wherever the page is served, including a local build, so use a content blocker while working on
+  it if you do not want the hit in Analytics.
 - A footer **Site stats** panel. It reads the totals and the month's referrers, locations, browsers
   and pages back through GoatCounter's JSON API, one request at a time to stay under its rate
   limit. Nothing is fetched until the panel is opened, and the numbers are cached for a minute.
@@ -348,6 +355,8 @@ and asserts 145 specific things:
 - no console or page errors, exactly one `h1`, a heading for every section, every anchor resolves;
 - all 21 screenshots actually load;
 - the theme toggle flips the document and the FAQ opens without scripting;
+- the home page's third-party requests are confined to the disclosed Google tag hosts, so a second
+  tracker fails rather than shipping quietly;
 - the three documents are served with a 200 rather than the 404 page, render without the
   application bundle, keep the theme choice, and every link and in-page anchor on them resolves;
   none of them requests a third-party origin except the contact page's hCaptcha;
@@ -424,7 +433,8 @@ every screenshot.
 
 ## Browser support
 
-**Baseline: Widely available.** No polyfills and no third-party runtime scripts.
+**Baseline: Widely available.** No polyfills. The only third-party runtime scripts are the
+disclosed Google tag on the home page and hCaptcha on the contact page.
 
 Two features degrade rather than being assumed: `color-mix()` (where unsupported, the declaration is
 dropped and a solid background shows through) and `backdrop-filter` (decoration over an

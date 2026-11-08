@@ -456,7 +456,7 @@ Your data
 
 ### It stays on your machine, and that is the feature
 
-Most productivity apps ask you to hand over your working life before they will show you a timer. DeepWork asks for nothing: no account, no cloud, no analytics on your work. The hosted web app counts visits and this page counts its own, both are described here, and the app’s can be switched off.
+Most productivity apps ask you to hand over your working life before they will show you a timer. DeepWork asks for nothing: no account, no cloud, no analytics on your work. The hosted web app counts visits, and this page both counts its own and loads Google Analytics; all three are described here, and the app’s counter can be switched off.
 - One SQLite file, copied before it is touched Tasks, sessions, habits, journal entries, water and settings live in a local database. Every launch copies it and its write-ahead log into a backups folder before migrations run, and a database that is there but unreadable stops startup with its path instead of being replaced by an empty one.
 - No account, ever Nothing to sign up for, nothing to sign in to, and no email address collected — there is no mechanism to collect one.
 - A short list of calls you can name The update check reads the public GitHub release list for the app you are running. An installer is downloaded only when you press Update. Links open in your own browser. That is the complete list for the desktop app — and the hosted web app has one more, below.
@@ -475,7 +475,9 @@ The app has no server of its own, so the web build uses GoatCounter — the same
 - Count my visits is a switch in Settings → Visitor Counter → Details. With it off the script is never fetched at all.
 - The desktop build is never counted: it has no web address to report, and its Settings row says so.
 
-This page counts its own visits the same way, on its own GoatCounter site, deepwork.goatcounter.com, so the two never mix in a dashboard. It sends the address, the title, the referring site and the screen width; it sets no cookie, GoatCounter stores no IP address, and no third-party script is loaded to make the request — the page sends the beacon itself. A browser that asks not to be tracked is not counted, and the Site stats button in the footer only asks GoatCounter for the totals back.
+This page counts its own visits the same way, on its own GoatCounter site, deepwork.goatcounter.com, so the two never mix in a dashboard. It sends the address, the title, the referring site and the screen width; the page sends that beacon itself, sets no cookie for it, and GoatCounter stores no IP address. A browser that asks not to be tracked is not counted, and the Site stats button in the footer only asks GoatCounter for the totals back.
+
+This page also loads Google Tag Manager and Google Analytics. That one is a third-party script: Google receives the page address, the referring site, the IP address and browser details, and sets its own cookies. The privacy policy spells out what it sends and how to block it.
 
 Backups
 
@@ -501,7 +503,7 @@ Each file rolls over at 512 KB, keeps its five most recent archives, and can nev
 #### Offline is the normal case
 
 The fonts travel with the app, the alert tones are synthesised rather than downloaded, and the database is a file on your disk. Nothing in the app needs the network to look like itself or to keep your records.
-- Inter and JetBrains Mono ship with the build — no font CDN, no third-party request.
+- Inter and JetBrains Mono ship with the build — no font CDN and no request to a font service.
 - The browser build registers a service worker, so it keeps working after the first visit.
 - Dark, light, or follow the system — applied before the first paint, with no flash of the wrong one.
 
@@ -720,7 +722,7 @@ Frontend architect and engineering lead — fifteen years of taking large web pr
 
 I build for enterprise, energy, telecom and finance teams — Siemens since 2020, and Siemens Energy and HCL before that. Most of that work is unglamorous and hard: modernising a legacy Angular or React platform without stopping delivery, drawing module boundaries so two teams can ship in the same week, agreeing the design system once, and moving a Lighthouse score from the wrong side of the dial to the right one.
 
-DeepWork is what I build when nobody is paying me to, and it is the same argument in miniature: local-first by construction, reminders that wait for an answer instead of fading, and a page with no router, no animation library and no third-party script — because a claim that survives being checked is worth more than a stronger one that does not.
+DeepWork is what I build when nobody is paying me to, and it is the same argument in miniature: local-first by construction, reminders that wait for an answer instead of fading, and a page with no router and no animation library. Its one third-party script is a disclosed analytics tag, and the privacy policy says exactly what it sends — because a claim that survives being checked is worth more than a stronger one that does not.
 
 Rajat Malik Gurgaon, India
 - Angular

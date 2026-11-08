@@ -21,8 +21,8 @@
    Inter and JetBrains Mono ship with the site instead of being fetched from a
    font CDN, exactly as the application ships them. They are SIL Open Font
    License 1.1 and both licences travel with the build in `public/fonts/`.
-   Nothing here is a third-party request, so the site renders identically
-   offline, behind a proxy, or on a network that blocks Google.
+   The typefaces are therefore not a third-party request, so the site renders
+   identically offline, behind a proxy, or on a network that blocks Google.
    ========================================================================= */
 @font-face {
   font-family: 'Inter';

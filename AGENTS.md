@@ -54,8 +54,9 @@ only.
 ## Browser support policy
 
 **Baseline: Widely available.** No polyfills, no feature-detection branches for browsers older than
-Baseline, and no third-party runtime script except the hCaptcha widget the contact form requires
-(described under the contact form in the README). Nothing on the front page loads one.
+Baseline, and no third-party runtime script except two disclosed dependencies: the Google tag on the
+home page and the hCaptcha widget the contact form requires (both described in the README). The
+legal documents load neither.
 
 Two features are used progressively, which means the fallback is "less pretty", not "broken":
 
@@ -109,9 +110,10 @@ thing that still needs scripting is the theme — without it the page stays dark
   `afterNextRender`.
 - **The visitor count is first-party.** A pageview is a beacon this page sends to GoatCounter
   (`src/app/core/analytics.ts`), not `count.js` and not anybody else's script. It counts only
-  `https://deepwork.rajatmalik.dev`: local builds, previews and the audit send nothing, and the audit
-  asserts that no request leaves the site's origin — the contact page's hCaptcha is the one permitted
-  exception, and it is permitted there only. Do not turn this back into a third-party loader.
+  `https://deepwork.rajatmalik.dev`: local builds and previews send no GoatCounter pageview.
+  The front page separately loads the disclosed Google tag (Tag Manager, which loads Analytics), and
+  the contact page loads hCaptcha. The audit allows those hosts on those pages only; do not widen
+  that allowlist without updating `/privacy/`, the README and this file.
   The footer's Site stats panel reads the numbers back with a token that is public by construction
   (`src/app/core/visitor-stats.ts`); it must stay a read-only "Read statistics" token, because
   anybody can read it out of the bundle. Nothing is fetched unless the panel is opened.
