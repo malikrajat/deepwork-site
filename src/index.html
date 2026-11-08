@@ -1,104 +1,89 @@
 <!doctype html>
 <html lang="en" data-theme="dark">
-  <head>
-    <meta charset="utf-8" />
 
-    <!--
+<head>
+  <meta charset="utf-8" />
+
+  <!--
       The title leads with what people actually search for rather than with the
       slogan. "DeepWork" is the brand and belongs first, but "free Pomodoro
       timer, task manager & habits" is the part that has to survive being read
       in a list of ten blue links. 53 characters, so it is not truncated.
     -->
-    <title>DeepWork — Free Pomodoro Timer, Tasks &amp; Reminders</title>
-    <base href="/" />
+  <title>DeepWork — Free Pomodoro Timer, Tasks &amp; Reminders</title>
+  <base href="/" />
 
-    <!-- `viewport-fit=cover` is what lets the page reach under an iPhone's rounded
+  <!-- `viewport-fit=cover` is what lets the page reach under an iPhone's rounded
          corners and notch, so the sticky header and the footer can pad themselves
          with `env(safe-area-inset-*)` instead of leaving bars of dead colour. -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 
-    <meta
-      name="description"
-      content="A free Pomodoro timer, task manager and standing-reminder app for Windows, macOS, Linux and any browser. Offline AI turns your own day into clear analysis, reminders keep asking, and your data never leaves your machine."
-    />
-    <link rel="canonical" href="https://deepwork.rajatmalik.dev/" />
+  <meta name="description"
+    content="A free Pomodoro timer, task manager and standing-reminder app for Windows, macOS, Linux and any browser. Offline AI turns your own day into clear analysis, reminders keep asking, and your data never leaves your machine." />
+  <link rel="canonical" href="https://deepwork.rajatmalik.dev/" />
 
-    <!--
+  <!--
       Large image previews and full-length snippets. The defaults are cautious
       and this page wants both: it is a product page whose whole job is to be
       understood from a search result.
     -->
-    <meta
-      name="robots"
-      content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
-    />
-    <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1" />
-    <meta name="author" content="Rajat Malik" />
-    <meta name="theme-color" content="#080613" media="(prefers-color-scheme: dark)" />
-    <meta name="theme-color" content="#f4f6fb" media="(prefers-color-scheme: light)" />
-    <meta name="color-scheme" content="dark light" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1" />
+  <meta name="author" content="Rajat Malik" />
+  <meta name="theme-color" content="#080613" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#f4f6fb" media="(prefers-color-scheme: light)" />
+  <meta name="color-scheme" content="dark light" />
 
-    <!-- Open Graph. The image is generated at authoring time from the real site
+  <!-- Open Graph. The image is generated at authoring time from the real site
          chrome (see `tools/make-og-image.cjs`), so a shared link shows the
          product rather than a stock photo. -->
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="DeepWork" />
-    <meta property="og:locale" content="en" />
-    <meta property="og:title" content="DeepWork — Free Pomodoro Timer, Tasks &amp; Reminders" />
-    <meta
-      property="og:description"
-      content="A free Pomodoro timer, task manager and standing-reminder app for desktop and browser. Offline AI analysis, reminders that keep asking, no account, no cloud."
-    />
-    <meta property="og:url" content="https://deepwork.rajatmalik.dev/" />
-    <meta property="og:image" content="https://deepwork.rajatmalik.dev/og-image.png" />
-    <meta property="og:image:type" content="image/png" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta
-      property="og:image:alt"
-      content="The DeepWork dashboard, with its focus clock and today's tasks."
-    />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="DeepWork" />
+  <meta property="og:locale" content="en" />
+  <meta property="og:title" content="DeepWork — Free Pomodoro Timer, Tasks &amp; Reminders" />
+  <meta property="og:description"
+    content="A free Pomodoro timer, task manager and standing-reminder app for desktop and browser. Offline AI analysis, reminders that keep asking, no account, no cloud." />
+  <meta property="og:url" content="https://deepwork.rajatmalik.dev/" />
+  <meta property="og:image" content="https://deepwork.rajatmalik.dev/og-image.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="The DeepWork dashboard, with its focus clock and today's tasks." />
 
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="DeepWork — Free Pomodoro Timer, Tasks &amp; Reminders" />
-    <meta
-      name="twitter:description"
-      content="A free Pomodoro timer, task manager and standing-reminder app for desktop and browser. Offline AI analysis, reminders that keep asking, no account, no cloud."
-    />
-    <meta name="twitter:image" content="https://deepwork.rajatmalik.dev/og-image.png" />
-    <meta
-      name="twitter:image:alt"
-      content="The DeepWork dashboard: a focus clock mid-session above today's tasks."
-    />
-    <meta name="google-site-verification" content="lTgQD1uJlZUR7Iqd2vCEJ54on_Gtxdhb-zX2o-NGDJQ" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="DeepWork — Free Pomodoro Timer, Tasks &amp; Reminders" />
+  <meta name="twitter:description"
+    content="A free Pomodoro timer, task manager and standing-reminder app for desktop and browser. Offline AI analysis, reminders that keep asking, no account, no cloud." />
+  <meta name="twitter:image" content="https://deepwork.rajatmalik.dev/og-image.png" />
+  <meta name="twitter:image:alt" content="The DeepWork dashboard: a focus clock mid-session above today's tasks." />
+  <meta name="google-site-verification" content="lTgQD1uJlZUR7Iqd2vCEJ54on_Gtxdhb-zX2o-NGDJQ" />
 
-    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-    <link rel="alternate icon" type="image/x-icon" href="favicon.ico" />
-    <!-- iOS ignores SVG for the home-screen icon, so it gets a real PNG. -->
-    <link rel="apple-touch-icon" href="icons/128x128.png" />
-    <link rel="manifest" href="site.webmanifest" />
+  <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-MSKWWSH7"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+  </script>
 
-    <!--
+
+
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="alternate icon" type="image/x-icon" href="favicon.ico" />
+  <!-- iOS ignores SVG for the home-screen icon, so it gets a real PNG. -->
+  <link rel="apple-touch-icon" href="icons/128x128.png" />
+  <link rel="manifest" href="site.webmanifest" />
+
+  <!--
       Plain-text versions of this page for language models, discoverable from
       the markup as well as from `robots.txt`. `llms.txt` is the curated index;
       `llms-full.txt` is the whole page as Markdown, for an agent that would
       rather read than parse HTML. Neither is a standard link relation, so
       agents that do not know them ignore them harmlessly.
     -->
-    <link
-      rel="alternate"
-      type="text/plain"
-      href="llms.txt"
-      title="DeepWork — summary for language models"
-    />
-    <link
-      rel="alternate"
-      type="text/markdown"
-      href="llms-full.txt"
-      title="DeepWork — the whole page as Markdown"
-    />
+  <link rel="alternate" type="text/plain" href="llms.txt" title="DeepWork — summary for language models" />
+  <link rel="alternate" type="text/markdown" href="llms-full.txt" title="DeepWork — the whole page as Markdown" />
 
-    <!--
+  <!--
       The theme is applied before the first paint, so a visitor who prefers light
       never sees a flash of the dark page. It has to be inline and it has to be
       this small: anything deferred runs after the browser has already painted.
@@ -106,24 +91,24 @@
       `system` is the default, which is why the fallback below is the media query
       rather than the dark theme.
     -->
-    <script>
-      (function () {
-        try {
-          var stored = localStorage.getItem('deepwork-site-theme');
-          var theme =
-            stored === 'light' || stored === 'dark'
-              ? stored
-              : window.matchMedia('(prefers-color-scheme: light)').matches
-                ? 'light'
-                : 'dark';
-          document.documentElement.dataset['theme'] = theme;
-        } catch (_) {
-          /* Private mode or blocked storage: the dark default in the markup stands. */
-        }
-      })();
-    </script>
+  <script>
+    (function () {
+      try {
+        var stored = localStorage.getItem('deepwork-site-theme');
+        var theme =
+          stored === 'light' || stored === 'dark'
+            ? stored
+            : window.matchMedia('(prefers-color-scheme: light)').matches
+              ? 'light'
+              : 'dark';
+        document.documentElement.dataset['theme'] = theme;
+      } catch (_) {
+        /* Private mode or blocked storage: the dark default in the markup stands. */
+      }
+    })();
+  </script>
 
-    <!--
+  <!--
       Structured data, as one connected graph rather than four loose objects:
       the WebSite, the person who made it, the application being described, and
       the questions the page answers. Every value here is a fact taken from the
@@ -131,7 +116,7 @@
       price. `aggregateRating` is deliberately absent: there are no ratings to
       average, and inventing one is both dishonest and against Google's policy.
     -->
-    <script type="application/ld+json">
+  <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@graph": [
@@ -343,12 +328,13 @@
         ]
       }
     </script>
-  </head>
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <app-root></app-root>
+</head>
 
-    <!--
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <app-root></app-root>
+
+  <!--
       No `<noscript>` summary, because there is nothing left to summarise: the
       build prerenders the whole page into this file, so a visitor without
       JavaScript — and a crawler that never runs any — already has every word of
@@ -356,5 +342,6 @@
       content, and it used to carry a second `h1`, which is a heading-hierarchy
       bug as well.
     -->
-  </body>
+</body>
+
 </html>
