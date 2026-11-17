@@ -114,7 +114,7 @@ claim that survives being checked is worth more than a stronger one that does no
 no account to have. They are **static HTML files in `public/`**, not Angular routes, and that is a
 consequence of two constraints rather than a preference:
 
-- GitHub Pages answers a path it does not know with `public/404.html` **and a 404 status**, so a
+- Cloudflare Pages answers a path it does not know with `public/404.html` **and a 404 status**, so a
   legal notice reached through the client router would be served as "not found";
 - a privacy policy has to be readable with JavaScript disabled — true of a static file by
   construction, and now true of the front page as well, because the build prerenders it.
@@ -132,10 +132,10 @@ The contact form posts to **Web3Forms**, which forwards the message to
 `public/contact/config.js` — the generated file is gitignored, so the key is assembled at build
 time rather than written into the page by hand.
 
-Precedence, highest first: `WEB3FORMS_ACCESS_KEY` in the process environment (CI), then `.env.local`
-(a developer's gitignored override), then `.env`. The deploy workflow still passes the repository
-secret when one is set, but a plain `npm ci && npm run build` produces a working form without it,
-because `.env` is part of the checkout.
+Precedence, highest first: `WEB3FORMS_ACCESS_KEY` in the process environment (CI, and the Cloudflare
+Pages project variable), then `.env.local` (a developer's gitignored override), then `.env`. CI still
+passes the repository secret when one is set, but a plain `npm ci && npm run build` produces a
+working form without it, because `.env` is part of the checkout.
 
 With no key configured at all, `config.js` is still written with an empty one, `legal.js` leaves the
 form alone, and the markup's own `action="mailto:…"` takes over — so the page still works, it just
@@ -160,8 +160,8 @@ harmless.
 Each of these is a decision with a reason, and most of them were made the other way first.
 
 - **One page, no router.** One page needs no routing. Leaving the router out keeps the bundle
-  smaller, and there is no SPA fallback to configure: GitHub Pages serves the branded `404.html` for
-  a path that does not exist, which is a page that says so rather than the app pretending to load.
+  smaller, and there is no SPA fallback to need: Cloudflare Pages serves the branded `404.html` for a
+  path that does not exist, which is a page that says so rather than the app pretending to load.
   The three documents beside the page — `/privacy/`, `/terms/` and `/contact/` — are static files
   for the same reason, and are described above.
 - **One stylesheet, no component `styles`.** Component styles are injected as separate `<style>`
@@ -397,17 +397,17 @@ deliberate and documented in `biome.json`.
 
 ## Deployment
 
-GitHub Pages is the only host, on the custom domain `https://deepwork.rajatmalik.dev/`; `public/CNAME`
-ships the domain with the build so the address survives a change of deployment source. Pages cannot
-publish this repository as it stands — the branch is TypeScript and an empty `<app-root>`, not a
-page — so `.github/workflows/deploy-pages.yml` runs the production build, audits the result in
-Chromium, and publishes `dist/deepwork-site/browser` as the Pages artefact. It runs on every push to
-`main` and on demand.
+Cloudflare Pages is the only host, on the custom domain `https://deepwork.rajatmalik.dev/`. The
+repository cannot be published as it stands — the branch is TypeScript and an empty `<app-root>`, not
+a page — so what is deployed is the build: `npm run build` prerenders the whole page into
+`index.html`, and `dist/deepwork-site/browser` is uploaded as a directory of static files. There is
+no server and no Pages Function, which is the condition the next section depends on: Cloudflare only
+reads `_headers` for static asset responses.
 
-**One setting cannot be committed.** In the repository, Settings → Pages → Build and deployment →
-Source must be **GitHub Actions**. Left on “Deploy from a branch”, Pages runs Jekyll over the
-repository and serves this README at the domain — which is exactly what it did before the workflow
-existed — and a deployment from the workflow is rejected.
+**Some settings cannot be committed.** The Pages project's build command (`npm run build`), its
+output directory (`dist/deepwork-site/browser`), the `WEB3FORMS_ACCESS_KEY` variable and the custom
+domain all live in the Cloudflare dashboard rather than in this repository. `public/CNAME` is a
+leftover from the GitHub Pages years and is inert here; the domain is bound in Pages.
 
 The base href stays `/`, matching `src/index.html` and the canonical URLs. There is deliberately no
 second deployment: Netlify hosted this page until it moved to the custom domain, and `netlify.toml`
@@ -416,9 +416,59 @@ canonical splits the ranking between them. The address is repeated in `src/index
 `public/sitemap.xml`, `public/robots.txt`, `public/llms.txt` and `public/llms-full.txt`; the audit
 reads it from `site.ts` and fails if any of them disagrees.
 
-Pages does not accept custom response headers, so the security and cache headers `netlify.toml` used
-to set are gone. Nothing on the page depends on them, and Pages' own ten-minute cache is consistent
-with the shell: it names the hashed files, so a new build is picked up together.
+### Response headers
+
+Cloudflare Pages is the first host this site has had that can send response headers, so
+`public/_headers` sets them. The assets glob copies it into the build and Pages parses it from there;
+it is never served. Four headers are set on every response, and two more because they cost nothing:
+
+| Header | Value | What it is for |
+| --- | --- | --- |
+| `Strict-Transport-Security` | `max-age=31536000` | Until this header existed, a first visit could be made over plain HTTP and intercepted before the redirect. Deliberately **not** `includeSubDomains`: `app.deepwork.rajatmalik.dev` is hosted separately and never sent this policy, and HSTS subdomain matching is by DNS suffix, so including it would pin a host this file does not govern. |
+| `X-Frame-Options` | `DENY` | Clickjacking. `SAMEORIGIN` is the usual recommendation; nothing embeds this page, so the stricter value is also the honest one. |
+| `Content-Security-Policy` | see the file | The one header with content. |
+| `Permissions-Policy` | every feature empty | Nothing on the page asks for a camera, a microphone or a location. |
+| `X-Content-Type-Options` | `nosniff` | |
+| `Referrer-Policy` | `strict-origin-when-cross-origin` | GoatCounter still receives the referring origin, never the full path of the page a visitor came from. |
+
+The policy is source-listed, and every host in it was taken from a request the built site actually
+made — the Google tag, the GA4 property it configures, the GoatCounter origin in
+`src/app/core/analytics.ts`, and on `/contact/` alone Web3Forms and hCaptcha. One of them,
+`https://www.google.com`, was found by serving the build under the policy and reading the one
+violation it produced; GA4 posts `g/collect` there as well as to `www.google-analytics.com`, and no
+amount of reading the HTML would have shown that.
+
+Three details in that file are easy to undo by accident:
+
+- **`/contact/` detaches before it sets.** Pages joins a repeated header with a comma, and two
+  `Content-Security-Policy` headers are both enforced — the intersection would block hCaptcha. The
+  `! Content-Security-Policy` line is what stops that, and it only works because it appears after
+  the `/*` block.
+- **`'unsafe-inline'` stays in `script-src`.** Tag Manager injects inline script by design and the
+  theme is applied before first paint by an inline script in the document, so a nonce would have to
+  be threaded through both. The directives that still carry weight are `frame-ancestors`, `base-uri`,
+  `form-action`, `object-src` and a closed `connect-src` — not script-src.
+- **The legal documents get the general policy, not a stricter one.** They load nothing third-party,
+  which `npm run audit` already asserts page by page; a separate policy would only be a second place
+  for that to go wrong.
+
+`tools/static-server.cjs` does not emulate `_headers`, because reimplementing Pages' matcher would
+test the reimplementation. So `npm run audit` checks the page and not the transport, and after a
+deploy the headers are worth one command each:
+
+```bash
+curl -sI https://deepwork.rajatmalik.dev/ | grep -i -E 'strict-transport|x-frame|content-security|permissions-policy'
+curl -sI https://deepwork.rajatmalik.dev/contact/ | grep -i content-security-policy
+```
+
+Two Cloudflare settings must not also be doing this job. The zone's own HSTS toggle adds the header
+at the edge as well, and the Transform Rules page can modify response headers — either would leave
+two sources for one value, with the file in this repository no longer describing what ships. The
+`_headers` file is the source; the edge settings stay off.
+
+Cache headers are deliberately not in the file. The build's JavaScript and stylesheet are
+content-hashed and could be cached immutably, but a cache rule that outlives a deploy is a worse
+failure than a revalidation request, and the host's default revalidation is correct.
 
 ---
 

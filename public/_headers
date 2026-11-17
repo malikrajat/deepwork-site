@@ -1,0 +1,54 @@
+# Response headers, honoured by Cloudflare Pages.
+#
+# GitHub Pages could not send these: `actions/deploy-pages` uploads files and
+# Pages answers them with a fixed header set, with no per-repository way to add
+# one. Cloudflare Pages reads this file from the root of the deployed directory
+# instead, which is why it lives in `public/` — the Angular assets glob copies it
+# verbatim into `dist/deepwork-site/browser`, and Pages parses it there rather
+# than serving it.
+#
+# The syntax is Cloudflare's, not Apache's: a URL pattern on its own line, then
+# indented `Name: value` pairs. Rules are applied in file order, and a header set
+# twice is joined with a comma — which is why the `/contact*` block below *detaches*
+# the policy in force before setting its own. Two Content-Security-Policy headers
+# would both be enforced, and the intersection of the two would block hCaptcha.
+#
+# Every host in the policies below is one the site actually loads, not a guess:
+#   'self'                        the bundle, fonts, screenshots, favicons
+#   googletagmanager.com          the disclosed Google tag (src/index.html)
+#   google-analytics.com          the GA4 property that tag configures
+#   analytics.google.com          GA4's regional collection endpoint
+#   www.google.com                where GA4 actually posts `g/collect`; found by
+#                                 loading the built page under this policy and
+#                                 reading the one violation it produced
+#   deepwork.goatcounter.com      the first-party pageview (src/app/core/analytics.ts)
+#   web3forms.com                 the contact form's script and endpoint
+#   hcaptcha.com / hcaptcha.net   the captcha the form requires
+#
+# `'unsafe-inline'` in script-src is not laziness: Tag Manager injects inline
+# script by design, and the theme is applied by an inline script before first
+# paint. A nonce would have to be threaded through both, and GTM's injected
+# containers would still need it. What is left is still worth having —
+# frame-ancestors, base-uri, form-action, object-src and a closed connect-src are
+# the directives that matter on a page with no user-supplied content.
+
+/*
+  Strict-Transport-Security: max-age=31536000
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: accelerometer=(), autoplay=(), browsing-topics=(), camera=(), display-capture=(), encrypted-media=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), publickey-credentials-get=(), screen-wake-lock=(), serial=(), usb=(), xr-spatial-tracking=()
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://*.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com; font-src 'self'; connect-src 'self' https://*.googletagmanager.com https://*.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://www.google.com https://deepwork.goatcounter.com; frame-src 'none'; worker-src 'self'; manifest-src 'self'
+
+# The contact form is the one page with a third party whose own documentation
+# requires allowances: hCaptcha asks for `script-src` and `frame-src` to include
+# hcaptcha.com and *.hcaptcha.com, and the widget answers on connect-src too.
+# The policy is detached and re-set rather than extended, for the reason in the
+# header comment. `worker-src blob:` and `child-src blob:` are for the challenge
+# step, which runs its proof of work in a worker created from a blob URL.
+# The selector is `/contact*` rather than `/contact/*` on purpose: it matches
+# `/contact`, `/contact/` and `/contact/index.html` without depending on whether a
+# splat is allowed to match an empty remainder.
+/contact*
+  ! Content-Security-Policy
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self' 'unsafe-inline' https://web3forms.com https://hcaptcha.com https://*.hcaptcha.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://hcaptcha.com https://*.hcaptcha.com https://*.hcaptcha.net; font-src 'self'; connect-src 'self' https://api.web3forms.com https://web3forms.com https://hcaptcha.com https://*.hcaptcha.com https://*.hcaptcha.net; frame-src https://hcaptcha.com https://*.hcaptcha.com https://*.hcaptcha.net; child-src blob:; worker-src 'self' blob:

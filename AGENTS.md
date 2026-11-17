@@ -76,13 +76,15 @@ thing that still needs scripting is the theme — without it the page stays dark
 
 ## Architecture decisions, and why
 
-- **No router.** One page, no deep links, so there is no SPA fallback to configure: GitHub Pages
-  serves `public/404.html` for an unknown path, which is a branded page rather than the app.
+- **No router.** One page, no deep links, so there is no SPA fallback to configure: the host serves
+  `public/404.html` for an unknown path, which is a branded page rather than the app. On Cloudflare
+  Pages that file is served whatever the missing path was — Pages does not rewrite the address — so
+  it must not assume it was reached from a link the site owns.
 - **Three documents, and they are static files.** `/privacy/`, `/terms/` and `/contact/` live in
   `public/` as self-contained HTML sharing `public/legal/legal.css` and `legal.js`, with real URLs
-  and a 200 status. They are not routes because GitHub Pages would answer one with a 404, and
-  because a legal notice has to read with JavaScript off. The theme toggle uses the same
-  `deepwork-site-theme` key as the page; the documents send no pageview.
+  and a 200 status. They are not routes because a legal notice has to read with JavaScript off, and
+  because a route would be one more thing that can fail while the page still renders. The theme
+  toggle uses the same `deepwork-site-theme` key as the page; the documents send no pageview.
   The contact form is wired to `data-endpoint` on the form and falls back to `mailto:` — never
   invent an endpoint, and if one is set, name the processor in the privacy policy.
 - **No lazy loading, no `@defer`.** A visitor scrolls the whole page; a section that pops in late
@@ -117,6 +119,13 @@ thing that still needs scripting is the theme — without it the page stays dark
   The footer's Site stats panel reads the numbers back with a token that is public by construction
   (`src/app/core/visitor-stats.ts`); it must stay a read-only "Read statistics" token, because
   anybody can read it out of the bundle. Nothing is fetched unless the panel is opened.
+- **Response headers are a file in `public/`, not a setting.** `public/_headers` is parsed by
+  Cloudflare Pages out of the build output; the assets glob copies it and Pages never serves it. It
+  is the only place a header is set. A new third-party host means a new source in the matching
+  policy, and `/contact/`'s block must keep its `! Content-Security-Policy` line — Pages joins a
+  repeated header with a comma and both policies are enforced, so the intersection silently blocks
+  the captcha. The local static server does not emulate `_headers`, so `npm run audit` cannot see a
+  broken policy: verify a deployed response with `curl -sI`, not by reading the file back.
 - **The crawler files are part of the deliverable.** `robots.txt` names each AI crawler explicitly,
   `sitemap.xml` lists the images, `llms.txt` is a curated index, and `llms-full.txt` is generated
   from the **rendered** page by `npm run llms` (which needs the site served — see the README) —
@@ -170,12 +179,14 @@ up-to-date check on `llms-full.txt`. It does **not** run `npm audit` — the own
 pipeline that does not gate on vulnerability reports, and `.npmrc` records that. Do not quietly add
 a security gate back; if you think it should be there, say so rather than sneaking it in.
 
-`.github/workflows/deploy-pages.yml` publishes the site to GitHub Pages on a push to `main`. It
-builds and audits on its own rather than trusting the separate CI run — the two start together, so
-CI's verdict does not exist yet when the deploy would ship. It requires Settings → Pages → Source to
-be “GitHub Actions”; with a branch source, Pages serves the repository's README through Jekyll
-instead, and the deployment is rejected. The custom domain lives in `public/CNAME` and in the
-repository's Pages settings.
+Cloudflare Pages publishes `main` through its own Git integration, configured in the Cloudflare
+dashboard: build command `npm run build`, output directory `dist/deepwork-site/browser`, and
+`WEB3FORMS_ACCESS_KEY` as a project variable. There is no deploy workflow in this repository, and
+re-adding one would publish the same build twice. Cloudflare builds from `main` as it is pushed, so
+nothing here gates the deploy but CI: a push that fails CI may already be live, and the remedy is a
+fix or a revert, not a retry. `public/CNAME` is a leftover from the GitHub Pages years — Pages reads
+the domain from the project settings, not from a file — and is kept only because deleting it would
+change a working deployment for no benefit.
 
 ## Skills in this workspace
 
