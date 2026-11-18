@@ -47,6 +47,30 @@
     });
   }
 
+  /* ---------- Cookie settings ----------
+     Every page carries one control, because a choice that cannot be changed is
+     not much of a choice. Where Google's consent message is loaded, its own
+     revocation screen is opened; where it is not — the legal documents load no
+     advertising at all — the visitor is sent to the explanation in /cookies/,
+     which names the same switches. The button works either way, which is the
+     point; a control that silently does nothing is worse than no control. */
+  var cookieButtons = document.querySelectorAll('[data-cookie-settings]');
+
+  Array.prototype.forEach.call(cookieButtons, function (button) {
+    button.hidden = false;
+
+    button.addEventListener('click', function (event) {
+      event.preventDefault();
+
+      if (window.googlefc && typeof window.googlefc.showRevocationMessage === 'function') {
+        window.googlefc.showRevocationMessage();
+        return;
+      }
+
+      window.location.href = '/cookies/#choices';
+    });
+  });
+
   /* ---------- Copy the address ---------- */
   var copyButton = document.querySelector('[data-copy]');
 

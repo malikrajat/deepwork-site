@@ -71,10 +71,18 @@
       content="The DeepWork dashboard: a focus clock mid-session above today's tasks."
     />
     <meta name="google-site-verification" content="lTgQD1uJlZUR7Iqd2vCEJ54on_Gtxdhb-zX2o-NGDJQ" />
+    <meta name="google-adsense-account" content="ca-pub-4991682021863699" />
 
     <!--
-      Google Tag Manager. This is the page's one third-party script; `TAG_HOSTS`
-      in `tools/verify-site.cjs` permits its hosts here and nowhere else, and
+      Consent Mode v2 defaults, before anything that measures or advertises. One
+      local file rather than an inline block repeated in every document that
+      loads a Google tag; `/content/consent.js` explains the regional split.
+    -->
+    <script src="/content/consent.js"></script>
+
+    <!--
+      Google Tag Manager. This is the page's measurement tag; `TAG_HOSTS` in
+      `tools/verify-site.cjs` permits its hosts and the AdSense hosts below, and
       `public/privacy/index.html` names Google and what it receives. Changing
       this container id changes the request the audit sees.
     -->
@@ -86,6 +94,18 @@
       }
       gtag('js', new Date());
     </script>
+
+    <!--
+      Google AdSense. Advertising appears on the reading pages and on this one,
+      never inside the app and never on the legal documents. `ADSENSE_CLIENT` in
+      `src/app/core/site.ts` is the account id; the same id appears in
+      `public/ads.txt` and on every guide, and the audit fails if they disagree.
+    -->
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4991682021863699"
+      crossorigin="anonymous"
+    ></script>
 
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <link rel="alternate icon" type="image/x-icon" href="favicon.ico" />

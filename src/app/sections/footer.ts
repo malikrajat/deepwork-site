@@ -9,7 +9,10 @@ import {
 } from '@angular/core';
 
 import {
+  ABOUT_URL,
   CONTACT_PAGE_URL,
+  COOKIES_URL,
+  GUIDES_URL,
   LICENSE_SPDX,
   PRIVACY_URL,
   SITE,
@@ -128,21 +131,47 @@ export class Footer {
     return value == null ? '—' : this.counts.format(value);
   }
 
+  /**
+   * The one control that changes a cookie decision.
+   *
+   * Where Google's consent platform is loaded, its own revocation screen is
+   * opened — that is the surface that actually remembers the choice. Where it is
+   * not, the visitor is sent to the cookies page, which names the same switches.
+   * The control works in both cases; a button that silently does nothing is
+   * worse than no button.
+   */
+  openCookieSettings(): void {
+    const googlefc = (
+      globalThis as typeof globalThis & {
+        googlefc?: { showRevocationMessage?: () => void };
+      }
+    ).googlefc;
+
+    if (typeof googlefc?.showRevocationMessage === 'function') {
+      googlefc.showRevocationMessage();
+      return;
+    }
+
+    this.document.location.assign(`${COOKIES_URL}#choices`);
+  }
+
   readonly role = 'Senior Lead Software Engineer at Siemens · Frontend architect';
 
   /**
-   * The three documents.
+   * The documents beside the page.
    *
-   * They are static files beside the page rather than sections inside it — the
-   * reasoning is in `core/site.ts` — so these are real URLs and every link is a
-   * page load, not an anchor jump. The footer is the one place that lists them:
-   * the navigation already runs to nine section links and adding three more
-   * would shorten the labels it has.
+   * They are static files rather than sections inside it — the reasoning is in
+   * `core/site.ts` — so these are real URLs and every link is a page load, not
+   * an anchor jump. The footer is the one place that lists them: the navigation
+   * already runs to nine section links and adding six more would shorten the
+   * labels it has.
    */
   readonly legal: readonly FooterLink[] = [
     { label: 'Privacy', href: PRIVACY_URL },
+    { label: 'Cookies', href: COOKIES_URL },
     { label: 'Terms', href: TERMS_URL },
     { label: 'Contact', href: CONTACT_PAGE_URL },
+    { label: 'About this site', href: ABOUT_URL },
   ];
 
   readonly newsletter = {
@@ -167,6 +196,7 @@ export class Footer {
         { label: 'How it compares', href: '#compare' },
         { label: 'Desktop app', href: '#desktop' },
         { label: 'What a Pomodoro is', href: '#learn' },
+        { label: 'Guides', href: GUIDES_URL },
       ],
     },
     {

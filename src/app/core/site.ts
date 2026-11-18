@@ -94,14 +94,14 @@ export const CONTACT_URL = `mailto:${SITE.contactEmail}`;
 export const SUPPORT_URL = `mailto:${SITE.supportEmail}`;
 
 /**
- * The three documents that sit beside the page, and where they live.
+ * The documents that sit beside the page, and where they live.
  *
  * They are static files in `public/`, not routes, and that is a consequence of
  * this site's two constraints rather than a preference: there is no router, and
  * GitHub Pages answers an unknown path with the 404 page *and a 404 status*, so
  * a privacy policy reached as a client route would be served as "not found".
  * The files also have to be readable with JavaScript disabled — a legal notice
- * behind a bundle is not a notice. `tools/verify-site.cjs` loads all three and
+ * behind a bundle is not a notice. `tools/verify-site.cjs` loads all of them and
  * follows every link on them.
  */
 export const PRIVACY_URL = '/privacy/';
@@ -109,13 +109,130 @@ export const TERMS_URL = '/terms/';
 export const CONTACT_PAGE_URL = '/contact/';
 
 /**
- * The day the three documents were last edited.
+ * The day the documents were last edited.
  *
  * Each one prints this date, and the audit asserts that the printed dates agree
  * with this constant — a privacy policy whose "last updated" line changes
  * without the policy changing is worse than no date at all.
  */
-export const LEGAL_UPDATED = '2026-11-08';
+export const LEGAL_UPDATED = '2026-11-17';
+
+/**
+ * The advertising that keeps the domain paid for.
+ *
+ * DeepWork itself has no advertising in it — this is the website only. The
+ * guides carry Google AdSense because writing them takes days and the app is
+ * free and MIT-licensed, so this is the one revenue line the project has.
+ * Advertising never appears in the product and never on the three legal
+ * documents.
+ *
+ * `ADSENSE_CLIENT` is the account id AdSense issues (`ca-pub-…`). It is repeated
+ * in `public/ads.txt`, in the ad script on every page that shows one, and in the
+ * `google-adsense-account` meta tag, because a static site has no includes —
+ * `npm run audit` reads this constant and fails if any copy disagrees. Set it to
+ * `null` to withdraw advertising: the audit then requires `ads.txt` and every ad
+ * script to be gone as well.
+ */
+export const ADSENSE_CLIENT: string | null = 'ca-pub-4991682021863699';
+
+/** The same account without the `ca-` prefix, which is the form `ads.txt` uses. */
+export const ADSENSE_PUB_ID = ADSENSE_CLIENT?.replace(/^ca-/, '') ?? null;
+
+/**
+ * The written guides that sit beside the product page.
+ *
+ * They exist for a reason a product page cannot serve: somebody searching "how
+ * long should a pomodoro be" has not heard of DeepWork yet, and a page that only
+ * sells a timer answers nothing. Each guide is about the work, not the product;
+ * the product appears at the end, named as one way to do what the guide
+ * describes.
+ *
+ * `slug` is the directory under `/guides/`, and the page is a static file at
+ * `public/guides/<slug>/index.html` — the same shape as the legal documents,
+ * for the same reasons (no router, a 200 status, readable without JavaScript).
+ */
+export interface Guide {
+  /** The directory name, which is also the last part of the URL. */
+  slug: string;
+  /** The `h1` of the page and the card's headline. */
+  title: string;
+  /** A one-word category, printed above the title. */
+  tag: string;
+  /** Two or three sentences: what the guide answers, in the card. */
+  summary: string;
+}
+
+export const GUIDES_URL = '/guides/';
+export const ABOUT_URL = '/about/';
+export const COOKIES_URL = '/cookies/';
+
+/**
+ * The day every guide was published or last edited.
+ *
+ * They were written together, so they share a date; a guide revised on its own
+ * gets its own `dateModified` in its structured data and its printed byline,
+ * and this constant moves only when the set moves.
+ */
+export const GUIDES_UPDATED = '2026-11-17';
+
+export const GUIDES: readonly Guide[] = [
+  {
+    slug: 'pomodoro-technique',
+    title: 'The Pomodoro Technique, explained properly',
+    tag: 'Method',
+    summary:
+      'What a Pomodoro is, the five steps that make it work, and the three habits that quietly turn it into a countdown nobody follows.',
+  },
+  {
+    slug: 'pomodoro-length',
+    title: 'How long should a Pomodoro be?',
+    tag: 'Method',
+    summary:
+      'Twenty-five minutes is a starting point, not a rule. How to tell whether a session length fits the work, and how to change it without losing the shape.',
+  },
+  {
+    slug: 'plan-your-day-in-focus-blocks',
+    title: 'How to plan a day in focus blocks',
+    tag: 'Planning',
+    summary:
+      'A task list is not a plan. A practical way to turn what you have to do into a day of sessions, with breaks and room for the day going wrong.',
+  },
+  {
+    slug: 'time-blocking-vs-time-tracking',
+    title: 'Time blocking vs time tracking',
+    tag: 'Planning',
+    summary:
+      'One says what you intend, the other says what happened. Why the useful question is the gap between them — and how to review it in minutes.',
+  },
+  {
+    slug: 'why-reminders-fail',
+    title: 'Why reminders get ignored',
+    tag: 'Attention',
+    summary:
+      'A notification that fades in four seconds is not a reminder. The three ways reminders fail, and what a reminder needs if it is going to survive a meeting.',
+  },
+  {
+    slug: 'weekly-review',
+    title: 'A weekly review you can do in twenty minutes',
+    tag: 'Review',
+    summary:
+      'Not a productivity ritual and not a second job. Four questions, answered from your own week, that produce one change worth making.',
+  },
+  {
+    slug: 'local-first-software',
+    title: 'What local-first software means for your work',
+    tag: 'Data',
+    summary:
+      'Where the file is, what happens offline, and who can read it. The questions worth asking before a tool holds the list of everything you have to do.',
+  },
+  {
+    slug: 'choose-a-focus-timer',
+    title: 'How to choose a focus timer app',
+    tag: 'Choosing',
+    summary:
+      'Feature lists are easy to write and hard to compare. Seven questions that decide whether a timer will still be useful in six months.',
+  },
+];
 
 export interface NavLink {
   /** The `id` of the section this link scrolls to. */

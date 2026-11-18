@@ -714,6 +714,62 @@ A block has to be short enough that starting it is not a decision, and long enou
 
 An hour is not a unit of work; it is a unit of clock. A block is a unit of attention, which is why DeepWork plans with them. Decide what matters first, let the planner place it into focus blocks with breaks already reserved, and then look at the shape of the day you have made. When it does not fit, that is information rather than failure — Fit day will tell you how much longer the day would have to be.
 
+Guides
+
+### The method, written down properly
+
+Eight guides on the parts a product page can only summarise: what a Pomodoro is, how long a session should be, how to plan a day, what makes a reminder work, and where your data should live. They are useful before you install anything — and one of them argues you may not need an app at all.
+
+Method
+
+#### The Pomodoro Technique, explained properly
+
+What a Pomodoro is, the five steps that make it work, and the three habits that quietly turn it into a countdown nobody follows.
+
+Method
+
+#### How long should a Pomodoro be?
+
+Twenty-five minutes is a starting point, not a rule. How to tell whether a session length fits the work, and how to change it without losing the shape.
+
+Planning
+
+#### How to plan a day in focus blocks
+
+A task list is not a plan. A practical way to turn what you have to do into a day of sessions, with breaks and room for the day going wrong.
+
+Planning
+
+#### Time blocking vs time tracking
+
+One says what you intend, the other says what happened. Why the useful question is the gap between them — and how to review it in minutes.
+
+Attention
+
+#### Why reminders get ignored
+
+A notification that fades in four seconds is not a reminder. The three ways reminders fail, and what a reminder needs if it is going to survive a meeting.
+
+Review
+
+#### A weekly review you can do in twenty minutes
+
+Not a productivity ritual and not a second job. Four questions, answered from your own week, that produce one change worth making.
+
+Data
+
+#### What local-first software means for your work
+
+Where the file is, what happens offline, and who can read it. The questions worth asking before a tool holds the list of everything you have to do.
+
+Choosing
+
+#### How to choose a focus timer app
+
+Feature lists are easy to write and hard to compare. Seven questions that decide whether a timer will still be useful in six months.
+
+Written by the person who builds DeepWork. No sponsored posts, no affiliate links — the advertising on the guides is disclosed on every one of them.
+
 About the maker
 
 ### Rajat Malik

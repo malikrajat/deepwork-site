@@ -69,6 +69,13 @@
   ],
   "shortcuts": [
     {
+      "name": "Guides",
+      "short_name": "Guides",
+      "description": "Eight guides on focus, planning and local-first software",
+      "url": "/guides/",
+      "icons": [{ "src": "icons/128x128.png", "sizes": "128x128", "type": "image/png" }]
+    },
+    {
       "name": "What's new in 3.0",
       "short_name": "What's new",
       "description": "Time by Task, standing reminders and quiet controls",

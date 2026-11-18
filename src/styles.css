@@ -1672,6 +1672,25 @@ html[data-theme='light'] .footer {
   color: var(--text);
 }
 
+/* The cookie control is a button because it opens a dialog rather than a page,
+   but it sits in the same row and has to look like the links beside it. */
+.footer__legal-btn {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--text-3);
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.footer__legal-btn:hover {
+  color: var(--text);
+}
+
 /* ===== Footer: site stats ==============================================
    The trigger and the panel it opens. The panel is a dialog rather than a
    section: it is read once, on purpose, and the page behind it is not part of

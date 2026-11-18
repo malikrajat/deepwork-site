@@ -54,9 +54,10 @@ only.
 ## Browser support policy
 
 **Baseline: Widely available.** No polyfills, no feature-detection branches for browsers older than
-Baseline, and no third-party runtime script except two disclosed dependencies: the Google tag on the
-home page and the hCaptcha widget the contact form requires (both described in the README). The
-legal documents load neither.
+Baseline, and no third-party runtime script except the disclosed dependencies named in the README:
+the Google tag and AdSense on the home page and the guides, and the hCaptcha widget the contact form
+requires. The four legal documents load none of them, and `/content/consent.js` runs before either
+Google tag.
 
 Two features are used progressively, which means the fallback is "less pretty", not "broken":
 
@@ -76,17 +77,18 @@ thing that still needs scripting is the theme — without it the page stays dark
 
 ## Architecture decisions, and why
 
-- **No router.** One page, no deep links, so there is no SPA fallback to configure: the host serves
-  `public/404.html` for an unknown path, which is a branded page rather than the app. On Cloudflare
-  Pages that file is served whatever the missing path was — Pages does not rewrite the address — so
-  it must not assume it was reached from a link the site owns.
-- **Three documents, and they are static files.** `/privacy/`, `/terms/` and `/contact/` live in
-  `public/` as self-contained HTML sharing `public/legal/legal.css` and `legal.js`, with real URLs
-  and a 200 status. They are not routes because a legal notice has to read with JavaScript off, and
-  because a route would be one more thing that can fail while the page still renders. The theme
-  toggle uses the same `deepwork-site-theme` key as the page; the documents send no pageview.
-  The contact form is wired to `data-endpoint` on the form and falls back to `mailto:` — never
-  invent an endpoint, and if one is set, name the processor in the privacy policy.
+- **No router.** One Angular page plus static documents and guides, so there is no SPA fallback to
+  configure: the host serves `public/404.html` for an unknown path, which is a branded page rather
+  than the app. On Cloudflare Pages that file is served whatever the missing path was — Pages does
+  not rewrite the address — so it must not assume it was reached from a link the site owns.
+- **Four documents and eight guides, and they are static files.** `/privacy/`, `/cookies/`,
+  `/terms/`, `/contact/`, `/about/` and `/guides/…` live in `public/` as self-contained HTML sharing
+  `public/legal/legal.css` and `legal.js`, with real URLs and a 200 status. They are not routes
+  because a legal notice has to read with JavaScript off, and because a route would be one more
+  thing that can fail while the page still renders. The theme toggle uses the same
+  `deepwork-site-theme` key as the page; the documents send no pageview. The contact form is wired
+  to `data-endpoint` on the form and falls back to `mailto:` — never invent an endpoint, and if one
+  is set, name the processor in the privacy policy.
 - **No lazy loading, no `@defer`.** A visitor scrolls the whole page; a section that pops in late
   is worse than one in the first paint.
 - **One global stylesheet, no component `styles`.** Component styles are injected at runtime;
@@ -96,7 +98,7 @@ thing that still needs scripting is the theme — without it the page stays dark
   `transform`/`opacity`, driven by a shared geometry queue — **not** `IntersectionObserver`, which
   silently loses elements on a fast scroll and leaves them at `opacity: 0` forever. See
   `src/app/core/reveal.ts`.
-- **Nineteen section components, no shared UI kit.** A component library for a single page would be
+- **One component per section, no shared UI kit.** A component library for a single page would be
   abstraction without a second caller.
 - **Prerendered, and it is a build step, not a server.** `outputMode: "static"` plus
   `src/main.server.ts` writes the whole page into `index.html`, so a crawler that executes no
@@ -113,12 +115,20 @@ thing that still needs scripting is the theme — without it the page stays dark
 - **The visitor count is first-party.** A pageview is a beacon this page sends to GoatCounter
   (`src/app/core/analytics.ts`), not `count.js` and not anybody else's script. It counts only
   `https://deepwork.rajatmalik.dev`: local builds and previews send no GoatCounter pageview.
-  The front page separately loads the disclosed Google tag (Tag Manager, which loads Analytics), and
-  the contact page loads hCaptcha. The audit allows those hosts on those pages only; do not widen
-  that allowlist without updating `/privacy/`, the README and this file.
+  The front page and the guides separately load the disclosed Google tag (Tag Manager, which loads
+  Analytics) and Google AdSense, and the contact page loads hCaptcha. The audit allows those hosts
+  on those pages only; do not widen that allowlist without updating `/privacy/`, `/cookies/`,
+  the README and this file.
   The footer's Site stats panel reads the numbers back with a token that is public by construction
   (`src/app/core/visitor-stats.ts`); it must stay a read-only "Read statistics" token, because
   anybody can read it out of the bundle. Nothing is fetched unless the panel is opened.
+- **Advertising is disclosed, and it is only on the reading pages.** AdSense appears on the home
+  page and the eight guides, never in the application and never on `/privacy/`, `/cookies/`,
+  `/terms/` or `/contact/`. `ADSENSE_CLIENT` in `src/app/core/site.ts` is the only publisher id;
+  `public/ads.txt` and the ad script on each page must match it, and the audit fails if they do not.
+  `public/content/consent.js` sets Consent Mode v2 defaults before either Google tag loads, and the
+  certified consent message is configured in the AdSense dashboard — do not replace it with a
+  hand-built banner. The guides disclose the advertising, and nobody clicks their own ads.
 - **Response headers are a file in `public/`, not a setting.** `public/_headers` is parsed by
   Cloudflare Pages out of the build output; the assets glob copies it and Pages never serves it. It
   is the only place a header is set. A new third-party host means a new source in the matching
@@ -136,7 +146,15 @@ thing that still needs scripting is the theme — without it the page stays dark
 ## SEO rules
 
 - **Never** add `aggregateRating`, `review`, `ratingCount` or testimonials. There are none, and
-  inventing them is dishonest and against Google's structured-data policy.
+  inventing them is dishonest and against Google's structured-data policy. Do not invent them to
+  satisfy an ad network either: AdSense does not require reviews, and a fabricated one risks the
+  account as well as the site.
+- **Ads are not content.** Never label an ad anything except "Advertisements" or "Sponsored Links"
+  (Google's own units carry their label), never place the ad script on the legal documents, the
+  contact page, `404.html` or a page without substantial text, and never ask for a click, offer a
+  reward for one, or frame content. The audit asserts the placement, the word floors, the absence of
+  iframes and the absence of incentive language; the Auto ads format settings and the brand-safety
+  blocks are dashboard-side.
 - **Never** keyword-stuff, hide text, or add a `lastmod` to `sitemap.xml` that changes without the
   content changing.
 - Exactly one `h1` in the shipped HTML, and headings in order. `npm run audit` asserts it — the
@@ -166,11 +184,12 @@ thing that still needs scripting is the theme — without it the page stays dark
 
 ## Checks before you call something done
 
-`npm run audit` drives the **built** site in a browser and asserts 145 things — the page with
+`npm run audit` drives the **built** site in a browser and asserts 500 things — the page with
 JavaScript disabled, visibility, overflow at ten widths, console errors, loaded images, crawler files,
-structured data, and the three documents. It has caught four bugs that `ng build` could not see. It
-needs `npm run build` first, and Chromium once (`npx playwright install chromium`). `npm run llms`
-after any copy change, or CI will fail on a stale `llms-full.txt`.
+structured data, the four documents and the eleven content pages. It has caught four bugs that
+`ng build` could not see. It needs `npm run build` first, and Chromium once
+(`npx playwright install chromium`). `npm run llms` after any copy change, or CI will fail on a stale
+`llms-full.txt`.
 
 ## What CI does, and what it deliberately does not
 
@@ -211,7 +230,7 @@ npm run lint           # Biome lint
 npm run format         # Biome (TS/JSON/tools) + Prettier (HTML/CSS)
 npm run verify         # format:check + build
 npm run serve:dist     # serve the build at http://127.0.0.1:5200
-npm run audit          # 132 assertions against the built site (needs Chromium)
+npm run audit          # 500 assertions against the built site (needs Chromium)
 npm run llms           # regenerate public/llms-full.txt from the rendered page
 ```
 

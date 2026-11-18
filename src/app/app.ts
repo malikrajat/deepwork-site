@@ -10,6 +10,7 @@ import { Faq } from './sections/faq';
 import { Focus } from './sections/focus';
 import { Footer } from './sections/footer';
 import { GetStarted } from './sections/get-started';
+import { Guides } from './sections/guides';
 import { Habits } from './sections/habits';
 import { Hero } from './sections/hero';
 import { HowItWorks } from './sections/how-it-works';
@@ -66,6 +67,7 @@ import { Why } from './sections/why';
     Devices,
     HowItWorks,
     Learn,
+    Guides,
     About,
     Why,
     Compare,

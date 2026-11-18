@@ -21,6 +21,17 @@
 #   www.google.com                where GA4 actually posts `g/collect`; found by
 #                                 loading the built page under this policy and
 #                                 reading the one violation it produced
+#   pagead2.googlesyndication.com the AdSense script on the page and the guides
+#   *.googlesyndication.com       the ad frames and the resources they fetch
+#   *.doubleclick.net             ad delivery, measurement and frequency capping
+#   *.googleadservices.com        the ad-click path
+#   adservice.google.com          the ad-serving endpoint
+#   www.googletagservices.com     Google's ad-tag loader
+#   *.adtrafficquality.google     Google's invalid-traffic checks for the ads
+#   *.gstatic.com                 static resources the ad frames request
+#   fundingchoicesmessages.google.com
+#                                 the consent message Google serves in the
+#                                 EEA, UK and Switzerland
 #   deepwork.goatcounter.com      the first-party pageview (src/app/core/analytics.ts)
 #   web3forms.com                 the contact form's script and endpoint
 #   hcaptcha.com / hcaptcha.net   the captcha the form requires
@@ -38,7 +49,7 @@
   X-Frame-Options: DENY
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: accelerometer=(), autoplay=(), browsing-topics=(), camera=(), display-capture=(), encrypted-media=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), publickey-credentials-get=(), screen-wake-lock=(), serial=(), usb=(), xr-spatial-tracking=()
-  Content-Security-Policy: default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://*.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com; font-src 'self'; connect-src 'self' https://*.googletagmanager.com https://*.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://www.google.com https://deepwork.goatcounter.com; frame-src 'none'; worker-src 'self'; manifest-src 'self'
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://*.googletagmanager.com https://pagead2.googlesyndication.com https://*.googlesyndication.com https://www.googletagservices.com https://adservice.google.com https://*.googleadservices.com https://*.doubleclick.net https://*.adtrafficquality.google https://fundingchoicesmessages.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com https://*.googlesyndication.com https://adservice.google.com https://*.doubleclick.net https://*.googleadservices.com https://*.adtrafficquality.google https://*.gstatic.com https://www.google.com; font-src 'self'; connect-src 'self' https://*.googletagmanager.com https://*.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://www.google.com https://pagead2.googlesyndication.com https://*.googlesyndication.com https://adservice.google.com https://*.doubleclick.net https://*.googleadservices.com https://*.adtrafficquality.google https://*.gstatic.com https://fundingchoicesmessages.google.com https://deepwork.goatcounter.com; frame-src https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://*.googlesyndication.com https://*.doubleclick.net https://*.googleadservices.com https://fundingchoicesmessages.google.com https://www.google.com; worker-src 'self' blob:; manifest-src 'self'
 
 # The contact form is the one page with a third party whose own documentation
 # requires allowances: hCaptcha asks for `script-src` and `frame-src` to include

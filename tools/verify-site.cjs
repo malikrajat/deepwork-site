@@ -44,15 +44,68 @@ const EXTERNAL_URL = process.env['SITE_URL'];
 const WIDTHS = [320, 360, 390, 430, 768, 1024, 1280, 1440, 1920, 2560];
 
 /**
- * The Google tag stack, the one third-party dependency the home page is allowed
- * to load. The tag is a deliberate product decision and is disclosed in
- * `/privacy/`; any other host is still a failure, and these hosts are not
- * allowed on the three documents.
+ * The Google stack, the third-party dependencies the reading pages are allowed
+ * to load: the measurement tag, Analytics, and the AdSense advertising on the
+ * home page and the guides. They are a deliberate product decision, disclosed in
+ * `/privacy/`, `/cookies/` and on every guide. Any other host is still a
+ * failure, and none of these are allowed on the four documents.
  */
 const TAG_HOSTS = ['googletagmanager.com', 'google-analytics.com'];
 
+/**
+ * The advertising and consent hosts. Google decides at run time which of these
+ * it requests and from which subdomain, so the audit judges them by suffix and
+ * blocks them: a local build must not depend on an ad being sold to pass, and a
+ * visitor with a content blocker sees exactly this.
+ */
+const AD_HOSTS = [
+  'googlesyndication.com',
+  'doubleclick.net',
+  'googleadservices.com',
+  'adservice.google.com',
+  'adtrafficquality.google',
+  'googletagservices.com',
+  'fundingchoicesmessages.google.com',
+  'gstatic.com',
+];
+
+function hostIn(hostname, hosts) {
+  return hosts.some((host) => hostname === host || hostname.endsWith(`.${host}`));
+}
+
 function isTagHost(hostname) {
-  return TAG_HOSTS.some((host) => hostname === host || hostname.endsWith(`.${host}`));
+  return hostIn(hostname, TAG_HOSTS);
+}
+
+function isAdHost(hostname) {
+  return hostIn(hostname, AD_HOSTS);
+}
+
+/**
+ * Blocks advertising and consent requests before they leave the machine.
+ *
+ * The page has to work when those requests are refused — that is the state a
+ * content blocker creates, and the state most of this audit should test. What it
+ * does not test is whether Google sold an ad, which no local build can answer.
+ * The script tags themselves are asserted in the markup instead.
+ */
+async function blockAds(context) {
+  await context.route('**/*', (route) => {
+    let hostname;
+    try {
+      hostname = new URL(route.request().url()).hostname;
+    } catch {
+      return route.continue();
+    }
+
+    if (isAdHost(hostname)) return route.abort('blockedbyclient');
+    return route.continue();
+  });
+}
+
+/** Console noise caused by a request the audit itself blocked. */
+function isBlockedAdNoise(text) {
+  return AD_HOSTS.some((host) => text.includes(host)) || text.includes('ERR_BLOCKED_BY_CLIENT');
 }
 
 /** Every section the navigation promises. */
@@ -73,6 +126,7 @@ const SECTION_IDS = [
   'devices',
   'how',
   'learn',
+  'guides',
   'about',
   'why',
   'compare',
@@ -220,6 +274,265 @@ async function main() {
     'a <br> in a headline becomes a space, not a glued-together sentence',
   );
 
+  /* ---------- advertising, and the pages that carry it ----------
+     AdSense has two failure modes a build log will not show: an `ads.txt` that
+     authorises the wrong seller, and a page that loads the advertising script
+     without the content or the consent signal that makes it acceptable. Both are
+     checked here, against the one client id in `site.ts`. */
+  const head = fs.readFileSync('src/index.html', 'utf8');
+  const adsenseClient = /ADSENSE_CLIENT[^=]*=\s*'([^']+)'/.exec(siteSource)?.[1] ?? '';
+  const adsensePub = adsenseClient.replace(/^ca-/, '');
+  check(
+    /^ca-pub-\d+$/.test(adsenseClient),
+    `site.ts names the AdSense client (${adsenseClient || 'nothing'})`,
+  );
+
+  const adsTxt = fs.existsSync('public/ads.txt') ? fs.readFileSync('public/ads.txt', 'utf8') : '';
+  const sellerLines = adsTxt
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter((line) => line && !line.startsWith('#'));
+  check(
+    sellerLines.length === 1,
+    `ads.txt authorises exactly one seller (${sellerLines.length} lines)`,
+  );
+  check(
+    sellerLines[0] === `google.com, ${adsensePub}, DIRECT, f08c47fec0942fa0`,
+    'ads.txt names the same publisher id as site.ts, in the spec format',
+  );
+
+  check(
+    robots.includes('User-agent: Mediapartners-Google') &&
+      robots.includes('User-agent: AdsBot-Google'),
+    'robots.txt lets the advertising crawlers read the pages',
+  );
+
+  /* The local static server does not emulate `_headers`, so the transport policy
+     cannot be exercised here. It can at least be read: an ad script the policy
+     would block is an empty rectangle on the live site and nothing in a build
+     log says so. */
+  const headersFile = fs.readFileSync('public/_headers', 'utf8');
+  check(
+    [
+      'pagead2.googlesyndication.com',
+      'googleads.g.doubleclick.net',
+      'fundingchoicesmessages.google.com',
+      '*.adtrafficquality.google',
+    ].every((host) => headersFile.includes(host)),
+    'the transport policy allows the ad and consent hosts',
+  );
+
+  /* The guides are data in `site.ts` and files in `public/`; the audit reads the
+     slugs from the one and requires the other, so a guide cannot exist in one
+     place only. */
+  const guideSlugs = [...siteSource.matchAll(/slug:\s*'([a-z0-9-]+)'/g)].map((match) => match[1]);
+  check(guideSlugs.length === 8, `site.ts lists the eight guides (found ${guideSlugs.length})`);
+
+  /* The guides were written together and share one date. A page whose printed
+     date drifts from the constant is a page claiming an edit that did not
+     happen, so the same check the legal documents get applies here. */
+  const guidesUpdated = /GUIDES_UPDATED\s*=\s*'([^']+)'/.exec(siteSource)?.[1] ?? '';
+  check(
+    /^\d{4}-\d{2}-\d{2}$/.test(guidesUpdated),
+    `site.ts dates the guides (${guidesUpdated || 'nothing'})`,
+  );
+
+  const contentPages = [
+    { path: '/guides/', file: 'public/guides/index.html' },
+    ...guideSlugs.map((slug) => ({
+      path: `/guides/${slug}/`,
+      file: `public/guides/${slug}/index.html`,
+    })),
+    { path: '/about/', file: 'public/about/index.html' },
+    { path: '/cookies/', file: 'public/cookies/index.html' },
+  ];
+
+  const metaContent = (html, name) =>
+    new RegExp(`<meta[^>]*name="${name}"[^>]*content="([^"]+)"`, 's').exec(html)?.[1] ?? '';
+  const pageTitle = (html) => /<title>([^<]+)<\/title>/.exec(html)?.[1]?.trim() ?? '';
+
+  const metaPages = [
+    { path: '/', file: path.join(DIST, 'index.html') },
+    ...contentPages,
+    { path: '/privacy/', file: 'public/privacy/index.html' },
+    { path: '/terms/', file: 'public/terms/index.html' },
+    { path: '/contact/', file: 'public/contact/index.html' },
+  ];
+
+  const titles = new Map();
+  const descriptions = new Map();
+
+  for (const page of metaPages) {
+    check(fs.existsSync(page.file), `${page.file} is shipped`);
+
+    const html = fs.existsSync(page.file) ? fs.readFileSync(page.file, 'utf8') : '';
+    const title = pageTitle(html);
+    const description = metaContent(html, 'description');
+
+    check(title.length >= 12, `${page.path} has a real title ("${title.slice(0, 60)}")`);
+    check(description.length >= 70, `${page.path} has a real meta description`);
+    check((html.match(/<h1[\s>]/g) || []).length === 1, `${page.path} has exactly one h1`);
+    check(
+      !/"aggregateRating"\s*:/.test(html) && !/"review"\s*:/.test(html),
+      `${page.path} claims no invented rating or review`,
+    );
+
+    const titleSeen = titles.get(title);
+    check(
+      !titleSeen,
+      `${page.path} has a unique title${titleSeen ? ` (shared with ${titleSeen})` : ''}`,
+    );
+    titles.set(title, page.path);
+
+    const descriptionSeen = descriptions.get(description);
+    check(
+      !descriptionSeen,
+      `${page.path} has a unique description${descriptionSeen ? ` (shared with ${descriptionSeen})` : ''}`,
+    );
+    descriptions.set(description, page.path);
+  }
+
+  for (const page of contentPages) {
+    const html = fs.existsSync(page.file) ? fs.readFileSync(page.file, 'utf8') : '';
+    const expectedCanonical = `${siteUrl}${page.path.slice(1)}`;
+    const canonical = /<link[^>]*rel="canonical"[^>]*href="([^"]+)"/s.exec(html)?.[1] ?? '';
+
+    check(
+      canonical === expectedCanonical,
+      `${page.path} declares its canonical URL (${canonical || 'none'})`,
+    );
+    check(
+      sitemap.includes(`<loc>${expectedCanonical}</loc>`),
+      `${page.path} is listed in the sitemap`,
+    );
+    check(html.includes('application/ld+json'), `${page.path} carries structured data`);
+    check(
+      html.includes('src="/content/consent.js"'),
+      `${page.path} sets consent defaults before Google loads`,
+    );
+    check(html.includes('<a class="skip-link" href="#main">'), `${page.path} keeps the skip link`);
+  }
+
+  /* Advertising is on the home page and the guides, and nowhere else. The legal
+     documents are the pages a visitor reads when deciding whether to trust the
+     site; putting ads beside them would be the wrong trade, and the audit
+     enforces the line rather than the intention. */
+  for (const slug of guideSlugs) {
+    const html = fs.readFileSync(`public/guides/${slug}/index.html`, 'utf8');
+    check(
+      html.includes(`adsbygoogle.js?client=${adsenseClient}`),
+      `the ${slug} guide loads the AdSense script with the same client id`,
+    );
+    check(html.includes('class="guide-disclosure"'), `the ${slug} guide discloses the advertising`);
+    check(
+      html.includes(`datetime="${guidesUpdated}"`),
+      `the ${slug} guide prints the date in site.ts`,
+    );
+  }
+
+  for (const page of [
+    { path: '/guides/', file: 'public/guides/index.html' },
+    ...contentPages.slice(-2),
+  ]) {
+    const html = fs.readFileSync(page.file, 'utf8');
+    check(!html.includes('adsbygoogle.js'), `${page.path} carries no advertising`);
+  }
+
+  /* ---------- the publisher policies, as assertions ----------
+     The AdSense Program policies prohibit ads on thin content, ads that look like
+     navigation, and any request to click one. Those are not things a build log
+     notices, so they are measured: a minimum of real text on every page that
+     loads the ad script, no iframes, and no incentive language. */
+  const builtHome = fs.readFileSync(path.join(DIST, 'index.html'), 'utf8');
+
+  const visibleWords = (html) =>
+    html
+      .replace(/<script[\s\S]*?<\/script>/gi, ' ')
+      .replace(/<style[\s\S]*?<\/style>/gi, ' ')
+      .replace(/<[^>]+>/g, ' ')
+      .replace(/&[a-z]+;/gi, ' ')
+      .replace(/\s+/g, ' ')
+      .trim()
+      .split(' ')
+      .filter(Boolean).length;
+
+  const INCENTIVE =
+    /(click (the|our|these|on an?) ads?|support (us|this site) by clicking|visit these links|help keep this site running)/i;
+
+  check(
+    visibleWords(builtHome) >= 3000,
+    `the ad-bearing home page carries real content (${visibleWords(builtHome)} words)`,
+  );
+
+  for (const slug of guideSlugs) {
+    const html = fs.readFileSync(`public/guides/${slug}/index.html`, 'utf8');
+    const words = visibleWords(html);
+    const adTag =
+      /<script[^>]*src="https:\/\/pagead2\.googlesyndication\.com\/pagead\/js\/adsbygoogle\.js\?client=[^"]+"[^>]*>/s.exec(
+        html,
+      )?.[0] ?? '';
+
+    check(words >= 600, `the ${slug} guide has enough content for its ad (${words} words)`);
+    check(!/<iframe/i.test(html), `the ${slug} guide frames no content and no ads`);
+    check(!INCENTIVE.test(html), `the ${slug} guide asks nobody to click an ad`);
+    check(
+      /async/.test(adTag) && /crossorigin="anonymous"/.test(adTag),
+      `the ${slug} guide uses the standard asynchronous ad tag`,
+    );
+  }
+
+  check(
+    !INCENTIVE.test(builtHome),
+    'the home page asks nobody to click an ad or to support the site that way',
+  );
+  check(!/<iframe/i.test(builtHome), 'the home page frames no content and no ads');
+
+  const consentSource = fs.readFileSync('public/content/consent.js', 'utf8');
+  check(consentSource.includes("'BR'"), 'consent defaults cover Brazil (LGPD), not only the EEA');
+
+  const cookiesHtml = fs.readFileSync('public/cookies/index.html', 'utf8');
+  check(
+    cookiesHtml.toLowerCase().includes('lgpd') &&
+      cookiesHtml.includes('policies/privacy/partners/'),
+    'the cookies page names LGPD and links Google’s explanation of its data use',
+  );
+
+  const aboutHtml = fs.readFileSync('public/about/index.html', 'utf8');
+  check(
+    /do not click the ads/i.test(aboutHtml) && /offered money or a reward/i.test(aboutHtml),
+    'the About page states the no-incentive and no-self-click commitments',
+  );
+
+  check(
+    !fs.readFileSync('public/404.html', 'utf8').includes('adsbygoogle.js'),
+    'the error page carries no advertising',
+  );
+
+  check(head.includes(`adsbygoogle.js?client=${adsenseClient}`), 'the home page loads AdSense');
+  check(
+    head.includes(`name="google-adsense-account" content="${adsenseClient}"`),
+    'the home page names the AdSense account for verification',
+  );
+  check(
+    head.includes('src="/content/consent.js"'),
+    'the home page sets consent defaults before Google loads',
+  );
+
+  const privacyHtml = fs.readFileSync('public/privacy/index.html', 'utf8');
+  check(
+    ['AdSense', 'DoubleClick', 'adssettings.google.com', 'aboutads.info'].every((term) =>
+      privacyHtml.includes(term),
+    ),
+    'the privacy policy names the advertising, its cookies and the opt-outs',
+  );
+  check(
+    /web beacon/i.test(privacyHtml) &&
+      privacyHtml.includes('policies/privacy/partners/') &&
+      privacyHtml.includes('user-consent-policy'),
+    'the privacy disclosures name web beacons and link Google’s data-use and consent policies',
+  );
+  check(privacyHtml.includes('href="/cookies/"'), 'the privacy policy links the cookies page');
+
   for (const file of ['og-image.png', 'site.webmanifest', 'robots.txt', 'sitemap.xml']) {
     check(fs.existsSync(path.join('public', file)), `public/${file} exists`);
   }
@@ -246,7 +559,6 @@ async function main() {
      The patterns tolerate whitespace around the JSON colons, because Prettier
      owns the formatting of this file and a test that breaks when a formatter
      runs is a test that gets deleted rather than fixed. */
-  const head = fs.readFileSync('src/index.html', 'utf8');
   const hasType = (type) => new RegExp(`"@type"\\s*:\\s*"${type}"`).test(head);
 
   check(head.includes('rel="canonical"'), 'a canonical URL is declared');
@@ -360,10 +672,12 @@ async function main() {
       viewport: { width: 1280, height: 900 },
       reducedMotion: 'reduce',
     });
+    await blockAds(context);
     const page = await context.newPage();
     const errors = [];
     page.on('console', (message) => {
-      if (message.type() === 'error') errors.push(message.text());
+      if (message.type() === 'error' && !isBlockedAdNoise(message.text()))
+        errors.push(message.text());
     });
     page.on('pageerror', (error) => errors.push(String(error)));
 
@@ -382,7 +696,9 @@ async function main() {
       } catch {
         return;
       }
-      if (url.origin !== ownOrigin && !isTagHost(url.hostname)) external.push(request.url());
+      if (url.origin !== ownOrigin && !isTagHost(url.hostname) && !isAdHost(url.hostname)) {
+        external.push(request.url());
+      }
     });
 
     await page.goto(base, { waitUntil: 'networkidle', timeout: 30000 });
@@ -444,6 +760,7 @@ async function main() {
     const context = await browser.newContext({
       viewport: { width, height: width < 700 ? 844 : 900 },
     });
+    await blockAds(context);
     const page = await context.newPage();
     await page.goto(base, { waitUntil: 'domcontentloaded', timeout: 30000 });
     await page.waitForTimeout(700);
@@ -690,16 +1007,21 @@ async function main() {
     await page.close();
   }
 
-  /* The lobby is the only place that lists the three documents. */
+  /* The lobby is the only place that lists the documents. */
   {
     const page = await documentsContext.newPage();
     await page.goto(base, { waitUntil: 'networkidle', timeout: 30000 });
     await page.waitForSelector('.footer__legal', { timeout: 10000 });
 
-    for (const doc of documents) {
-      const count = await page.locator(`.footer__legal a[href="${doc.path}"]`).count();
-      check(count === 1, `the footer lists ${doc.path}`);
+    for (const href of ['/privacy/', '/terms/', '/contact/', '/cookies/', '/about/']) {
+      const count = await page.locator(`.footer__legal a[href="${href}"]`).count();
+      check(count === 1, `the footer lists ${href}`);
     }
+
+    check(
+      (await page.locator('.footer__legal .footer__legal-btn').count()) === 1,
+      'the footer offers the cookie-settings control',
+    );
 
     await page.close();
   }
@@ -725,6 +1047,121 @@ async function main() {
 
     await context.close();
   }
+
+  /* ---------- 6. The guides and the two new documents ----------
+     Static files like the legal documents, but with a different job: they are
+     the pages that earn search traffic and carry the advertising. So they are
+     checked for the things a reader needs (a 200, one h1, working links, a
+     theme toggle, no overflow) and for the one thing AdSense requires (a page
+     with content and a consent signal, not a bare container). */
+  console.log('\n== content pages ==');
+
+  const contentContext = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+  await blockAds(contentContext);
+
+  for (const page of contentPages) {
+    const tab = await contentContext.newPage();
+    const pageErrors = [];
+
+    tab.on('console', (message) => {
+      if (message.type() === 'error' && !isBlockedAdNoise(message.text())) {
+        pageErrors.push(message.text());
+      }
+    });
+    tab.on('pageerror', (error) => pageErrors.push(String(error)));
+
+    const response = await tab.goto(base + page.path, { waitUntil: 'networkidle', timeout: 30000 });
+    const h1Count = await tab.locator('h1').count();
+    const h1Text = ((await tab.locator('h1').first().textContent()) ?? '').trim();
+
+    check(
+      response !== null && response.status() === 200,
+      `${page.path} is served with 200 (${response?.status()})`,
+    );
+    check(h1Count === 1, `${page.path} renders exactly one h1 (found ${h1Count})`);
+    check(h1Text.length > 8, `${page.path} h1 has real text: "${h1Text.slice(0, 44)}"`);
+    check(
+      pageErrors.length === 0,
+      `${page.path} has no console or page errors${pageErrors.length ? `: ${pageErrors[0]}` : ''}`,
+    );
+
+    /* Every internal link, followed for real. The guides link to each other and
+       to the product page; a renamed slug is exactly the failure a sitemap will
+       happily keep advertising. */
+    const hrefs = await tab.$$eval('a[href]', (links) =>
+      Array.from(
+        new Set(
+          links
+            .map((link) => link.getAttribute('href') ?? '')
+            .filter((href) => href.startsWith('/') && !href.startsWith('//')),
+        ),
+      ),
+    );
+
+    const broken = [];
+    for (const href of hrefs) {
+      const linkResponse = await contentContext.request.get(base + href);
+      if (!linkResponse.ok()) broken.push(`${href} (${linkResponse.status()})`);
+    }
+    check(
+      broken.length === 0,
+      `${page.path} links all resolve (${hrefs.length} links${broken.length ? `: ${broken.join(', ')}` : ''})`,
+    );
+
+    const missingAnchors = await tab.$$eval('a[href^="#"]', (links) =>
+      Array.from(
+        new Set(
+          links
+            .map((link) => (link.getAttribute('href') ?? '').slice(1))
+            .filter((id) => id !== '' && document.getElementById(id) === null),
+        ),
+      ),
+    );
+    check(
+      missingAnchors.length === 0,
+      `${page.path} in-page anchors resolve${missingAnchors.length ? `: #${missingAnchors[0]}` : ''}`,
+    );
+
+    const before = await tab.evaluate(() => document.documentElement.dataset['theme']);
+    await tab.locator('[data-theme-toggle]').click();
+    await tab.waitForTimeout(150);
+    const after = await tab.evaluate(() => ({
+      theme: document.documentElement.dataset['theme'],
+      stored: localStorage.getItem('deepwork-site-theme'),
+    }));
+    check(
+      after.theme !== before && after.stored === after.theme,
+      `${page.path} theme toggle switches and persists (${before} -> ${after.theme})`,
+    );
+
+    check(
+      (await tab.locator('[data-cookie-settings]').count()) >= 1,
+      `${page.path} offers a way to change a cookie choice`,
+    );
+
+    await tab.close();
+  }
+
+  /* The narrowest width is where a two-column card grid, a table or a long word
+     becomes a sideways scrollbar. Every page, at the two widths that matter. */
+  for (const width of [360, 1440]) {
+    const context = await browser.newContext({ viewport: { width, height: 900 } });
+    await blockAds(context);
+    const tab = await context.newPage();
+
+    for (const page of contentPages) {
+      await tab.goto(base + page.path, { waitUntil: 'domcontentloaded', timeout: 30000 });
+      await tab.waitForTimeout(200);
+
+      const result = await tab.evaluate(measure);
+      const overflow = result.scrollWidth - result.innerWidth;
+      check(overflow <= 1, `${page.path} has no horizontal overflow at ${width}px (${overflow}px)`);
+    }
+
+    await context.close();
+  }
+
+  await contentContext.close();
 
   await browser.close();
   if (server) await server.close();

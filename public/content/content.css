@@ -1,0 +1,280 @@
+/* ============================================================================
+   DeepWork — the guides
+   ----------------------------------------------------------------------------
+   Loaded after `/legal/legal.css`, which already supplies the tokens, the
+   masthead, the reading measure, the table of contents and the prose styles.
+   This file adds only what an article needs and a legal notice does not: a
+   breadcrumb, a byline, a grid of article cards, and the box that points back
+   at the product.
+
+   No new colours and no new typefaces: a guide and a privacy policy are the
+   same site, and a visitor who moves between them should not be able to tell
+   that they came from different stylesheets.
+   ========================================================================= */
+
+/* A guide is read, not consulted, so it keeps the legal measure — slightly
+   wider, because an article has fewer lists and more paragraphs. */
+.doc--guide {
+  --measure: 44rem;
+}
+
+/* The index and the About page are made of cards, not paragraphs, and a
+   two-column grid inside a 42rem measure is a column of words. */
+.doc--hub {
+  max-width: calc(62rem + 2 * var(--gutter));
+}
+
+/* ===== Breadcrumb ======================================================== */
+.crumbs {
+  margin-bottom: 1.5rem;
+  font-size: var(--fs-xs);
+  color: var(--text-3);
+}
+
+.crumbs ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.crumbs li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.crumbs li + li::before {
+  content: '/';
+  color: var(--border-strong);
+}
+
+.crumbs a {
+  color: var(--text-2);
+}
+
+.crumbs a:hover {
+  color: var(--text);
+}
+
+.crumbs [aria-current='page'] {
+  color: var(--text-3);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 22ch;
+}
+
+/* ===== Byline ============================================================ */
+.byline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.75rem;
+  margin-top: 1.25rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--border);
+  font-size: var(--fs-sm);
+  color: var(--text-3);
+}
+
+.byline a {
+  color: var(--text-2);
+  text-decoration: underline;
+  text-decoration-color: var(--border-strong);
+  text-underline-offset: 3px;
+}
+
+.byline a:hover {
+  color: var(--text);
+  text-decoration-color: currentColor;
+}
+
+/* ===== Article index ===================================================== */
+.guide-grid {
+  display: grid;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 720px) {
+  .guide-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.15rem;
+  }
+}
+
+.guide-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 0.55rem;
+  padding: 1.35rem 1.4rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: inherit;
+  text-decoration: none;
+  transition:
+    border-color 0.2s var(--ease),
+    background 0.2s var(--ease),
+    transform 0.2s var(--ease);
+}
+
+.guide-card:hover {
+  border-color: var(--accent-line);
+  background: var(--surface-strong);
+  transform: translateY(-2px);
+  text-decoration: none;
+}
+
+.guide-card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.guide-card__tag {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.guide-card__title {
+  font-size: 1.12rem;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  color: var(--text);
+}
+
+.guide-card__body {
+  font-size: var(--fs-sm);
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+.guide-card__more {
+  margin-top: auto;
+  padding-top: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--text-3);
+}
+
+.guide-card:hover .guide-card__more {
+  color: var(--accent);
+}
+
+/* ===== Product pointer =================================================== */
+.guide-cta {
+  margin-top: clamp(2.25rem, 4vw, 3rem);
+  padding: 1.4rem 1.5rem;
+  border: 1px solid var(--accent-line);
+  border-radius: var(--radius);
+  background: var(--accent-soft);
+}
+
+.guide-cta__title {
+  margin-bottom: 0.45rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+
+.guide-cta p {
+  color: var(--text-2);
+  font-size: var(--fs-sm);
+  line-height: 1.65;
+}
+
+.guide-cta__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1rem;
+}
+
+.guide-cta__actions .chip {
+  background: var(--surface-solid);
+}
+
+/* ===== Small print ======================================================= */
+.guide-note {
+  margin-top: 1.25rem;
+  font-size: var(--fs-xs);
+  line-height: 1.65;
+  color: var(--text-3);
+}
+
+.guide-note a {
+  color: var(--text-2);
+}
+
+/* An honest label for the one commercial thing on the page. The AdSense units
+   themselves carry Google's own label; this sentence explains the arrangement
+   once, in the footer, rather than pretending the page has no advertising. */
+.guide-disclosure {
+  margin-top: 0.85rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--border);
+  font-size: var(--fs-xs);
+  line-height: 1.65;
+  color: var(--text-3);
+}
+
+/* ===== Wider lists inside prose ========================================== */
+.prose .guide-steps {
+  counter-reset: step;
+  padding-left: 0;
+  list-style: none;
+}
+
+.prose .guide-steps > li {
+  position: relative;
+  padding-left: 2.1rem;
+  counter-increment: step;
+}
+
+.prose .guide-steps > li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: 0.05rem;
+  display: grid;
+  place-items: center;
+  width: 1.45rem;
+  height: 1.45rem;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+}
+
+/* legal.css draws a decorative dash before every list item; a numbered step
+   already carries its own marker, and two would be one too many. */
+.prose .guide-steps > li::after {
+  content: none;
+}
+
+/* ===== Print ============================================================= */
+@media print {
+  .guide-cta,
+  .guide-card__more,
+  .guide-disclosure {
+    display: none;
+  }
+
+  .guide-card {
+    break-inside: avoid;
+    border-color: #bbb;
+    background: none;
+  }
+}

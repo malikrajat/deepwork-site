@@ -82,7 +82,7 @@
 
     <div class="footer__bottom">
       <span>© {{ year }} {{ site.name }} · v{{ site.version }} · {{ sourceLabel }}</span>
-      <span>Free to use. No account, no ads, no upsell.</span>
+      <span>Free to use. No account, no upsell. Advertising pays for the hosting.</span>
       <span>
         Built by
         <a [href]="site.authorUrl" target="_blank" rel="noopener">{{ site.author }}</a>
@@ -93,6 +93,9 @@
       @for (link of legal; track link.href) {
         <a [href]="link.href">{{ link.label }}</a>
       }
+      <button class="footer__legal-btn" type="button" (click)="openCookieSettings()">
+        Cookie settings
+      </button>
     </nav>
 
     <div class="footer__stats">

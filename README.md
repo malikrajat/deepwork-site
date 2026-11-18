@@ -52,7 +52,7 @@ Everything else:
 npm run format            # Biome over TS/JSON/scripts, then Prettier over HTML/CSS
 npm run format:check      # what CI runs
 npm run lint              # Biome lint
-npm run audit             # drive the BUILT site in a browser and assert 145 things
+npm run audit             # drive the BUILT site in a browser and assert 500 things
 npm run llms              # regenerate public/llms-full.txt from the rendered page
 npm run shots             # re-capture the app screenshots
 npm run og                # regenerate the social preview card
@@ -68,7 +68,7 @@ npx playwright install chromium
 
 ## What is on the page
 
-Twenty-four sections, in the order they are argued. The `id` is the anchor.
+Twenty-five sections, in the order they are argued. The `id` is the anchor.
 
 | #   | `id`          | Section                                                      |
 | --- | ------------- | ------------------------------------------------------------ |
@@ -91,28 +91,31 @@ Twenty-four sections, in the order they are argued. The `id` is the anchor.
 | 17  | `devices`     | Every screen — layouts, touch, keyboard, install modes        |
 | 18  | `how`         | How it works — four steps                                     |
 | 19  | `learn`       | **Learn the method** — what a Pomodoro is, how to plan a day  |
-| 20  | `about`       | About the maker — the person, the day job, the open source    |
-| 21  | `why`         | Why DeepWork — the strengths                                 |
-| 22  | `compare`     | How it compares — ten moments, one honest table               |
-| 23  | `get-started` | Get started — browser, desktop, install as an app             |
-| 24  | `faq`         | Common questions                                              |
-| 25  | —             | Footer                                                        |
+| 20  | `guides`      | **Guides** — the eight written pages, and the way in          |
+| 21  | `about`       | About the maker — the person, the day job, the open source    |
+| 22  | `why`         | Why DeepWork — the strengths                                 |
+| 23  | `compare`     | How it compares — ten moments, one honest table               |
+| 24  | `get-started` | Get started — browser, desktop, install as an app             |
+| 25  | `faq`         | Common questions                                              |
+| 26  | —             | Footer                                                        |
 
-Section 19 is the one that earns traffic rather than describing a product. Everything else answers
-"what does DeepWork do?"; `learn` answers "what is the Pomodoro Technique?", which is what somebody
-types into a search engine *before* they have heard of this app. Sections 3, 9, 13 and 16 are the
-3.0 story: what changed, the new report, the new reminder and the new quiet controls.
+Section 19 is the one that introduces the method. Section 20 is the bridge to the eight standalone
+guides under `/guides/`, which are the pages that earn search traffic rather than describe a
+product: everything else answers "what does DeepWork do?", while the guides answer "what is the
+Pomodoro Technique?", "how long should a session be?" and "where should my data live?" — questions
+somebody types into a search engine *before* they have heard of this app. Sections 3, 9, 13 and 16
+are the 3.0 story: what changed, the new report, the new reminder and the new quiet controls.
 
-Section 20 is the only one about a person. The biography is the author's own, read from his
+Section 21 is the only one about a person. The biography is the author's own, read from his
 portfolio and checked against his public GitHub and npm profiles, and it carries no availability
 badge or "open to work" status — for the same reason the page quotes no figure it cannot show: a
 claim that survives being checked is worth more than a stronger one that does not.
 
-## The three documents beside the page
+## The four documents and the guides
 
-`/privacy/`, `/terms/` and `/contact/` are listed in the footer and reachable by anyone — there is
-no account to have. They are **static HTML files in `public/`**, not Angular routes, and that is a
-consequence of two constraints rather than a preference:
+`/privacy/`, `/cookies/`, `/terms/` and `/contact/` are listed in the footer and reachable by
+anyone — there is no account to have. They are **static HTML files in `public/`**, not Angular
+routes, and that is a consequence of two constraints rather than a preference:
 
 - Cloudflare Pages answers a path it does not know with `public/404.html` **and a 404 status**, so a
   legal notice reached through the client router would be served as "not found";
@@ -120,11 +123,11 @@ consequence of two constraints rather than a preference:
   construction, and now true of the front page as well, because the build prerenders it.
 
 Each is a self-contained document sharing `public/legal/legal.css` and `public/legal/legal.js` —
-the theme toggle, the copy-address button and the contact form. They read the same
-`deepwork-site-theme` key as the page, so a theme chosen on one applies to the other, and they send
-**no** pageview: the visit counter is on the front page and the web app only. `tools/verify-site.cjs`
-loads all three, follows every link on them, and asserts that the date printed on each matches
-`LEGAL_UPDATED` in `core/site.ts`.
+the theme toggle, the copy-address button, the cookie-settings control and the contact form. They
+read the same `deepwork-site-theme` key as the page, so a theme chosen on one applies to the other,
+and they send **no** pageview: the visit counter is on the front page and the web app only.
+`tools/verify-site.cjs` loads all four, follows every link on them, and asserts that the date
+printed on each matches `LEGAL_UPDATED` in `core/site.ts`.
 
 The contact form posts to **Web3Forms**, which forwards the message to
 `contact@rajatmalik.dev`. `WEB3FORMS_ACCESS_KEY` lives in the tracked **`.env`**, and
@@ -155,14 +158,41 @@ harmless.
 
 ---
 
+## The guides
+
+Eight guides live under `/guides/`, with an index at `/guides/`. They are the part of the site that
+is not about the product: what the Pomodoro Technique is, how long a session should be, how to plan
+a day, why reminders fail, how to run a weekly review, what local-first software means, and how to
+choose a timer. The index names the whole set; `GUIDES` in `core/site.ts` is the one list, and the
+home page, the sitemap and the audit all read it.
+
+They are **static HTML files**, like the legal documents, and share `public/legal/legal.css` for the
+tokens, masthead, prose and tables, plus `public/content/content.css` for the article cards, byline
+and product box. That keeps them readable with JavaScript off, served with a 200, and free of the
+Angular bundle. Each page carries a canonical URL, a unique title and description, `Article` and
+`BreadcrumbList` structured data, a printed author byline and a real date.
+
+Two rules keep them honest, and both are enforced rather than intended:
+
+- **No invented findings.** The method is described as a convention with mechanics, not as a
+  scientific result. Where a claim would need evidence the site does not have, the guide says so.
+- **No sponsored content.** There are no affiliate links and no paid placements. Every guide
+  discloses the advertising in its footer, and `/about/` states the same policy.
+
+`GUIDES_UPDATED` in `core/site.ts` is the date the set was published or last edited; each guide's
+`dateModified` and printed date must agree with it.
+
+---
+
 ## Architecture decisions, and why
 
 Each of these is a decision with a reason, and most of them were made the other way first.
 
-- **One page, no router.** One page needs no routing. Leaving the router out keeps the bundle
-  smaller, and there is no SPA fallback to need: Cloudflare Pages serves the branded `404.html` for a
-  path that does not exist, which is a page that says so rather than the app pretending to load.
-  The three documents beside the page — `/privacy/`, `/terms/` and `/contact/` — are static files
+- **No router. One Angular page, plus static documents and guides.** The product page needs no
+  routing, and leaving the router out keeps the bundle smaller. There is no SPA fallback to need:
+  Cloudflare Pages serves the branded `404.html` for a path that does not exist, which is a page
+  that says so rather than the app pretending to load. The four documents and the eight guides —
+  `/privacy/`, `/cookies/`, `/terms/`, `/contact/`, `/about/` and `/guides/…` — are static files
   for the same reason, and are described above.
 - **One stylesheet, no component `styles`.** Component styles are injected as separate `<style>`
   elements at runtime; a single critical-inlined sheet paints the first screen on the first frame,
@@ -234,9 +264,10 @@ because `llms-full.txt` is what a reader quotes.
 
 | File                       | Purpose                                                                                                                                                                                                                                    |
 | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `robots.txt`               | Allows everything, and names **each AI crawler explicitly** (GPTBot, OAI-SearchBot, ClaudeBot, Claude-User, PerplexityBot, Google-Extended, Applebot-Extended and more). Several treat a wildcard group more cautiously than a named rule. |
-| `sitemap.xml`              | The canonical URL plus image entries for six screenshots, with a real `lastmod`.                                                                                                                                                          |
-| `llms.txt`                 | The [llms.txt](https://llmstxt.org) convention: a curated index — what the product is, the verifiable facts, a link to every section.                                                                                                      |
+| `robots.txt`               | Allows everything, and names **each AI crawler explicitly** (GPTBot, OAI-SearchBot, ClaudeBot, Claude-User, PerplexityBot, Google-Extended, Applebot-Extended and more). Several treat a wildcard group more cautiously than a named rule. The advertising crawlers are named for the same reason. |
+| `ads.txt`                  | Authorises Google AdSense, and no other seller, for this domain. The audit checks it against `ADSENSE_CLIENT`. |
+| `sitemap.xml`              | Every indexable URL — the page, the guides, the four documents — plus image entries for the screenshots, with a real `lastmod`.                                                                                                             |
+| `llms.txt`                 | The [llms.txt](https://llmstxt.org) convention: a curated index — what the product is, the verifiable facts, a link to every section and every guide.                                                                                        |
 | `llms-full.txt`            | The **whole page** as Markdown, generated from the rendered page by `npm run llms`. This is what a crawler that runs no JavaScript actually reads.                                                                                          |
 | `site.webmanifest`         | Install metadata: shortcuts to `#learn` and `#get-started`, and screenshots for a richer install prompt.                                                                                                                                  |
 | `404.html`                 | A real, branded 404 with `noindex`, so an error page never ends up in a search result.                                                                                                                                                    |
@@ -244,14 +275,84 @@ because `llms-full.txt` is what a reader quotes.
 
 **Metadata.** The title leads with what people search for — *"DeepWork — Free Pomodoro Timer, Task
 Manager & Habits"*, 53 characters — rather than with the slogan. `max-image-preview:large` and
-`max-snippet:-1` are set, so a result shows the full snippet and a large image. Structured data is
-one connected `@graph`: `WebSite`, `Person`, `SoftwareApplication` (real `softwareVersion`,
-`installUrl`, `downloadUrl`, a 14-item `featureList`) and `FAQPage` whose answers are the same words
-a visitor reads.
+`max-snippet:-1` are set, so a result shows the full snippet and a large image. Every guide has its
+own title and description, a canonical URL, an author byline and `Article` + `BreadcrumbList`
+structured data; the audit fails if two pages share a title or a description. The home page's
+structured data is one connected `@graph`: `WebSite`, `Person`, `SoftwareApplication` (real
+`softwareVersion`, `installUrl`, `downloadUrl`, a 14-item `featureList`) and `FAQPage` whose answers
+are the same words a visitor reads.
 
 **What is deliberately not done.** No keyword stuffing, no hidden text, no doorway pages, no fake
 reviews, and no `aggregateRating` — there are no ratings to average, and inventing one is dishonest
 and against Google's policy. The audit fails if the string ever appears as a property.
+
+---
+
+## Advertising and AdSense
+
+The guides and the front page carry Google AdSense. The DeepWork application carries no
+advertising, and neither do `/privacy/`, `/cookies/`, `/terms/` or `/contact/` — the audit enforces
+that line rather than the intention.
+
+Everything that can live in this repository does:
+
+| What | Where | Why it is there |
+| --- | --- | --- |
+| Publisher id | `ADSENSE_CLIENT` in `core/site.ts`, repeated in `src/index.html`, eight guides and `public/ads.txt` | A static site has no includes; the audit reads the constant and fails if any copy disagrees |
+| Seller authorisation | `public/ads.txt` | One `google.com` line with the same publisher id and Google's certification authority id |
+| Ad script | `src/index.html` and every guide | Loaded with `async` and `crossorigin`; absent from the documents |
+| Consent defaults | `public/content/consent.js` | Consent Mode v2: denied in the EEA, UK, Switzerland and Brazil, granted elsewhere, before GTM and AdSense load |
+| Opt-out surface | `/cookies/` and the footer's **Cookie settings** control | Names every cookie and web beacon, and opens Google's revocation screen where it is available |
+| Disclosure | Every guide's footer, `/about/`, `/privacy/`, `/terms/`, `/llms.txt` | Says what advertising is present and that it has no influence on the writing |
+| Crawler access | `robots.txt` | `Mediapartners-Google`, `AdsBot-Google` and `AdsBot-Google-Mobile` allowed explicitly |
+| Transport policy | `public/_headers` | The ad, consent and measurement hosts are in the CSP source lists |
+| Policy guards | `tools/verify-site.cjs` | Ad pages need real text, no iframes and no incentive language; the error page and legal documents carry no ad script; the About page states the no-self-click commitment |
+
+The rules the site is checked against, and where each one lands:
+
+| AdSense / Publisher policy | What this repository does |
+| --- | --- |
+| Ads only on content-rich screens | Ad script only on the home page and the eight guides; each guide is measured at 600+ words and the home page at 3,000+ |
+| No ads on dead-end, error or legal screens | `/privacy/`, `/cookies/`, `/terms/`, `/contact/` and `404.html` load no ad script; the audit asserts it |
+| No replicated or automatically generated content | Eight original guides, a curated index, no syndicated text and no embedded third-party media |
+| No request or reward to click | No incentive language anywhere; the audit scans every ad-bearing page for the phrases the policy names |
+| Ads must not imitate navigation or content | Auto ads place and label the units; no hand-styled ad containers and no iframes |
+| Privacy disclosure | `/privacy/` names cookies, web beacons, IP addresses, the DoubleClick cookie and the opt-outs, and links Google's data-use and consent policies |
+| Consent (GDPR / UK / Swiss FADP / LGPD) | Consent Mode v2 defaults deny storage in those regions before either tag loads; the certified messages live in the AdSense dashboard |
+| Authorised inventory | `ads.txt` names the same publisher id as `site.ts`; the audit checks the exact seller line |
+| No invalid traffic | No paid-to-click, autosurf, pop-up or redirect traffic; no ads in the app; the About page records the no-self-click commitment |
+
+Three things are configured in the AdSense dashboard, not here, and are required before ads serve
+properly:
+
+1. **Site verification.** The home page ships both the AdSense script and
+   `<meta name="google-adsense-account" content="ca-pub-…">`; either path lets AdSense verify the
+   domain. Confirm the site is listed and verified in AdSense → Sites.
+2. **Privacy & messaging.** Publish the certified **GDPR** message for the EEA, UK and Switzerland
+   **and the LGPD** message for Brazil. `consent.js` sets those defaults to denied; the messages are
+   what turn them on when a visitor agrees. Without them, ads are limited in those regions — and a
+   hand-built banner is not a substitute, because Google requires a certified CMP.
+3. **Auto ads.** No manual ad-slot ids are committed, because a slot id is created in the dashboard
+   and would be a guess here. Enable Auto ads for the site (AdSense → Ads → By site) with
+   **In-page only**; leave **Anchor** and **Vignette** off. A sticky anchor can overlay navigation,
+   and an interstitial-style vignette is exactly what the "ads interfering" and Better Ads Standards
+   rules are about. Use page exclusions if the front page should stay ad-free.
+
+**Do not** click your own ads, ask anyone to click them, place ads on error pages, or add fake
+reviews or ratings to earn approval. The site publishes no ratings and no testimonials, and the
+audit fails if an `aggregateRating` or `review` property appears in any page's structured data.
+Unsuitable ads can be reported from `/about/` (mailto with the page and advertiser) and blocked in
+AdSense → Brand safety.
+
+`public/ads.txt` must be reachable at the domain root after a deploy:
+
+```bash
+curl -s https://deepwork.rajatmalik.dev/ads.txt
+curl -sI https://deepwork.rajatmalik.dev/guides/pomodoro-technique/ | grep -i content-security-policy
+```
+
+`npm run audit` cannot see `_headers` (the local server does not emulate Cloudflare's matcher), so
+the CSP is verified on a deployed response, not by reading the file back.
 
 ---
 
@@ -266,7 +367,12 @@ split by effort.
   about 130 kB of transfer: a 43 kB HTML document and 85 kB of JavaScript and CSS.
 - Structured data, a canonical URL, a generated social card and image-sitemap entries.
 - Plain-text versions for crawlers and language models, kept honest by a CI check.
-- An "informational" section that targets the question people ask *before* they want a product.
+- An "informational" section that targets the question people ask *before* they want a product,
+  now backed by eight standalone guides under `/guides/`, each with its own URL, byline, date and
+  structured data.
+- Advertising that is disclosed everywhere it appears: one publisher id in `ADSENSE_CLIENT`,
+  `ads.txt`, a consent layer, a cookies page, a privacy policy that names Google, web beacons and
+  the DoubleClick cookie, and an audit that fails if the copies disagree.
 - An automated audit, so the page cannot silently rot.
 - A first-party visitor count. One cookie-less pageview per load, sent by the page itself to
   GoatCounter — no tracker script for that count, no IP address is stored, and Do Not Track or
@@ -343,7 +449,7 @@ because its close button also dismisses a completion toast.
 ## Checks
 
 `npm run audit` does not test anything in the abstract — it drives the **built site** in Chromium
-and asserts 145 specific things:
+and asserts 500 specific things:
 
 - crawler files exist and say the right things, and no invented rating is claimed;
 - the built `index.html` is not an empty shell, and a browser with **JavaScript disabled** renders
@@ -357,9 +463,18 @@ and asserts 145 specific things:
 - the theme toggle flips the document and the FAQ opens without scripting;
 - the home page's third-party requests are confined to the disclosed Google tag hosts, so a second
   tracker fails rather than shipping quietly;
-- the three documents are served with a 200 rather than the 404 page, render without the
+- the four documents are served with a 200 rather than the 404 page, render without the
   application bundle, keep the theme choice, and every link and in-page anchor on them resolves;
   none of them requests a third-party origin except the contact page's hCaptcha;
+- the eleven content pages (`/guides/`, eight guides, `/about/`, `/cookies/`) are served with a 200,
+  render one `h1`, resolve every link and anchor, keep the theme, offer the cookie-settings control
+  and have no horizontal overflow at 360px and 1440px;
+- every page has a unique title and description; every guide has a canonical URL, structured data,
+  the consent defaults and the same AdSense client id as `site.ts`; the guides disclose the
+  advertising and the hub, About and Cookies pages carry none;
+- `ads.txt` authorises exactly one seller, with the publisher id in `site.ts`; `robots.txt` names
+  the advertising crawlers; the privacy policy names the advertising, the DoubleClick cookie and
+  both opt-out routes;
 - the contact form asks for the fields it says it does, mounts the captcha the service requires,
   and its delivery sentence matches whether a key is configured;
 - `llms-full.txt` really contains the page, including card body text.
@@ -432,11 +547,12 @@ it is never served. Four headers are set on every response, and two more because
 | `Referrer-Policy` | `strict-origin-when-cross-origin` | GoatCounter still receives the referring origin, never the full path of the page a visitor came from. |
 
 The policy is source-listed, and every host in it was taken from a request the built site actually
-made — the Google tag, the GA4 property it configures, the GoatCounter origin in
-`src/app/core/analytics.ts`, and on `/contact/` alone Web3Forms and hCaptcha. One of them,
-`https://www.google.com`, was found by serving the build under the policy and reading the one
-violation it produced; GA4 posts `g/collect` there as well as to `www.google-analytics.com`, and no
-amount of reading the HTML would have shown that.
+made — the Google tag, the GA4 property it configures, the AdSense script and the advertising and
+consent hosts Google requests, the GoatCounter origin in `src/app/core/analytics.ts`, and on
+`/contact/` alone Web3Forms and hCaptcha. One of them, `https://www.google.com`, was found by
+serving the build under the policy and reading the one violation it produced; GA4 posts
+`g/collect` there as well as to `www.google-analytics.com`, and no amount of reading the HTML would
+have shown that.
 
 Three details in that file are easy to undo by accident:
 
@@ -484,7 +600,8 @@ every screenshot.
 ## Browser support
 
 **Baseline: Widely available.** No polyfills. The only third-party runtime scripts are the
-disclosed Google tag on the home page and hCaptcha on the contact page.
+disclosed Google tag and AdSense on the home page and the guides, and hCaptcha on the contact page.
+The four legal documents load none of them.
 
 Two features degrade rather than being assumed: `color-mix()` (where unsupported, the declaration is
 dropped and a solid background shows through) and `backdrop-filter` (decoration over an

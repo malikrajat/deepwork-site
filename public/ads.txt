@@ -1,0 +1,11 @@
+# ads.txt for https://deepwork.rajatmalik.dev/
+#
+# Google AdSense is the only advertising system this site authorises. The
+# publisher id below must match `ADSENSE_CLIENT` in `src/app/core/site.ts`
+# (without the `ca-` prefix); `npm run audit` reads that constant and fails if
+# this file disagrees, because an ads.txt that names a different account is
+# worse than none — it authorises the wrong seller.
+#
+# The trailing value is Google's certification authority id, required by the
+# specification, not a secret.
+google.com, pub-4991682021863699, DIRECT, f08c47fec0942fa0

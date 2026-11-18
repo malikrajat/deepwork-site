@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  One page, so one URL — but the images are listed too. Google Images and the
+  The product page, the eight guides, the guide index and the four documents
+  beside them. The images are listed on the home page too: Google Images and the
   image results inside AI answers both read the image extension, and every
   screenshot here is of the real application, which makes them worth submitting.
 
@@ -14,7 +15,7 @@
 >
   <url>
     <loc>https://deepwork.rajatmalik.dev/</loc>
-    <lastmod>2026-11-08</lastmod>
+    <lastmod>2026-11-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
 
@@ -104,20 +105,91 @@
   -->
   <url>
     <loc>https://deepwork.rajatmalik.dev/privacy/</loc>
-    <lastmod>2026-11-08</lastmod>
+    <lastmod>2026-11-17</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://deepwork.rajatmalik.dev/terms/</loc>
-    <lastmod>2026-11-08</lastmod>
+    <lastmod>2026-11-17</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://deepwork.rajatmalik.dev/contact/</loc>
-    <lastmod>2026-11-08</lastmod>
+    <lastmod>2026-11-17</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://deepwork.rajatmalik.dev/cookies/</loc>
+    <lastmod>2026-11-17</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
+
+  <!--
+    The guides. They were published together, so they share a date; a guide
+    revised on its own gets its own `lastmod` when its text actually changes.
+  -->
+  <url>
+    <loc>https://deepwork.rajatmalik.dev/guides/</loc>
+    <lastmod>2026-11-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://deepwork.rajatmalik.dev/guides/pomodoro-technique/</loc>
+    <lastmod>2026-11-17</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://deepwork.rajatmalik.dev/guides/pomodoro-length/</loc>
+    <lastmod>2026-11-17</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://deepwork.rajatmalik.dev/guides/plan-your-day-in-focus-blocks/</loc>
+    <lastmod>2026-11-17</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://deepwork.rajatmalik.dev/guides/time-blocking-vs-time-tracking/</loc>
+    <lastmod>2026-11-17</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://deepwork.rajatmalik.dev/guides/why-reminders-fail/</loc>
+    <lastmod>2026-11-17</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://deepwork.rajatmalik.dev/guides/weekly-review/</loc>
+    <lastmod>2026-11-17</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://deepwork.rajatmalik.dev/guides/local-first-software/</loc>
+    <lastmod>2026-11-17</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://deepwork.rajatmalik.dev/guides/choose-a-focus-timer/</loc>
+    <lastmod>2026-11-17</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://deepwork.rajatmalik.dev/about/</loc>
+    <lastmod>2026-11-17</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
   </url>
 </urlset>

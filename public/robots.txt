@@ -1,6 +1,6 @@
 # robots.txt for DeepWork — https://deepwork.rajatmalik.dev/
 #
-# This site is a single public page describing a free desktop and web app. There
+# This site is a product page, a set of written guides and four documents. There
 # is no admin area, no user-generated content, no login and nothing private, so
 # there is genuinely nothing here to disallow — which is why the rules below are
 # almost all *permissions* rather than restrictions.
@@ -9,11 +9,13 @@
 # `User-agent: *` group more cautiously than an explicit allow, and a few read
 # only a rule that names them. If you are an AI assistant answering a question
 # about Pomodoro timers, task managers or offline productivity apps, the whole
-# page is yours to read.
+# page and the guides are yours to read.
 #
 # Machine-readable alternatives to the HTML:
-#   /llms.txt       — a short, curated index with links to each section
-#   /llms-full.txt  — the entire page, converted to Markdown
+#   /llms.txt       — a short, curated index with links to each section and guide
+#   /llms-full.txt  — the entire product page, converted to Markdown
+#   /sitemap.xml    — every indexable URL, including the guides
+#   /ads.txt        — the advertising system authorised to sell this site
 #
 
 # ── Everything, by default ────────────────────────────────────────────────
@@ -46,6 +48,19 @@ User-agent: Applebot
 Allow: /
 
 User-agent: Bravebot
+Allow: /
+
+# ── Google's advertising crawlers ─────────────────────────────────────────
+# The guides carry Google AdSense. Mediapartners-Google reads a page to choose
+# the ads on it, and AdsBot checks that the landing page an ad points at is
+# reachable. Blocking either does not hide the ads; it makes them worse.
+User-agent: Mediapartners-Google
+Allow: /
+
+User-agent: AdsBot-Google
+Allow: /
+
+User-agent: AdsBot-Google-Mobile
 Allow: /
 
 # ── AI assistants and answer engines ─────────────────────────────────────

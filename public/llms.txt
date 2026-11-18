@@ -71,7 +71,7 @@ Downloads: https://github.com/malikrajat/deepwork/releases/latest
 ## Insight and privacy
 
 - [Insights](https://deepwork.rajatmalik.dev/#insights): a 12-week focus heatmap, focus by hour of day with the peak window called out, average focus by weekday, task flow (created against closed), completion by quadrant, habit consistency, journalling statistics, and average session length with the share of interrupted sessions. Every chart is paired with a plain-language reading from the app's offline AI, which runs on the user's machine over their own rows and sends nothing anywhere.
-- [Your data](https://deepwork.rajatmalik.dev/#your-data): local SQLite storage with a backup before every migration and a read-only preflight check, no accounts, no cloud, five rolling log files the user can open and copy, a full JSON backup and CSV export as real exits, and fonts that ship with the app so it renders identically offline. The hosted web app counts visits (disclosed, switchable off, never in the desktop build) and this page counts its own the same way; the front page also loads a disclosed Google Analytics tag.
+- [Your data](https://deepwork.rajatmalik.dev/#your-data): local SQLite storage with a backup before every migration and a read-only preflight check, no accounts, no cloud, five rolling log files the user can open and copy, a full JSON backup and CSV export as real exits, and fonts that ship with the app so it renders identically offline. The hosted web app counts visits (disclosed, switchable off, never in the desktop build) and this page counts its own the same way; the front page and the guides also load a disclosed Google Analytics tag and carry disclosed Google AdSense advertising. The app itself carries no advertising.
 - [Desktop app](https://deepwork.rajatmalik.dev/#desktop): the desktop build adds a tray icon whose menu can add a task, open Settings and pause for 5 to 30 minutes; an always-on-top window that re-asserts itself; a 136×76 draggable floating mini widget with the same countdown ring; a first-launch question about starting with the computer; and an honest taskbar-pin reminder that asks Windows whether pinning is allowed. Updates download and start the right installer for the platform, Later is a twelve-hour snooze, and Skip this version ends that release.
 - [Common questions](https://deepwork.rajatmalik.dev/#faq): free, offline, where the data lives, why there is no sync, platform support, team use, offline AI, Time by Task, standing reminders, pause versus mute versus focus mode, the visit counter and database recovery.
 
@@ -79,14 +79,50 @@ Downloads: https://github.com/malikrajat/deepwork/releases/latest
 
 - [About the maker](https://deepwork.rajatmalik.dev/#about): Rajat Malik, a frontend architect and engineering lead in Gurgaon, India. Senior Lead Software Engineer at Siemens since 2020, and at Siemens Energy and HCL before that. Fifteen years of large web products — legacy Angular and React modernisation, micro-frontend boundaries, design systems, Core Web Vitals and WCAG 2.2 — for enterprise, energy, telecom and finance teams. Outside the day job he publishes MIT-licensed npm libraries, browser and editor extensions and two desktop apps (DeepWork and JsSandbox), writes The Angular Insider newsletter, and speaks on web performance and frontend architecture. DeepWork is his own project, built to the same standards. This section states what he does; it carries no availability status.
 
+## Guides
+
+Eight written guides sit beside the product page. They answer the questions people ask before
+they want a product, and each one stands alone:
+
+- [Guides index](https://deepwork.rajatmalik.dev/guides/): what the series covers and how it is
+  written. Original writing by the app's author, no sponsored posts, no affiliate links.
+- [The Pomodoro Technique, explained properly](https://deepwork.rajatmalik.dev/guides/pomodoro-technique/):
+  the five steps, the mechanics that make the shape work, the habits that break it, and what to
+  change first.
+- [How long should a Pomodoro be?](https://deepwork.rajatmalik.dev/guides/pomodoro-length/):
+  why 25 minutes is a default rather than a rule, three signals it does not fit, and how to test a
+  different length for a week.
+- [How to plan a day in focus blocks](https://deepwork.rajatmalik.dev/guides/plan-your-day-in-focus-blocks/):
+  choosing the work, estimating in sessions rather than hours, placing breaks first and leaving
+  room for the day going wrong.
+- [Time blocking vs time tracking](https://deepwork.rajatmalik.dev/guides/time-blocking-vs-time-tracking/):
+  what each one answers, where each one fails, and why the gap between the plan and the record is
+  the useful number.
+- [Why reminders get ignored](https://deepwork.rajatmalik.dev/guides/why-reminders-fail/):
+  the three failure modes, what a reminder needs, and the interruption problem.
+- [A weekly review you can do in twenty minutes](https://deepwork.rajatmalik.dev/guides/weekly-review/):
+  four questions, answered from your own week, that produce one change worth making.
+- [What local-first software means for your work](https://deepwork.rajatmalik.dev/guides/local-first-software/):
+  the seven ideals, the trade a local-only app makes, six questions to ask a tool, and the limits
+  of the approach.
+- [How to choose a focus timer app](https://deepwork.rajatmalik.dev/guides/choose-a-focus-timer/):
+  seven questions, including what happens at zero and whether you can take your data with you.
+
 ## Optional
 
 - [Privacy policy](https://deepwork.rajatmalik.dev/privacy/): what is and is not collected. No
-  account, no advertising. GoatCounter counts one pageview on the home page and in the web app
-  (path, title, referrer, screen width, query string; no cookie, no stored IP) and Do Not Track or
-  Global Privacy Control is honoured. The home page also loads Google Tag Manager and Google
-  Analytics, which set Google's own cookies and are described in full. The app's data stays on the
-  user's machine. The privacy, terms and contact documents are not counted at all.
+  account; the app's data stays on your machine. GoatCounter counts one pageview on the home page
+  and in the web app (path, title, referrer, screen width, query string; no cookie, no stored IP)
+  and Do Not Track or Global Privacy Control is honoured. The home page and the guides load Google
+  Tag Manager and Google Analytics, and Google AdSense serves advertising on the home page and the
+  guides; both use Google's own cookies and are described in full. The legal documents load
+  neither and are not counted at all.
+- [Cookies and choices](https://deepwork.rajatmalik.dev/cookies/): every cookie and storage key the
+  site can use — Google Analytics, the AdSense advertising cookies, hCaptcha on the contact page —
+  plus consent in the EEA, UK and Switzerland, and four ways to change a choice.
+- [About DeepWork and this site](https://deepwork.rajatmalik.dev/about/): who makes the app and
+  writes the guides, how the claims are checked, how the writing is paid for, and how to report a
+  correction. No availability badge and no invented reviews.
 - [Terms of use](https://deepwork.rajatmalik.dev/terms/): the app is MIT-licensed; this site's text
   and design are © Rajat Malik. Free with no account and no service level, provided as it is, your
   backups are your responsibility, no medical advice, Indian law and the courts at Gurgaon.
@@ -95,6 +131,8 @@ Downloads: https://github.com/malikrajat/deepwork/releases/latest
   bugs. No phone number is published.
 - [Full page as Markdown](https://deepwork.rajatmalik.dev/llms-full.txt): the entire site in one plain-text file.
 - [Licence text](https://github.com/malikrajat/deepwork/blob/main/LICENSE): MIT.
+- [ads.txt](https://deepwork.rajatmalik.dev/ads.txt): the advertising system authorised to sell
+  this site — Google AdSense only.
 - [Changelog](https://github.com/malikrajat/deepwork/blob/main/CHANGELOG.md): the written history of every release.
 - [Report an issue](https://github.com/malikrajat/deepwork/issues/new): bug reports and feature requests.
 - [Contact](mailto:contact@rajatmalik.dev): general enquiries about the project and this site.
