@@ -65,6 +65,10 @@ Two features are used progressively, which means the fallback is "less pretty", 
   background shows through. All text keeps its contrast either way.
 - `backdrop-filter` — decoration layered on an already-readable surface; also prefixed with
   `-webkit-` for Safari.
+- `scrollbar-color` — offered only to engines that do not understand `::-webkit-scrollbar`, so
+  Chromium keeps the thin custom bar and Firefox gets the same colours at its own width.
+- `closedby="any"` on the stats `<dialog>` — click-outside-to-close where it is supported; Escape,
+  the close button and the browser's own focus return work everywhere.
 
 Everything else is Baseline widely available today: custom properties, `clamp()`, grid,
 `text-wrap: balance`, `requestAnimationFrame`, `svh` units, `env(safe-area-inset-*)`.

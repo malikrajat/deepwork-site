@@ -3,7 +3,7 @@
     <div class="section__head section__head--center" dwReveal>
       <p class="eyebrow">The product</p>
       <h2 class="h2 section__title">One window for the whole working day</h2>
-      <p class="lead section__lead" style="margin-inline: auto">
+      <p class="lead section__lead">
         DeepWork is not a timer with a task list bolted on. It is a single window where the session
         you are running, the work you promised yourself, the day you planned and the progress you
         made all live in the same place.
@@ -30,7 +30,7 @@
       </div>
     </div>
 
-    <ul class="grid grid--4" style="margin-top: clamp(1.75rem, 3vw, 2.5rem)">
+    <ul class="grid grid--4 block-start--snug">
       @for (callout of callouts; track callout.title; let i = $index) {
         <li class="card card--edge" dwReveal [dwRevealDelay]="i * 70">
           <span class="card__icon" aria-hidden="true">{{ callout.glyph }}</span>

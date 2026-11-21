@@ -56,7 +56,7 @@
       </div>
     </div>
 
-    <ul class="grid grid--4" style="margin-top: clamp(2rem, 4vw, 3rem)">
+    <ul class="grid grid--4 block-start">
       @for (card of cards; track card.title; let i = $index) {
         <li class="card card--edge card--hover" dwReveal [dwRevealDelay]="i * 70">
           <span class="card__icon" aria-hidden="true">{{ card.glyph }}</span>

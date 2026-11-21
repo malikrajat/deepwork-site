@@ -51,11 +51,11 @@
       </div>
     </div>
 
-    <div class="grid grid--2" style="margin-top: clamp(2rem, 4vw, 3rem)">
+    <div class="grid grid--2 block-start">
       <article class="card card--edge" dwReveal>
         <p class="eyebrow">The visit count</p>
         <h3 class="card__title">The web app and this page count visits</h3>
-        <p class="card__body" style="margin-bottom: 1rem">
+        <p class="card__body">
           The app has no server of its own, so the web build uses GoatCounter — the same counter
           that runs on the author’s site. It exists so “is anybody using this?” has an answer
           without DeepWork running a backend.
@@ -68,7 +68,7 @@
             </li>
           }
         </ul>
-        <p class="card__body" style="margin-top: 1rem">
+        <p class="card__body">
           This page counts its own visits the same way, on its own GoatCounter site,
           <code>deepwork.goatcounter.com</code>, so the two never mix in a dashboard. It sends the
           address, the title, the referring site and the screen width; the page sends that beacon
@@ -76,7 +76,7 @@
           not to be tracked is not counted, and the Site stats button in the footer only asks
           GoatCounter for the totals back.
         </p>
-        <p class="card__body" style="margin-top: 1rem">
+        <p class="card__body">
           This page also loads Google Tag Manager and Google Analytics. That one is a third-party
           script: Google receives the page address, the referring site, the IP address and browser
           details, and sets its own cookies. The privacy policy spells out what it sends and how to
@@ -87,7 +87,7 @@
       <article class="card" dwReveal [dwRevealDelay]="90">
         <p class="eyebrow">Backups</p>
         <h3 class="card__title">The database is the only copy</h3>
-        <p class="card__body" style="margin-bottom: 1rem">
+        <p class="card__body">
           The one piece of state that exists nowhere else gets treated that way: checked before it
           is opened, copied before it is migrated, and never quietly replaced by an empty file that
           looks the same.
@@ -103,10 +103,10 @@
       </article>
     </div>
 
-    <div class="grid grid--2" style="margin-top: clamp(2rem, 4vw, 3rem)">
+    <div class="grid grid--2 block-start">
       <article class="card" dwReveal>
         <h3 class="card__title">Five log files you can actually open</h3>
-        <p class="card__body" style="margin-bottom: 1rem">
+        <p class="card__body">
           When something goes wrong on a machine nobody can sit in front of, the app has already
           written down what it was doing. Settings has one button that opens the folder and another
           that copies the last 300 lines with the environment they happened in.
@@ -116,7 +116,7 @@
             <li class="log-list__item mono">{{ line }}</li>
           }
         </ul>
-        <p class="card__body" style="margin-top: 1rem">
+        <p class="card__body">
           Each file rolls over at 512&nbsp;KB, keeps its five most recent archives, and can never
           grow past roughly 15&nbsp;MB. Identical lines inside two seconds are folded into one with
           a count, so a repeating fault cannot flood the file.
@@ -125,7 +125,7 @@
 
       <article class="card" dwReveal [dwRevealDelay]="90">
         <h3 class="card__title">Offline is the normal case</h3>
-        <p class="card__body" style="margin-bottom: 1rem">
+        <p class="card__body">
           The fonts travel with the app, the alert tones are synthesised rather than downloaded, and
           the database is a file on your disk. Nothing in the app needs the network to look like
           itself or to keep your records.

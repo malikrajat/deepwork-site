@@ -53,7 +53,7 @@ interface FooterColumn {
 export class Footer {
   private readonly document = inject(DOCUMENT);
   private readonly statsToggle = viewChild<ElementRef<HTMLButtonElement>>('statsToggle');
-  private readonly statsClose = viewChild<ElementRef<HTMLButtonElement>>('statsClose');
+  private readonly statsDialog = viewChild<ElementRef<HTMLDialogElement>>('statsDialog');
   private readonly counts = new Intl.NumberFormat();
 
   /** The panel's data, and whether it is open. Shared with the trigger below. */
@@ -101,16 +101,22 @@ export class Footer {
 
   constructor() {
     /*
-     * The dialog owns the viewport while it is open: the page behind it does not
-     * scroll and the close button takes focus, so a keyboard visitor is inside
-     * the thing that just appeared. Focus goes back to the trigger on close.
+     * The panel is a native `<dialog>` opened with `showModal()`, so the platform
+     * owns the focus trap, Escape, the backdrop and making the page behind it
+     * inert. This only keeps the signal and the element's open state in step, and
+     * holds the page still while it is open — a modal dialog does not stop the
+     * body scrolling on its own.
      */
     effect((onCleanup) => {
       const open = this.stats.isOpen();
       this.document.body.classList.toggle('stats-open', open);
       onCleanup(() => this.document.body.classList.remove('stats-open'));
 
-      if (open) this.statsClose()?.nativeElement.focus();
+      const dialog = this.statsDialog()?.nativeElement;
+      if (!dialog) return;
+
+      if (open && !dialog.open) dialog.showModal();
+      else if (!open && dialog.open) dialog.close();
     });
   }
 
@@ -119,11 +125,20 @@ export class Footer {
     this.stats.open();
   }
 
+  /**
+   * Closes the panel, however it was closed.
+   *
+   * `close` fires for the close button, Escape and a click outside, so the signal
+   * follows the element rather than the other way round. Focus is returned by the
+   * platform to whatever opened the dialog; the fallback below covers the case
+   * where it does not.
+   */
   closeStats(): void {
-    if (!this.stats.isOpen()) return;
+    if (this.stats.isOpen()) this.stats.close();
 
-    this.stats.close();
-    (this.lastFocused ?? this.statsToggle()?.nativeElement)?.focus();
+    if (this.document.activeElement === this.document.body) {
+      (this.lastFocused ?? this.statsToggle()?.nativeElement)?.focus();
+    }
   }
 
   /** Numbers in the visitor's own grouping, or an em dash before they arrive. */

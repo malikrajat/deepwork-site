@@ -591,11 +591,14 @@ failure than a revalidation request, and the host's default revalidation is corr
 ## Accessibility
 
 Semantic landmarks; one `h1`; a skip link that appears on focus; `:focus-visible` rings that are
-never removed; `<details>` for the FAQ so it works with no JavaScript and announces correctly;
-`prefers-reduced-motion: reduce` disables every entrance, drift and float while leaving all content
-in place; `forced-colors: active` re-maps the glass surfaces and the gradient text for Windows High
-Contrast; touch targets of at least 44px on the controls that matter; and descriptive `alt` text on
-every screenshot.
+never removed; `<details>` for the FAQ so it works with no JavaScript and announces correctly; the
+footer's stats panel is a native `<dialog>` opened with `showModal()`, so the focus trap, Escape,
+the backdrop and focus return to the trigger are the platform's rather than a script's;
+`prefers-reduced-motion` keeps every entrance, drift and float out of the static page by declaring
+them behind `no-preference`, and content is never hidden waiting for one; `prefers-contrast: more`
+strengthens the borders and the muted text; `forced-colors: active` re-maps the glass surfaces and
+the gradient text for Windows High Contrast; touch targets of at least 44px on the controls that
+matter; and descriptive `alt` text on every screenshot.
 
 ## Browser support
 

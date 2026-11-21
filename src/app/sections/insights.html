@@ -30,14 +30,14 @@
       </div>
     </div>
 
-    <div class="story" style="margin-top: clamp(2rem, 4vw, 3.5rem)">
+    <div class="story story--offset">
       <div class="story__body" dwReveal>
         <h3 class="h3">What the numbers say</h3>
-        <p class="lead" style="font-size: var(--fs-sm); margin-top: 0.75rem">
+        <p class="lead lead--sm">
           Charts are easy to look at and hard to read. So every chart is paired with a sentence
           about it, and the sentences are the point:
         </p>
-        <ul class="reading-list" style="margin-top: 1.25rem">
+        <ul class="reading-list">
           @for (reading of readings; track reading) {
             <li class="reading">{{ reading }}</li>
           }

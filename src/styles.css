@@ -85,6 +85,9 @@
   --accent-3: #ec4899;
   --accent-soft: rgba(139, 92, 246, 0.16);
   --accent-line: rgba(139, 92, 246, 0.36);
+  /* Selected text. Strong enough to be seen against the near-black page and
+     left light enough for the text on top of it to stay legible. */
+  --selection: rgba(139, 92, 246, 0.38);
   --gradient: linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%);
   --gradient-soft: linear-gradient(
     135deg,
@@ -168,6 +171,7 @@ html[data-theme='light'] {
   --accent-3: #db2777;
   --accent-soft: rgba(124, 58, 237, 0.12);
   --accent-line: rgba(124, 58, 237, 0.3);
+  --selection: rgba(124, 58, 237, 0.24);
   --gradient: linear-gradient(135deg, #7c3aed 0%, #0891b2 100%);
   --gradient-soft: linear-gradient(
     135deg,
@@ -198,14 +202,30 @@ html[data-theme='light'] {
   --glow: 0 0 70px rgba(124, 58, 237, 0.14);
 }
 
-/* ===== Reset ============================================================= */
+/* ===== Reset =============================================================
+   Box-sizing is the one rule that has to reach every element. The rest is
+   addressed to the elements it is for rather than to `*`, because a blanket
+   `*` reset cannot be undone by a lower-priority layer or by a component that
+   wants its own margin back. */
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
 
-* {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+figure,
+blockquote,
+dl,
+dd,
+fieldset,
+legend {
   margin: 0;
 }
 
@@ -217,6 +237,9 @@ html {
      it every anchor lands with its heading hidden behind the nav. */
   scroll-padding-top: 6rem;
   font-optical-sizing: auto;
+  /* Tells the browser UI which palette the page has chosen: form controls,
+     the caret and (on some platforms) the scrollbar follow it. */
+  accent-color: var(--accent);
 }
 
 body {
@@ -228,7 +251,6 @@ body {
   background: var(--bg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
   font-synthesis: none;
   overflow-x: hidden;
   /* Long URLs and long single words break rather than pushing a phone's layout
@@ -276,7 +298,9 @@ body {
 
 /* The application's drifting mesh gradient, at a lower alpha because a page
    that is read rather than worked in should not move this much. Two fixed
-   layers, animated on `transform` only — no paint, no layout, no jank. */
+   layers, animated on `transform` only — no paint, no layout, no jank. There
+   is no `will-change` here on purpose: a hint on two full-viewport layers is
+   permanent GPU memory for an animation the compositor already promotes. */
 body::before,
 body::after {
   content: '';
@@ -284,14 +308,12 @@ body::after {
   inset: -10%;
   z-index: -2;
   pointer-events: none;
-  will-change: transform;
 }
 body::before {
   background:
     radial-gradient(ellipse 55% 45% at 18% 12%, rgba(139, 92, 246, 0.3) 0%, transparent 62%),
     radial-gradient(ellipse 45% 40% at 82% 22%, rgba(6, 182, 212, 0.22) 0%, transparent 60%),
     radial-gradient(ellipse 50% 45% at 62% 88%, rgba(236, 72, 153, 0.16) 0%, transparent 62%);
-  animation: mesh-drift 26s var(--ease) infinite alternate;
 }
 body::after {
   z-index: -3;
@@ -300,7 +322,16 @@ body::after {
     rgba(139, 92, 246, 0.14) 0%,
     transparent 70%
   );
-  animation: mesh-drift 34s var(--ease) infinite alternate-reverse;
+}
+/* The drift is opt-in: with reduced motion the gradient is a still layer rather
+   than a gradient that has been frozen mid-frame. */
+@media (prefers-reduced-motion: no-preference) {
+  body::before {
+    animation: mesh-drift 26s var(--ease) infinite alternate;
+  }
+  body::after {
+    animation: mesh-drift 34s var(--ease) infinite alternate-reverse;
+  }
 }
 
 html[data-theme='light'] body::before {
@@ -366,8 +397,10 @@ ol {
   padding: 0;
 }
 
+/* Text selected by the visitor is the brand's violet from a token, so the two
+   themes can answer it differently instead of sharing one literal. */
 ::selection {
-  background: rgba(139, 92, 246, 0.35);
+  background: var(--selection);
   color: var(--text);
 }
 
@@ -438,11 +471,20 @@ p {
   font-size: var(--fs-h3);
 }
 
+/* The paragraph that introduces a heading's subject sits closer to it than the
+   page's normal rhythm, so the pair reads as one unit. */
+.h3 + .lead {
+  margin-top: 0.75rem;
+}
+
 .lead {
   font-size: var(--fs-lead);
   color: var(--text-2);
   line-height: 1.55;
   text-wrap: pretty;
+}
+.lead--sm {
+  font-size: var(--fs-sm);
 }
 
 .mono {
@@ -482,6 +524,19 @@ p {
   padding-block: clamp(3rem, 6vw, 6rem);
 }
 
+/* Vertical rhythm between one block of a section and the next. Three sizes,
+   because a row of cards after a heading, a row after a screenshot and a story
+   row after another story row are three different distances. */
+.block-start {
+  margin-top: clamp(2rem, 4vw, 3rem);
+}
+.block-start--snug {
+  margin-top: clamp(1.75rem, 3vw, 2.5rem);
+}
+.block-start--loose {
+  margin-top: clamp(2.5rem, 5vw, 4.5rem);
+}
+
 /* Alternating surface, so long stretches of the page do not read as one
    undifferentiated scroll. */
 .section--raised {
@@ -499,6 +554,11 @@ html[data-theme='light'] .section--raised {
 .section__head--center {
   margin-inline: auto;
   text-align: center;
+}
+/* A centred head centres its lead as well, rather than each section setting
+   the same `margin-inline` on the paragraph by hand. */
+.section__head--center .section__lead {
+  margin-inline: auto;
 }
 
 .eyebrow {
@@ -659,9 +719,24 @@ html[data-theme='light'] .section--raised {
   font-size: var(--fs-h4);
   margin-bottom: 0.5rem;
 }
+/* A card title that is the card's main heading rather than a label, used where
+   the card opens a section rather than sitting in a row of four. */
+.card__title--lg {
+  font-size: var(--fs-h3);
+}
 .card__body {
   font-size: var(--fs-sm);
   color: var(--text-2);
+}
+/* One gap between a card's prose and the list it introduces or follows, whichever
+   side the paragraph lands on, so neither needs a margin of its own. */
+.card__body + .log-list,
+.feature-list + .card__body,
+.log-list + .card__body {
+  margin-top: 1rem;
+}
+.card__body + .impl-list {
+  margin-top: 1.25rem;
 }
 
 .card__icon {
@@ -803,8 +878,10 @@ html[data-theme='light'] .section--raised {
 .nav__icon-btn {
   display: grid;
   place-items: center;
-  width: 42px;
-  height: 42px;
+  /* 44px, not 42: the smallest comfortable target for a thumb, and this is the
+     control a phone user reaches for first. */
+  min-width: 44px;
+  min-height: 44px;
   border-radius: var(--radius-pill);
   border: 1px solid var(--border);
   background: var(--surface);
@@ -960,7 +1037,8 @@ html[data-theme='light'] .section--raised {
 
 /* The hero image is the largest paint on the page, so it is never animated
    from zero opacity — it rises into place while already painted, which keeps
-   the LCP measurement honest. */
+   the LCP measurement honest. The rise itself is opt-in: the resting state is
+   the final one, so reduced motion gets the finished layout immediately. */
 @keyframes rise {
   from {
     transform: translate3d(0, 26px, 0);
@@ -970,20 +1048,22 @@ html[data-theme='light'] .section--raised {
   }
 }
 
-.rise {
-  animation: rise 0.85s var(--ease) both;
-}
-.rise--1 {
-  animation-delay: 0.05s;
-}
-.rise--2 {
-  animation-delay: 0.13s;
-}
-.rise--3 {
-  animation-delay: 0.21s;
-}
-.rise--4 {
-  animation-delay: 0.29s;
+@media (prefers-reduced-motion: no-preference) {
+  .rise {
+    animation: rise 0.85s var(--ease) both;
+  }
+  .rise--1 {
+    animation-delay: 0.05s;
+  }
+  .rise--2 {
+    animation-delay: 0.13s;
+  }
+  .rise--3 {
+    animation-delay: 0.21s;
+  }
+  .rise--4 {
+    animation-delay: 0.29s;
+  }
 }
 
 /* ===== Device frames ==================================================== */
@@ -1087,7 +1167,11 @@ html[data-theme='light'] .frame__title {
   font-size: var(--fs-xs);
   font-weight: 500;
   color: var(--text);
-  animation: float 7s var(--ease) infinite alternate;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .float {
+    animation: float 7s var(--ease) infinite alternate;
+  }
 }
 .float__label {
   display: block;
@@ -1134,6 +1218,14 @@ html[data-theme='light'] .frame__title {
   display: grid;
   gap: clamp(1.75rem, 4vw, 4rem);
   align-items: center;
+}
+/* A story row that follows a screenshot rather than the section head, and one
+   that has to leave room for the row beneath it. */
+.story--offset {
+  margin-top: clamp(2rem, 4vw, 3.5rem);
+}
+.story--spaced {
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
 }
 @media (min-width: 960px) {
   .story {
@@ -1574,6 +1666,16 @@ html[data-theme='light'] .footer {
   color: var(--text-3);
   max-width: 30rem;
 }
+/* The blurb under the footer's brand, and the licensing note under the blurb. */
+.nav__brand + .footer__about {
+  margin-top: 1rem;
+}
+.footer__about + .footer__about {
+  margin-top: 0.75rem;
+}
+.footer__about strong {
+  color: var(--text-2);
+}
 
 .footer__feature {
   display: grid;
@@ -1733,40 +1835,34 @@ body.stats-open {
   overflow: hidden;
 }
 
+/* The panel is the <dialog> itself. The top layer owns the stacking and the
+   focus trap, `::backdrop` replaces the scrim element, and the only thing left
+   to style is the surface. */
 .stats {
-  position: fixed;
-  inset: 0;
-  z-index: 120;
-  display: grid;
-  place-items: center;
-  padding: clamp(0.75rem, 3vw, 2rem);
+  width: min(1040px, calc(100% - 2 * clamp(0.75rem, 3vw, 2rem)));
+  max-width: none;
+  max-height: min(92svh, 920px);
+  margin: auto;
+  padding: clamp(1.25rem, 3vw, 2.25rem);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  background: var(--surface-solid);
+  color: var(--text-2);
+  box-shadow: var(--shadow-lg);
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
-
-.stats__scrim {
-  position: absolute;
-  inset: 0;
+.stats[open] {
+  display: grid;
+  gap: clamp(1rem, 2vw, 1.5rem);
+}
+.stats::backdrop {
   background: rgba(4, 2, 12, 0.72);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
 }
-html[data-theme='light'] .stats__scrim {
+html[data-theme='light'] .stats::backdrop {
   background: rgba(15, 23, 42, 0.42);
-}
-
-.stats__dialog {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  gap: clamp(1rem, 2vw, 1.5rem);
-  width: min(1040px, 100%);
-  max-height: min(92svh, 920px);
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  padding: clamp(1.25rem, 3vw, 2.25rem);
-  border-radius: var(--radius);
-  border: 1px solid var(--border-strong);
-  background: var(--surface-solid);
-  box-shadow: var(--shadow-lg);
 }
 
 .stats__head {
@@ -1948,12 +2044,10 @@ html[data-theme='light'] .stats__scrim {
 
 @media (max-width: 640px) {
   .stats {
-    padding: 0;
-  }
-  .stats__dialog {
     width: 100%;
     height: 100svh;
     max-height: 100svh;
+    margin: 0;
     border: 0;
     border-radius: 0;
     /* The panel reaches the edges, so it has to clear the notch and the home
@@ -1982,6 +2076,8 @@ html[data-theme='light'] .stats__scrim {
   transition:
     opacity 0.7s var(--ease),
     transform 0.7s var(--ease);
+  /* The stagger is passed in from the template as data; the sheet owns the unit. */
+  transition-delay: var(--reveal-delay, 0ms);
 }
 .reveal--armed {
   opacity: 0;
@@ -1992,7 +2088,13 @@ html[data-theme='light'] .stats__scrim {
   transform: none;
 }
 
-/* ===== Scrollbar ======================================================= */
+/* ===== Scrollbar =======================================================
+   Two mechanisms, because they are not interchangeable. Chromium's
+   `::-webkit-scrollbar` rules draw the thin, rounded bar the design asks for —
+   and Chromium ignores `scrollbar-color` whenever those rules exist, so the
+   standard property is offered only to engines that do not understand the
+   pseudo-element. Either way the thumb is the brand violet at a strength that
+   stays visible on both themes. */
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
@@ -2004,30 +2106,32 @@ html[data-theme='light'] .stats__scrim {
   border: 3px solid transparent;
   border-radius: 10px;
   background-clip: content-box;
-  background-color: rgba(139, 92, 246, 0.35);
+  background-color: var(--accent-line);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(139, 92, 246, 0.55);
+  background-color: var(--accent);
+}
+
+@supports not selector(::-webkit-scrollbar) {
+  html {
+    scrollbar-color: var(--accent-line) transparent;
+  }
 }
 
 /* ============================================================================
    Reduced motion
    ----------------------------------------------------------------------------
-   One switch at the end of the sheet turns off every entrance, drift and float
-   on the site while leaving all content in place and all transitions that carry
-   meaning (colour, border) intact. Nothing is hidden waiting for an animation
-   that will not run.
+   Handled per animation rather than with one `animation-duration: 0.001ms`
+   switch on `*`: a global kill also shortens transitions that carry meaning and
+   can make some animations jump instead of stopping. The drift, the float and
+   the entrance rise are declared inside `no-preference`, so the static state is
+   what everyone gets and motion is the opt-in. Colour and border transitions are
+   left alone — they are not movement. Nothing is ever hidden waiting for an
+   animation that will not run.
    ========================================================================= */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
-  }
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.001ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.001ms !important;
   }
   /* Belt and braces: the directive already refuses to arm anything under
      reduced motion, and this makes the hidden state impossible either way. */
@@ -2036,9 +2140,36 @@ html[data-theme='light'] .stats__scrim {
     opacity: 1;
     transform: none;
   }
-  body::before,
-  body::after {
-    animation: none;
+  /* The skip link slides down into view; without a transition it is simply
+     there, which is the point of it. */
+  .skip-link {
+    transition: none;
+  }
+}
+
+/* ============================================================================
+   More contrast, when asked for
+   ----------------------------------------------------------------------------
+   The design deliberately uses quiet borders and muted secondary text. Both
+   clear the minimums, but a visitor who has asked the operating system for more
+   contrast gets the same page with those two signals strengthened rather than
+   the low-contrast version.
+   ========================================================================= */
+@media (prefers-contrast: more) {
+  :root {
+    --border: rgba(255, 255, 255, 0.28);
+    --border-strong: rgba(255, 255, 255, 0.45);
+    --text-2: #ddd9f0;
+    --text-3: #b9b4d4;
+  }
+  html[data-theme='light'] {
+    --border: rgba(15, 23, 42, 0.3);
+    --border-strong: rgba(15, 23, 42, 0.5);
+    --text-2: #334155;
+    --text-3: #475569;
+  }
+  :focus-visible {
+    outline-width: 3px;
   }
 }
 
@@ -2056,7 +2187,7 @@ html[data-theme='light'] .stats__scrim {
   .faq__item,
   .platform,
   .metric,
-  .stats__dialog,
+  .stats,
   .stats__card,
   .stats__block {
     border: 1px solid CanvasText;
@@ -2119,6 +2250,14 @@ html[data-theme='light'] .stats__scrim {
   text-align: center;
   font-size: var(--fs-sm);
   color: var(--text-3);
+}
+/* The "browse all guides" button under the guides grid. */
+.guides__more {
+  margin-top: 1.75rem;
+}
+/* The guide's own tag at the top of its card. */
+.guides__tag {
+  margin-bottom: 0.6rem;
 }
 
 /* ===== Focus sessions ================================================== */
@@ -2253,6 +2392,12 @@ html[data-theme='light'] .stats__scrim {
 .grid--split {
   align-items: stretch;
 }
+/* A screenshot inside a card follows whatever came before it, so the gap belongs
+   to the pair rather than to the image. */
+.feature-list + .shot,
+.quote + .shot {
+  margin-top: 1.5rem;
+}
 
 /* ===== Every screen =================================================== */
 /* The tall card beside it is one concern — where the layout changes. These two
@@ -2269,6 +2414,9 @@ html[data-theme='light'] .stats__scrim {
   display: grid;
   gap: 0.6rem;
   margin-bottom: 1.5rem;
+}
+.lead + .option-table {
+  margin-top: 1.5rem;
 }
 .option {
   display: grid;
@@ -2333,6 +2481,9 @@ html[data-theme='light'] .stats__scrim {
 .reading-list {
   display: grid;
   gap: 0.6rem;
+}
+.lead + .reading-list {
+  margin-top: 1.25rem;
 }
 .reading {
   display: grid;
@@ -2494,6 +2645,19 @@ html[data-theme='light'] .code {
   color: var(--text-3);
   line-height: 1.7;
 }
+/* One panel, centred and narrow: the list is read rather than compared, so it
+   does not earn a second column. */
+.why__grid {
+  max-width: 46rem;
+  margin-inline: auto;
+}
+/* The claim, then the sentence that supports it. */
+.panel__list b {
+  color: var(--text);
+}
+.panel__list li > span > span {
+  display: block;
+}
 
 /* ===== Learn the method ================================================
    Editorial rather than promotional: this content is read, not scanned, so it
@@ -2501,6 +2665,9 @@ html[data-theme='light'] .code {
 .method-list {
   display: grid;
   gap: 1rem;
+}
+.h3 + .method-list {
+  margin-top: 1.5rem;
 }
 
 .method-step {

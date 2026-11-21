@@ -9,7 +9,7 @@
       @for (route of routes; track route.num; let i = $index) {
         <li class="card card--edge card--hover route" dwReveal [dwRevealDelay]="i * 80">
           <span class="step__num">{{ route.num }}</span>
-          <h3 class="card__title" style="font-size: var(--fs-h3)">{{ route.name }}</h3>
+          <h3 class="card__title card__title--lg">{{ route.name }}</h3>
           <p class="card__body">{{ route.body }}</p>
 
           @if (route.image; as image) {

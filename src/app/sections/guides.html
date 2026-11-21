@@ -14,8 +14,8 @@
     <ul class="grid grid--2">
       @for (guide of guides; track guide.slug; let i = $index) {
         <li class="card card--hover" dwReveal [dwRevealDelay]="i * 60">
-          <p class="eyebrow" style="margin-bottom: 0.6rem">{{ guide.tag }}</p>
-          <h3 class="card__title" style="font-size: var(--fs-h3)">
+          <p class="eyebrow guides__tag">{{ guide.tag }}</p>
+          <h3 class="card__title card__title--lg">
             <a [href]="guidesUrl + guide.slug + '/'">{{ guide.title }}</a>
           </h3>
           <p class="card__body">{{ guide.summary }}</p>
@@ -28,7 +28,7 @@
       advertising on the guides is disclosed on every one of them.
     </p>
 
-    <div style="margin-top: 1.75rem">
+    <div class="guides__more">
       <a class="btn btn--ghost" [href]="guidesUrl">
         Browse all guides <span aria-hidden="true">→</span>
       </a>

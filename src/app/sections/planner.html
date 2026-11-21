@@ -42,7 +42,7 @@
       </p>
     </div>
 
-    <ul class="grid grid--3" style="margin-top: clamp(1.75rem, 3vw, 2.5rem)">
+    <ul class="grid grid--3 block-start--snug">
       @for (point of points; track point.title; let i = $index) {
         <li class="card card--hover" dwReveal [dwRevealDelay]="i * 60">
           <h3 class="card__title">{{ point.title }}</h3>

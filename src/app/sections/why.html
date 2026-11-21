@@ -3,13 +3,13 @@
     <div class="section__head section__head--center" dwReveal>
       <p class="eyebrow">Why DeepWork</p>
       <h2 class="h2 section__title">What it is good at</h2>
-      <p class="lead section__lead" style="margin-inline: auto">
+      <p class="lead section__lead">
         Every point below is something the app actually does — drawn from the product, not from a
         roadmap.
       </p>
     </div>
 
-    <div class="grid grid--2" style="max-width: 46rem; margin-inline: auto">
+    <div class="grid grid--2 why__grid">
       <div class="panel panel--good" dwReveal>
         <h3 class="panel__title">
           <span aria-hidden="true">✓</span>
@@ -19,8 +19,8 @@
           @for (item of strengths; track item.title) {
             <li>
               <span>
-                <b style="color: var(--text)">{{ item.title }}</b>
-                <span style="display: block">{{ item.body }}</span>
+                <b>{{ item.title }}</b>
+                <span>{{ item.body }}</span>
               </span>
             </li>
           }

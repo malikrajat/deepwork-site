@@ -11,7 +11,7 @@
 
     <div class="story">
       <div class="story__body" dwReveal>
-        <h3 class="h3" style="margin-bottom: 1.5rem">The technique, in five steps</h3>
+        <h3 class="h3">The technique, in five steps</h3>
 
         <ol class="method-list">
           @for (step of method; track step.title; let i = $index) {
@@ -35,7 +35,7 @@
       <div class="story__body" dwReveal [dwRevealDelay]="100">
         <article class="card card--edge">
           <h3 class="card__title">How DeepWork implements it</h3>
-          <p class="card__body" style="margin-bottom: 1.25rem">
+          <p class="card__body">
             The defaults are the classic ones, and every one of them is a setting rather than a
             constant:
           </p>
@@ -54,10 +54,10 @@
       </div>
     </div>
 
-    <ul class="grid grid--2" style="margin-top: clamp(2rem, 4vw, 3rem)">
+    <ul class="grid grid--2 block-start">
       @for (item of practice; track item.title; let i = $index) {
         <li class="card card--hover" dwReveal [dwRevealDelay]="i * 80">
-          <h3 class="card__title" style="font-size: var(--fs-h3)">{{ item.title }}</h3>
+          <h3 class="card__title card__title--lg">{{ item.title }}</h3>
           <p class="card__body">{{ item.body }}</p>
         </li>
       }

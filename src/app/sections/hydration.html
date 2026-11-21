@@ -13,11 +13,11 @@
     <div class="story">
       <div class="story__body" dwReveal>
         <h3 class="h3">Every answer is a choice, not a field</h3>
-        <p class="lead" style="font-size: var(--fs-sm); margin-top: 0.75rem">
+        <p class="lead lead--sm">
           The useful range for each setting is narrow, and a number you have to type is a number you
           can mistype. So the reminder offers the sensible ones and nothing else.
         </p>
-        <ul class="option-table" style="margin-top: 1.5rem">
+        <ul class="option-table">
           @for (setting of settings; track setting.label) {
             <li class="option">
               <span class="option__label">{{ setting.label }}</span>
@@ -30,13 +30,13 @@
 
       <div class="story__body" dwReveal [dwRevealDelay]="100">
         <h3 class="h3">Today, on the dashboard</h3>
-        <p class="lead" style="font-size: var(--fs-sm); margin-top: 0.75rem">
+        <p class="lead lead--sm">
           The card reads out the day against the target, how many drinks that is, when the last one
           was and what the reminder is doing next. <strong>+ 250 ml</strong> logs a glass at the
           size you chose; <strong>Undo</strong> takes it back if you pressed it twice.
         </p>
 
-        <blockquote class="quote" style="margin-top: 1.5rem">
+        <blockquote class="quote">
           “{{ quote }}”
           <cite>One of the ten lines the water reminder rotates through.</cite>
         </blockquote>
@@ -61,7 +61,7 @@
       <p class="caption">The water card, as it sits on the dashboard.</p>
     </div>
 
-    <ul class="grid grid--3" style="margin-top: clamp(2rem, 4vw, 3rem)">
+    <ul class="grid grid--3 block-start">
       @for (item of behaviour; track item.title; let i = $index) {
         <li class="card card--hover" dwReveal [dwRevealDelay]="i * 60">
           <h3 class="card__title">{{ item.title }}</h3>

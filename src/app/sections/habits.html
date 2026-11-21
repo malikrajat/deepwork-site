@@ -12,7 +12,7 @@
     <div class="grid grid--2 grid--split">
       <article class="card" dwReveal>
         <p class="eyebrow">Habits</p>
-        <h3 class="h3" style="margin-bottom: 1rem">Streaks that show their working</h3>
+        <h3 class="h3">Streaks that show their working</h3>
         <ul class="feature-list">
           @for (point of habitPoints; track point) {
             <li class="feature-list__item">
@@ -23,7 +23,6 @@
         </ul>
         <img
           class="shot"
-          style="margin-top: 1.5rem"
           ngSrc="{{ habitsShot.src }}"
           [width]="habitsShot.width"
           [height]="habitsShot.height"
@@ -33,7 +32,7 @@
 
       <article class="card" dwReveal [dwRevealDelay]="100">
         <p class="eyebrow">Journal</p>
-        <h3 class="h3" style="margin-bottom: 1rem">One page a day, and the numbers it leaves</h3>
+        <h3 class="h3">One page a day, and the numbers it leaves</h3>
         <ul class="feature-list">
           @for (point of journalPoints; track point) {
             <li class="feature-list__item">

@@ -21,7 +21,7 @@
       }
     </div>
 
-    <div class="story" style="margin-top: clamp(2rem, 4vw, 3.5rem)">
+    <div class="story story--offset">
       <div class="story__media" dwReveal [dwRevealDelay]="80">
         <div class="frame">
           <div class="frame__bar">
@@ -54,7 +54,7 @@
       </div>
     </div>
 
-    <div class="story story--flip" style="margin-top: clamp(2.5rem, 5vw, 4.5rem)">
+    <div class="story story--flip block-start--loose">
       <div class="story__media" dwReveal [dwRevealDelay]="80">
         <div class="frame">
           <div class="frame__bar">
@@ -84,7 +84,7 @@
           <span class="chip">A layout, not fixed columns</span>
         </div>
         <h3 class="h3">The space comes back</h3>
-        <p class="lead" style="font-size: var(--fs-sm)">
+        <p class="lead lead--sm">
           A collapsed quadrant used to hide its contents and keep its share of the board, which is
           why minimising Schedule never made Do First any bigger. Now the board reflows around what
           is open, and the split is yours to drag.

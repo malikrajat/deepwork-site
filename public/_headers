@@ -48,6 +48,8 @@
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY
   Referrer-Policy: strict-origin-when-cross-origin
+  Cross-Origin-Opener-Policy: same-origin-allow-popups
+  Cross-Origin-Resource-Policy: same-origin
   Permissions-Policy: accelerometer=(), autoplay=(), browsing-topics=(), camera=(), display-capture=(), encrypted-media=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), publickey-credentials-get=(), screen-wake-lock=(), serial=(), usb=(), xr-spatial-tracking=()
   Content-Security-Policy: default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://*.googletagmanager.com https://pagead2.googlesyndication.com https://*.googlesyndication.com https://www.googletagservices.com https://adservice.google.com https://*.googleadservices.com https://*.doubleclick.net https://*.adtrafficquality.google https://fundingchoicesmessages.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com https://*.googlesyndication.com https://adservice.google.com https://*.doubleclick.net https://*.googleadservices.com https://*.adtrafficquality.google https://*.gstatic.com https://www.google.com; font-src 'self'; connect-src 'self' https://*.googletagmanager.com https://*.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://www.google.com https://pagead2.googlesyndication.com https://*.googlesyndication.com https://adservice.google.com https://*.doubleclick.net https://*.googleadservices.com https://*.adtrafficquality.google https://*.gstatic.com https://fundingchoicesmessages.google.com https://deepwork.goatcounter.com; frame-src https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://*.googlesyndication.com https://*.doubleclick.net https://*.googleadservices.com https://fundingchoicesmessages.google.com https://www.google.com; worker-src 'self' blob:; manifest-src 'self'
 
@@ -57,9 +59,12 @@
 # The policy is detached and re-set rather than extended, for the reason in the
 # header comment. `worker-src blob:` and `child-src blob:` are for the challenge
 # step, which runs its proof of work in a worker created from a blob URL.
+# `form-action` here allows `mailto:` on purpose: the form's documented
+# no-JavaScript fallback submits to `action="mailto:..."`, and a bare `'self'`
+# makes the browser block that submission without saying anything.
 # The selector is `/contact*` rather than `/contact/*` on purpose: it matches
 # `/contact`, `/contact/` and `/contact/index.html` without depending on whether a
 # splat is allowed to match an empty remainder.
 /contact*
   ! Content-Security-Policy
-  Content-Security-Policy: default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self' 'unsafe-inline' https://web3forms.com https://hcaptcha.com https://*.hcaptcha.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://hcaptcha.com https://*.hcaptcha.com https://*.hcaptcha.net; font-src 'self'; connect-src 'self' https://api.web3forms.com https://web3forms.com https://hcaptcha.com https://*.hcaptcha.com https://*.hcaptcha.net; frame-src https://hcaptcha.com https://*.hcaptcha.com https://*.hcaptcha.net; child-src blob:; worker-src 'self' blob:
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self' mailto:; script-src 'self' 'unsafe-inline' https://web3forms.com https://hcaptcha.com https://*.hcaptcha.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://hcaptcha.com https://*.hcaptcha.com https://*.hcaptcha.net; font-src 'self'; connect-src 'self' https://api.web3forms.com https://web3forms.com https://hcaptcha.com https://*.hcaptcha.com https://*.hcaptcha.net; frame-src https://hcaptcha.com https://*.hcaptcha.com https://*.hcaptcha.net; child-src blob:; worker-src 'self' blob:

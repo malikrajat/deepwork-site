@@ -46,12 +46,10 @@
       </div>
     </div>
 
-    <div class="grid grid--2" style="margin-top: clamp(2rem, 4vw, 3rem)">
+    <div class="grid grid--2 block-start">
       <article class="card card--edge" dwReveal>
         <p class="eyebrow">The mini widget</p>
-        <h3 class="card__title" style="font-size: var(--fs-h3)">
-          Minimise it and it keeps working
-        </h3>
+        <h3 class="card__title card__title--lg">Minimise it and it keeps working</h3>
         <ul class="feature-list">
           @for (line of widget; track line) {
             <li class="feature-list__item">
@@ -64,10 +62,8 @@
 
       <article class="card" dwReveal [dwRevealDelay]="90">
         <p class="eyebrow">Updates</p>
-        <h3 class="card__title" style="font-size: var(--fs-h3)">
-          It tells you, once, and then installs
-        </h3>
-        <p class="card__body" style="margin-bottom: 1rem">
+        <h3 class="card__title card__title--lg">It tells you, once, and then installs</h3>
+        <p class="card__body">
           DeepWork checks the public release list in the background on startup — never blocking the
           window, cached for six hours so it does not spend a rate limit, and reporting nothing
           back. A newer build shows up as a small pill beside the version, a system notification,
@@ -112,10 +108,8 @@
 
       <article class="card card--edge" dwReveal [dwRevealDelay]="140">
         <p class="eyebrow">The tray menu</p>
-        <h3 class="card__title" style="font-size: var(--fs-h3)">
-          For the work, not just the window
-        </h3>
-        <p class="card__body" style="margin-bottom: 1rem">
+        <h3 class="card__title card__title--lg">For the work, not just the window</h3>
+        <p class="card__body">
           The tray used to be a place to show or hide the app. It now carries the things you reach
           for in the middle of a session.
         </p>
@@ -131,10 +125,8 @@
 
       <article class="card" dwReveal [dwRevealDelay]="180">
         <p class="eyebrow">Taskbar</p>
-        <h3 class="card__title" style="font-size: var(--fs-h3)">
-          A pin reminder that tells the truth
-        </h3>
-        <p class="card__body" style="margin-bottom: 1rem">
+        <h3 class="card__title card__title--lg">A pin reminder that tells the truth</h3>
+        <p class="card__body">
           Windows 11 keeps programmatic pinning for apps it has packaged itself. The reminder asks
           the shell first instead of pretending the request always works.
         </p>
@@ -149,7 +141,7 @@
       </article>
     </div>
 
-    <div class="platforms" style="margin-top: clamp(2rem, 4vw, 3rem)" dwReveal>
+    <div class="platforms block-start" dwReveal>
       @for (platform of platforms; track platform.id) {
         <div class="platform">
           <span class="platform__glyph" aria-hidden="true">{{ platform.glyph }}</span>

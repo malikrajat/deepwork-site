@@ -1,4 +1,4 @@
-import { Directive, ElementRef, inject, input, type OnDestroy } from '@angular/core';
+import { computed, Directive, ElementRef, inject, input, type OnDestroy } from '@angular/core';
 
 /**
  * Fades and lifts an element into place the first time it is scrolled to.
@@ -42,7 +42,9 @@ import { Directive, ElementRef, inject, input, type OnDestroy } from '@angular/c
   selector: '[dwReveal]',
   host: {
     class: 'reveal',
-    '[style.transition-delay.ms]': 'delay()',
+    // Data, not design: the stagger is a number the template computes, so it
+    // arrives as a custom property and the stylesheet decides what to do with it.
+    '[style.--reveal-delay]': 'delayValue()',
   },
 })
 export class Reveal implements OnDestroy {
@@ -55,6 +57,9 @@ export class Reveal implements OnDestroy {
    * page this tall means content arrives after the visitor has scrolled past it.
    */
   readonly delay = input(0, { alias: 'dwRevealDelay' });
+
+  /** The stagger as a CSS custom property value; the sheet supplies the unit. */
+  readonly delayValue = computed(() => `${this.delay()}ms`);
 
   constructor() {
     const element = this.host.nativeElement;

@@ -11,6 +11,7 @@
           <a
             class="nav__link"
             [class.nav__link--active]="activeId() === link.id"
+            [attr.aria-current]="activeId() === link.id ? 'true' : null"
             [href]="'#' + link.id"
             (click)="closeMenu()"
           >
